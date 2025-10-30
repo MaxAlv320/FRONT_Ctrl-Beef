@@ -1,61 +1,154 @@
-import Menu from '../Component/component.menu.jsx';
+import { useState } from "react";
 
 const MenuApp = () => {
-    const products = [
-    {
-        name: "Hamburguesa comun",
-        description: "Pan, carne, lechuga, cebolla, jitomate, mostaza, queso amarillo, capsup, mayonesa, chile y pepinillos.",
-        img: "https://smartremo.es/wp-content/uploads/2020/04/hamburguesa-scaled.jpg"
-    },
-    {
-        name: "Hamburguesa Extra Queso",
-        description: "Pan, queso extra, mayonesa y carne",
-        img: "https://th.bing.com/th/id/OIP.oBqH5u3Z8mwZFbY-z7L-oQHaDt?w=314&h=174&c=7&r=0&o=7&pid=1.7&rm=3"
-    },
-    {
-        name: "Hamburguesa Tocino",
-        description: "Pan, lechuga, mayonesa, piña, tocino, carne y lechuga",
-        img: "https://micasahernandez.com/wp-content/uploads/2021/11/C%C3%B3mo-preparar-hamburguesas-con-tocino-y-pi%C3%B1a.jpg"
-    },
-    {
-        name: "Hamburguesa Mexicana",
-        description: "Pan, salsa de molcajete roja, guacamole, cebolla rosa, queso, mayonesa, lechuga, carne, jitomate, chile y jitomate.",
-        img: "https://canela-y-clavo.com/wp-content/uploads/2023/03/42-Mexicana.png"
-    },
-    {
-        name: "Hamburguesa de Pollo",
-        description: "Pan, queso, cebolla, lechuga, jitomate, tocino, mayonesa y carne de pollo empanizada.",
-        img: "https://www.blogcocinafacil.com.es/wp-content/uploads/2022/06/Ricetta-hamburger-di-pollo.jpg"
-    },
-    {
-        name: "Hamburguesa de Pescado",
-        description: "Pan, cebolla, carne de tilapia, lechuga, mayonesa y chimichurri.",
-        img: "https://okdiario.com/img/2021/03/29/hamburguesas-de-pescado.jpg"
-    },
-    {
-        name: "Hamburguesa de Soya",
-        description: "Pan, lechuga, jitomate, cebolla y carne de soya",
-        img: "https://cdn7.kiwilimon.com/recetaimagen/11414/960x640/2574.jpg.jpg"
-    },
-    {
-        name: "Hamburguesa de UTR",
-        description: "Pan, lechuga, pepinillos, cebolla rosa, jitomate, queso, pepino y carne de arrachera.",
-        img: "https://cdn.shopify.com/s/files/1/0669/7585/8999/files/carni-k_blog-hamburguesa.jpg?v=1667414084"
-    }
-];
+  const [activeFilter, setActiveFilter] = useState("All");
+  const [cartItems, setCartItems] = useState([]);
 
-    return (
-        <div className='col-12'>
-            
-            <div className="row">
-                {
-                    products.map((item, index) => (
-                        <Menu key={index} products={item}
-                        />
-                    ))}
+  const products = [
+    {
+      id: 1,
+      name: "Classic Burger",
+      description: "100% beef, lettuce, tomato, onion, pickles",
+      price: "12.99",
+      category: "Classic",
+      image:
+        "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80",
+    },
+    {
+      id: 2,
+      name: "Cheese Deluxe",
+      description: "Double meat, double cheddar cheese, crispy bacon",
+      price: "15.99",
+      category: "Special",
+      image:
+        "https://images.unsplash.com/photo-1549611016-3a70d82b5040?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80",
+    },
+    {
+      id: 3,
+      name: "Chicken Crispy",
+      description: "Breaded chicken, chipotle mayo, lettuce",
+      price: "13.99",
+      category: "Classic",
+      image:
+        "https://images.unsplash.com/photo-1625813506062-0aeb1d7a094e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80",
+    },
+    {
+      id: 4,
+      name: "BBQ Special",
+      description: "Homemade BBQ sauce, caramelized onion, jalapeños",
+      price: "14.99",
+      category: "Special",
+      image:
+        "https://images.unsplash.com/photo-1572802419224-296b0aeee0d9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80",
+    },
+    {
+      id: 5,
+      name: "Veggie Burger",
+      description: "Plant-based patty, avocado, fresh vegetables",
+      price: "11.99",
+      category: "Vegetarian",
+      image:
+        "https://images.unsplash.com/photo-1596662951482-0c4ba74a6df6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80",
+    },
+    {
+      id: 6,
+      name: "Mushroom Swiss",
+      description: "Sautéed mushrooms, Swiss cheese, onion",
+      price: "14.50",
+      category: "Vegetarian",
+      image:
+        "https://images.unsplash.com/photo-1572802419224-296b0aeee0d9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80",
+    },
+  ];
+
+  const filters = [
+    { name: "All", type: "gold" },
+    { name: "Classic", type: "wine" },
+    { name: "Special", type: "gold" },
+    { name: "Vegetarian", type: "wine" },
+    { name: "Combo", type: "gold" },
+  ];
+
+  const filteredProducts =
+    activeFilter === "All"
+      ? products
+      : products.filter((product) => product.category === activeFilter);
+
+  const addToCart = (product) => {
+    setCartItems((prevItems) => {
+      const existingItem = prevItems.find((item) => item.id === product.id);
+      if (existingItem) {
+        return prevItems.map((item) =>
+          item.id === product.id
+            ? { ...item, quantity: item.quantity + 1 }
+            : item
+        );
+      } else {
+        return [...prevItems, { ...product, quantity: 1 }];
+      }
+    });
+  };
+
+  const getTotalItems = () => {
+    return cartItems.reduce((total, item) => total + item.quantity, 0);
+  };
+
+  const getButtonText = () => {
+    const totalItems = getTotalItems();
+    return totalItems > 0 ? `View Order (${totalItems})` : "View Order";
+  };
+
+  return (
+    <div className="container-custom">
+      <div className="header">
+        <h2 className="header-subtitle">Our Menu</h2>
+        <p className="header-description">Choose your favorite burgers</p>
+      </div>
+
+      <div className="filters-container">
+        {filters.map((filter) => (
+          <button
+            key={filter.name}
+            className={`filter-button ${filter.type} ${
+              activeFilter === filter.name ? "active" : ""
+            }`}
+            onClick={() => setActiveFilter(filter.name)}
+          >
+            {filter.name}
+          </button>
+        ))}
+      </div>
+
+      <div className="divider"></div>
+
+      <div className="menu-grid">
+        {filteredProducts.map((product) => (
+          <div key={product.id} className="menu-item">
+            <img
+              src={product.image}
+              alt={product.name}
+              className="menu-item-image"
+            />
+            <h3 className="menu-item-title">{product.name}</h3>
+            <p className="menu-item-description">{product.description}</p>
+            <div className="price-add-container">
+              <div className="menu-item-price">${product.price}</div>
+              <button
+                className="btn-add-simple"
+                onClick={() => addToCart(product)}
+              >
+                + Add
+              </button>
             </div>
-        </div>
-    );
+          </div>
+        ))}
+      </div>
+
+      <div className="view-order-container">
+        <button className="btn-view-order">{getButtonText()}</button>
+      </div>
+    </div>
+  );
 };
 
 export default MenuApp;
