@@ -1,22 +1,15 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
-import { Routes, Route, Link } from "react-router-dom";
-import "./App.css";
-import MenuApp  from "./pages/Menu.jsx";
-
-import Home from "./pages/Home.jsx";
-import About from "./pages/About.jsx";
-import Contact from "./pages/Contact.jsx";
+import { Routes, Route } from "react-router-dom";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
+import ForgotPassword from "./pages/ForgotPassword";
 
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
-      <div>
-        <MenuApp/>
-      </div>
-      
+    <Routes>
+      <Route path="/" element={<Login />} />
+      <Route path="/signup" element={<Signup />} />
+      <Route path="/forgot" element={<ForgotPassword />} />
+    </Routes>
   );
 }
 
