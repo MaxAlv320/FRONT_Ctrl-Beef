@@ -15,7 +15,6 @@ const Home = () => {
 
   return (
     <>
-      {/* Hero Section */}
       <section
         className="hero-section text-center text-white d-flex align-items-center justify-content-center"
         style={{
@@ -33,12 +32,11 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Feature Cards */}
       <section className="container my-5">
         <div className="row g-4">
           <div className="col-md-4">
             <FeatureCard
-              icon={<FaClock size={28} color="#7a001f" />}
+              icon={<FaClock size={28} color="#f6a700" />}
               title="About Us"
               text="Learn more about our story"
               onClick={scrollToFooter}
@@ -46,14 +44,14 @@ const Home = () => {
           </div>
           <div className="col-md-4">
             <FeatureCard
-              icon={<FaStar size={28} color="#7a001f" />}
+              icon={<FaStar size={28} color="#56070c" />}
               title="Promotions"
               text="Exclusive deals every week"
             />
           </div>
           <div className="col-md-4">
             <FeatureCard
-              icon={<FaMapMarkerAlt size={28} color="#7a001f" />}
+              icon={<FaMapMarkerAlt size={28} color="#f6a700" />}
               title="Location"
               text=" Talamantes 716, Barrio de San Marcos"
             />
@@ -61,10 +59,8 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Customer Favorites */}
       <CustomerFavorites />
 
-      {/* Footer */}
       <Footer />
     </>
   );

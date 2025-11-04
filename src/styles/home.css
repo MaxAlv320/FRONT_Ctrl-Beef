@@ -23,7 +23,7 @@
 }
 
 .footer-section {
-  background-color: #7a001f; /* color vino */
+  background-color: #56070c; /* color vino */
   color: white;
   padding: 40px 0;
 }
@@ -36,4 +36,97 @@
 .footer-section p {
   font-size: 16px;
   line-height: 1.6;
+}
+
+/* === GENERAL FEATURE CARD STYLE === */
+.feature-card {
+  background-color: #ffffff;
+  color: #f6a700;
+  border: 2px solid #f6a700;
+  border-radius: 16px;
+  padding: 2rem;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+}
+
+.feature-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+}
+
+/* Ícono centrado */
+.feature-icon {
+  width: 70px;
+  height: 70px;
+  background-color: #f6a700; /* fondo dorado por defecto */
+  color: #56070c; /* símbolo vino */
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.2rem;
+  font-size: 1.8rem;
+}
+
+.feature-title {
+  color: #f6a700;
+  font-weight: bold;
+  font-size: 1.3rem;
+  margin-bottom: 0.5rem;
+}
+
+.feature-text {
+  color: #fff;
+  font-size: 1rem;
+  opacity: 0.9;
+}
+
+body {
+  background-color: #f4f4f6;
+}
+
+/* ABOUT US card */
+.row.g-4 .col-md-4:nth-child(1) .feature-card {
+  border: 2px solid #7a001f;
+  box-shadow: 0 4px 10px rgba(122, 0, 31, 0.3);
+}
+
+.row.g-4 .col-md-4:nth-child(1) .feature-icon {
+  background-color: #56070c;
+  color: #f6a700;
+}
+
+.row.g-4 .col-md-4:nth-child(1) .feature-title {
+  color: #56070c;
+}
+
+/* PROMOTIONS card */
+.row.g-4 .col-md-4:nth-child(2) .feature-card {
+  border: 3px solid #f6a700;
+  box-shadow: 0 0 15px rgba(246, 167, 0, 0.6);
+}
+
+.row.g-4 .col-md-4:nth-child(2) .feature-icon {
+  background-color: #f6a700;
+  color: #56070c;
+}
+
+.row.g-4 .col-md-4:nth-child(2) .feature-title {
+  color: #c47f00;
+}
+
+/* LOCATION card */
+.row.g-4 .col-md-4:nth-child(3) .feature-card {
+  border: 2px solid #7a001f;
+  box-shadow: 0 4px 10px rgba(122, 0, 31, 0.3);
+}
+
+.row.g-4 .col-md-4:nth-child(3) .feature-icon {
+  background-color: #56070c;
+  color: #f6a700;
+}
+
+.row.g-4 .col-md-4:nth-child(3) .feature-title {
+  color: #56070c;
 }
