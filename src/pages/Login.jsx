@@ -4,12 +4,18 @@ import burger from "../assets/burger.jpg";
 import burger1 from "../assets/burger1.jpg";
 import burger2 from "../assets/burger2.jpg";
 import logoBurger from "../assets/logoburger.png"; // importa el logo localmente
-import { Link } from "react-router-dom";
-
+import { Link, useNavigate } from "react-router-dom"; // 👈 solo agregamos useNavigate
 
 export default function Login() {
   const images = [burger, burger1, burger2];
   const [currentIndex, setCurrentIndex] = useState(0);
+  const navigate = useNavigate(); // 👈 agregamos esto
+
+  // 👇 esta función ahora se usa para el botón Sign in
+  const handleSignIn = (e) => {
+    e.preventDefault();
+    navigate("/home"); // redirige al Home
+  };
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -37,7 +43,10 @@ export default function Login() {
 
             <div className="dots">
               {images.map((_, idx) => (
-                <span key={idx} className={`dot ${idx === currentIndex ? "active" : ""}`} />
+                <span
+                  key={idx}
+                  className={`dot ${idx === currentIndex ? "active" : ""}`}
+                />
               ))}
             </div>
           </div>
@@ -53,26 +62,50 @@ export default function Login() {
             <form className="mt-4">
               <div className="mb-3">
                 <label className="form-label">Email</label>
-                <input type="email" className="form-control custom-input" placeholder="your@email.com"/>
+                <input
+                  type="email"
+                  className="form-control custom-input"
+                  placeholder="your@email.com"
+                />
               </div>
 
               <div className="mb-2">
                 <label className="form-label">Password</label>
-                <input type="password" className="form-control custom-input" placeholder="••••••••"/>
+                <input
+                  type="password"
+                  className="form-control custom-input"
+                  placeholder="••••••••"
+                />
               </div>
 
               <div className="d-flex justify-content-between align-items-center mb-3">
                 <div className="form-check">
-                  <input className="form-check-input" type="checkbox" id="remember"/>
-                  <label className="form-check-label" htmlFor="remember">Remember me</label>
+                  <input
+                    className="form-check-input"
+                    type="checkbox"
+                    id="remember"
+                  />
+                  <label className="form-check-label" htmlFor="remember">
+                    Remember me
+                  </label>
                 </div>
-                <Link to="/forgot" className="forgot">Forgot password?</Link>
+                <Link to="/forgot" className="forgot">
+                  Forgot password?
+                </Link>
               </div>
 
-              <button type="button" className="sign-btn">Sign in</button>
+              {/* 👇 ahora el Sign in redirige al Home */}
+              <button type="button" className="sign-btn" onClick={handleSignIn}>
+                Sign in
+              </button>
 
               <div className="footer-cta">
-                <p>Don't have an account? <Link to="/signup" className="signup">Sign up</Link></p>
+                <p>
+                  Don't have an account?{" "}
+                  <Link to="/signup" className="signup">
+                    Sign up
+                  </Link>
+                </p>
               </div>
             </form>
           </div>
