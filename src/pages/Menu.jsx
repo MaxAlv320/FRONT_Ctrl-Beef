@@ -1,65 +1,31 @@
 import { useState } from "react";
+import { getProducts } from "../js/products.js";
+import img1 from "../assets/classicburger.jpg";
+import img2 from "../assets/cheesedeluxe.jpg";
+import img3 from "../assets/checkencrispy.jpg";
+import img4 from "../assets/bbqspecial.jpg";
+import img5 from "../assets/veggieburger.jpg";
+import img6 from "../assets/mushroomswiss.jpg";
+
+const test = await getProducts();
+console.log("DESDE LOGIN " + test.length);
 
 const MenuApp = () => {
   const [activeFilter, setActiveFilter] = useState("All");
   const [cartItems, setCartItems] = useState([]);
+  const products = [];
+  const img = [img1, img2, img3, img4, img5, img6];
 
-  const products = [
-    {
-
-      name: "Classic Burger",
-      description: "100% beef, lettuce, tomato, onion, pickles",
-      price: "12.99",
-      category: "Classic",
-      image:
-        "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80",
-    },
-    {
-
-      name: "Cheese Deluxe",
-      description: "Double meat, double cheddar cheese, crispy bacon",
-      price: "15.99",
-      category: "Special",
-      image:
-        "https://images.unsplash.com/photo-1549611016-3a70d82b5040?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80",
-    },
-    {
-
-      name: "Chicken Crispy",
-      description: "Breaded chicken, chipotle mayo, lettuce",
-      price: "13.99",
-      category: "Classic",
-      image:
-        "https://images.unsplash.com/photo-1625813506062-0aeb1d7a094e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80",
-    },
-    {
-      
-      name: "BBQ Special",
-      description: "Homemade BBQ sauce, caramelized onion, jalapeños",
-      price: "14.99",
-      category: "Special",
-      image:
-        "https://images.unsplash.com/photo-1572802419224-296b0aeee0d9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80",
-    },
-    {
-      
-      name: "Veggie Burger",
-      description: "Plant-based patty, avocado, fresh vegetables",
-      price: "11.99",
-      category: "Vegetarian",
-      image:
-        "https://images.unsplash.com/photo-1596662951482-0c4ba74a6df6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80",
-    },
-    {
-      
-      name: "Mushroom Swiss",
-      description: "Sautéed mushrooms, Swiss cheese, onion",
-      price: "14.50",
-      category: "Vegetarian",
-      image:
-        "https://images.unsplash.com/photo-1572802419224-296b0aeee0d9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80",
-    },
-  ];
+  for (let i = 0; i < test.length; i++) {
+    const product = {
+      name: test[i].name,
+      description: test[i].description,
+      price: test[i].price,
+      category: test[i].category,
+      image: img[i],
+    };
+    products.push(product);
+  }
 
   const filters = [
     { name: "All", type: "gold" },
