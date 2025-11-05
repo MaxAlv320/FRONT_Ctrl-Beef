@@ -28,7 +28,7 @@ const Home = () => {
         <div className="content">
           <h2>The Best Burgers in Town</h2>
           <p>Made with fresh ingredients and passion</p>
-          <button className="btn btn-warning mt-3">View Menu</button>
+          
         </div>
       </section>
 
