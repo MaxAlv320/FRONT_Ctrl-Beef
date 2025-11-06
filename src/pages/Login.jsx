@@ -36,7 +36,7 @@ export default function Login() {
 
     try {
       const response = await postLoginUsers(credentials);
-      console.log("✅ Usuario logueado:", response);
+      console.log("Usuario logueado:", response);
 
       // Ejemplo: guarda el token si tu API lo devuelve
       if (response?.token) {
@@ -46,7 +46,7 @@ export default function Login() {
       alert("Login successful!");
       navigate("/home"); // redirige al Home
     } catch (err) {
-      console.error("❌ Error al iniciar sesión:", err);
+      console.error("Error al iniciar sesión:", err);
       setError("Invalid credentials or server error.");
     } finally {
       setLoading(false);
@@ -147,4 +147,3 @@ export default function Login() {
     </div>
   );
 }
-
