@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { getProducts } from "../js/products.js";
 import img1 from "../assets/classicburger.jpg";
 import img2 from "../assets/cheesedeluxe.jpg";
@@ -15,6 +15,10 @@ const MenuApp = () => {
   const [cartItems, setCartItems] = useState([]);
   const products = [];
   const img = [img1, img2, img3, img4, img5, img6];
+
+  useEffect(() => {
+    const response = fetch('')
+  },[])
 
   for (let i = 0; i < test.length; i++) {
     const product = {

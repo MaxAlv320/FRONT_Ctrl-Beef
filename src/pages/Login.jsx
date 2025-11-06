@@ -3,44 +3,69 @@ import "../styles/Login.css";
 import burger from "../assets/burger.jpg";
 import burger1 from "../assets/burger1.jpg";
 import burger2 from "../assets/burger2.jpg";
-import logoBurger from "../assets/logoburger.png"; // importa el logo localmente
-import { Link, useNavigate } from "react-router-dom"; // 👈 solo agregamos useNavigate
+import logoBurger from "../assets/logoburger.png";
+import { Link, useNavigate } from "react-router-dom";
+import { postLoginUsers } from "../js/test";
 
 export default function Login() {
   const images = [burger, burger1, burger2];
   const [currentIndex, setCurrentIndex] = useState(0);
-  const navigate = useNavigate(); // 👈 agregamos esto
 
-  // 👇 esta función ahora se usa para el botón Sign in
-  const handleSignIn = (e) => {
-    e.preventDefault();
-    navigate("/home"); // redirige al Home
-  };
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
+  const navigate = useNavigate();
+
+  // Rotación de imágenes
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % images.length);
-    }, 2000); // cada 2 segundos
-
+    }, 2000);
     return () => clearInterval(interval);
   }, [images.length]);
+
+  // 👇 Función para iniciar sesión
+  const handleSignIn = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setError(null);
+
+    const credentials = { email, password };
+
+    try {
+      const response = await postLoginUsers(credentials);
+      console.log("✅ Usuario logueado:", response);
+
+      // Ejemplo: guarda el token si tu API lo devuelve
+      if (response?.token) {
+        localStorage.setItem("token", response.token);
+      }
+
+      alert("Login successful!");
+      navigate("/home"); // redirige al Home
+    } catch (err) {
+      console.error("❌ Error al iniciar sesión:", err);
+      setError("Invalid credentials or server error.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="login-wrapper">
       <div className="login-frame">
-        {/* HERO: ahora tiene dos capas para poder hacer fade */}
+        {/* HERO con imágenes cambiantes */}
         <div className="hero-side">
-          {/* capa de imagen activa */}
           <div
             className="hero-bg hero-bg--1"
             style={{ backgroundImage: `url(${images[currentIndex]})` }}
           />
-          {/* opcional: capa adicional para crossfade si quieres preponer otra imagen */}
           <div className="hero-overlay" />
           <div className="hero-content">
             <h1>Craving a burger?</h1>
             <p>Order from our amazing selection of gourmet burgers</p>
-
             <div className="dots">
               {images.map((_, idx) => (
                 <span
@@ -52,6 +77,7 @@ export default function Login() {
           </div>
         </div>
 
+        {/* FORMULARIO */}
         <div className="form-side">
           <div className="form-card">
             <div className="logo">
@@ -59,13 +85,16 @@ export default function Login() {
             </div>
             <p className="welcome">Welcome back!</p>
 
-            <form className="mt-4">
+            <form className="mt-4" onSubmit={handleSignIn}>
               <div className="mb-3">
                 <label className="form-label">Email</label>
                 <input
                   type="email"
                   className="form-control custom-input"
                   placeholder="your@email.com"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
                 />
               </div>
 
@@ -75,6 +104,9 @@ export default function Login() {
                   type="password"
                   className="form-control custom-input"
                   placeholder="••••••••"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
                 />
               </div>
 
@@ -94,10 +126,11 @@ export default function Login() {
                 </Link>
               </div>
 
-              {/* 👇 ahora el Sign in redirige al Home */}
-              <button type="button" className="sign-btn" onClick={handleSignIn}>
-                Sign in
+              <button type="submit" className="sign-btn" disabled={loading}>
+                {loading ? "Signing in..." : "Sign in"}
               </button>
+
+              {error && <p className="error-msg mt-2">{error}</p>}
 
               <div className="footer-cta">
                 <p>
@@ -114,3 +147,4 @@ export default function Login() {
     </div>
   );
 }
+

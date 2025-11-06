@@ -55,9 +55,9 @@ const CustomerFavorites = () => {
         <Button
           variant="outline-dark"
           href="/menu"
-          className="view-menu-btn fw-bold"
+          className="btn-order-now fw-bold"
         >
-          View Full Menu
+          Order now
         </Button>
       </div>
     </section>
