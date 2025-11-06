@@ -5,7 +5,7 @@ import burger5 from "../assets/burger5.jpg";
 import burger3 from "../assets/burger3.jpg";
 import logoBurger from "../assets/logoburger.png";
 import { Link, useNavigate } from "react-router-dom";
-import { postRegisterUsers } from "../js/test";
+import { postRegisterUsers } from "../js/users";
 
 export default function Signup() {
   const images = [burger4, burger5, burger3];
@@ -63,10 +63,15 @@ export default function Signup() {
             <div className="hero-overlay" />
             <div className="hero-content">
               <h1>Join the Ctrl+Beef Club!</h1>
-              <p>Create your account and start enjoying the best burgers in town</p>
+              <p>
+                Create your account and start enjoying the best burgers in town
+              </p>
               <div className="dots">
                 {images.map((_, idx) => (
-                  <span key={idx} className={`dot ${idx === currentIndex ? "active" : ""}`} />
+                  <span
+                    key={idx}
+                    className={`dot ${idx === currentIndex ? "active" : ""}`}
+                  />
                 ))}
               </div>
             </div>
@@ -76,7 +81,11 @@ export default function Signup() {
           <div className="form-side">
             <div className="form-card signup-form-card">
               <div className="logo">
-                <img src={logoBurger} alt="Ctrl+Beef Logo" className="logo-img" />
+                <img
+                  src={logoBurger}
+                  alt="Ctrl+Beef Logo"
+                  className="logo-img"
+                />
               </div>
               <p className="welcome">Create your account</p>
 
@@ -126,13 +135,14 @@ export default function Signup() {
                 <div className="footer-cta mt-3">
                   <p>
                     Already have an account?{" "}
-                    <Link to="/" className="signup">Sign in</Link>
+                    <Link to="/" className="signup">
+                      Sign in
+                    </Link>
                   </p>
                 </div>
               </form>
             </div>
           </div>
-
         </div>
       </div>
     </div>

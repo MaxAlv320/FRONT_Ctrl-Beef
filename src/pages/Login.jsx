@@ -5,7 +5,7 @@ import burger1 from "../assets/burger1.jpg";
 import burger2 from "../assets/burger2.jpg";
 import logoBurger from "../assets/logoburger.png";
 import { Link, useNavigate } from "react-router-dom";
-import { postLoginUsers } from "../js/test";
+import { postLoginUsers } from "../js/users";
 
 export default function Login() {
   const images = [burger, burger1, burger2];
