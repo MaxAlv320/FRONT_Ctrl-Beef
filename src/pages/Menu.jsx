@@ -6,6 +6,7 @@ import img3 from "../assets/checkencrispy.jpg";
 import img4 from "../assets/bbqspecial.jpg";
 import img5 from "../assets/veggieburger.jpg";
 import img6 from "../assets/mushroomswiss.jpg";
+import img7 from "../assets/supremeburger.jpg";
 
 const test = await getProducts();
 console.log("DESDE LOGIN " + test.length);
@@ -14,11 +15,11 @@ const MenuApp = () => {
   const [activeFilter, setActiveFilter] = useState("All");
   const [cartItems, setCartItems] = useState([]);
   const products = [];
-  const img = [img1, img2, img3, img4, img5, img6];
+  const img = [img1, img2, img3, img4, img5, img6, img7];
 
   useEffect(() => {
-    const response = fetch('')
-  },[])
+    const response = fetch("");
+  }, []);
 
   for (let i = 0; i < test.length; i++) {
     const product = {
