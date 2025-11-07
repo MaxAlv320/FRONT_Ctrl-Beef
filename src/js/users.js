@@ -45,18 +45,19 @@ export async function postLoginUsers(userData) {
     const response = await fetch(url, {
       method: "POST",
       headers,
-      body: JSON.stringify(userData), // 👈 Enviamos las credenciales aquí
+      body: JSON.stringify(userData),
     });
 
-    if (!response.ok) {
-      console.error("Login failed with status:", response.status);
-      throw new Error(`HTTP error! status: ${response.status}`);
+    const data = await response.json();
+
+    // Verificación segura
+    if (!response.ok || !data.token) {
+      throw new Error(data.message || "Invalid credentials");
     }
 
-    const data = await response.json();
-    console.log("Fetched data:", data);
     return data;
   } catch (error) {
     console.error("Error fetching data:", error);
+    throw error;
   }
 }

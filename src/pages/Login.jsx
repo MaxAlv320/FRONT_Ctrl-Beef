@@ -18,7 +18,7 @@ export default function Login() {
 
   const navigate = useNavigate();
 
-  // Rotación de imágenes
+  //Rotación de imágenes
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % images.length);
@@ -26,7 +26,7 @@ export default function Login() {
     return () => clearInterval(interval);
   }, [images.length]);
 
-  // 👇 Función para iniciar sesión
+  //Función para iniciar sesión
   const handleSignIn = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -36,18 +36,19 @@ export default function Login() {
 
     try {
       const response = await postLoginUsers(credentials);
-      console.log("Usuario logueado:", response);
 
-      // Ejemplo: guarda el token si tu API lo devuelve
+      //verifica que el backend realmente devuelva un token
       if (response?.token) {
         localStorage.setItem("token", response.token);
+        alert("Login successful!");
+        navigate("/home");
+      } else {
+        // si no hay token, muestra el mensaje del backend
+        setError(response?.message || "Invalid credentials.");
       }
-
-      alert("Login successful!");
-      navigate("/home"); // redirige al Home
     } catch (err) {
-      console.error("Error al iniciar sesión:", err);
-      setError("Invalid credentials or server error.");
+      console.error("Error loggin in:", err);
+      setError("User not found");
     } finally {
       setLoading(false);
     }
