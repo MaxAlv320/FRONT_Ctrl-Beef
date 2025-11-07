@@ -245,3 +245,22 @@
 @media (prefers-reduced-motion: reduce) {
   .hero-bg, .dot { transition: none !important; transform: none !important; }
 }
+
+.password-wrapper {
+  position: relative;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  font-size: 1.3rem;
+  color: #821018; /* color vino */
+  user-select: none;
+}
+
+.toggle-password:hover {
+  color: #b91c1c; /* tono más claro al pasar el mouse */
+}

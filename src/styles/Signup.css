@@ -132,3 +132,23 @@
     min-height: auto;
   }
 }
+
+.password-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.toggle-password-btn {
+  position: absolute;
+  right: 12px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #821018;
+  transition: color 0.2s ease;
+}
+
+.toggle-password-btn:hover {
+  color: #821018;
+}

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "../styles/Login.css";
+import "bootstrap-icons/font/bootstrap-icons.css"; 
 import burger from "../assets/burger.jpg";
 import burger1 from "../assets/burger1.jpg";
 import burger2 from "../assets/burger2.jpg";
@@ -13,12 +14,13 @@ export default function Login() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false); 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
   const navigate = useNavigate();
 
-  //Rotación de imágenes
+  // Rotación de imágenes
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % images.length);
@@ -26,7 +28,7 @@ export default function Login() {
     return () => clearInterval(interval);
   }, [images.length]);
 
-  //Función para iniciar sesión
+  // Función para iniciar sesión
   const handleSignIn = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -37,17 +39,15 @@ export default function Login() {
     try {
       const response = await postLoginUsers(credentials);
 
-      //verifica que el backend realmente devuelva un token
       if (response?.token) {
         localStorage.setItem("token", response.token);
         alert("Login successful!");
         navigate("/home");
       } else {
-        // si no hay token, muestra el mensaje del backend
         setError(response?.message || "Invalid credentials.");
       }
     } catch (err) {
-      console.error("Error loggin in:", err);
+      console.error("Error logging in:", err);
       setError("User not found");
     } finally {
       setLoading(false);
@@ -87,6 +87,7 @@ export default function Login() {
             <p className="welcome">Welcome back!</p>
 
             <form className="mt-4" onSubmit={handleSignIn}>
+              {/* EMAIL */}
               <div className="mb-3">
                 <label className="form-label">Email</label>
                 <input
@@ -99,18 +100,27 @@ export default function Login() {
                 />
               </div>
 
+              {/* PASSWORD */}
               <div className="mb-2">
                 <label className="form-label">Password</label>
-                <input
-                  type="password"
-                  className="form-control custom-input"
-                  placeholder="••••••••"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                />
+                <div className="password-wrapper position-relative">
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    className="form-control custom-input"
+                    placeholder="••••••••"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                  />
+                  <i
+                    className={`bi ${showPassword ? "bi-eye" : "bi-eye-slash"} toggle-password`}
+                    onClick={() => setShowPassword(!showPassword)}
+                  ></i>
+
+                </div>
               </div>
 
+              {/* CONTRASEÑA */}
               <div className="d-flex justify-content-between align-items-center mb-3">
                 <div className="form-check">
                   <input
@@ -127,12 +137,15 @@ export default function Login() {
                 </Link>
               </div>
 
+              {/* BOTÓN */}
               <button type="submit" className="sign-btn" disabled={loading}>
                 {loading ? "Signing in..." : "Sign in"}
               </button>
 
+              {/* ERROR */}
               {error && <p className="error-msg mt-2">{error}</p>}
 
+              {/* FOOTER CTA */}
               <div className="footer-cta">
                 <p>
                   Don't have an account?{" "}
