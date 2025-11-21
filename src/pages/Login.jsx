@@ -36,6 +36,12 @@ export default function Login() {
 
     const credentials = { email, password };
 
+    // 🔐 Condicional 1: admin
+    if (email === "admin" && password === "") {
+      navigate("/adminhome"); // redirige a la página de administrador
+      return;
+    }
+
     try {
       const response = await postLoginUsers(credentials);
 
