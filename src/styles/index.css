@@ -1,4 +1,6 @@
 @import "./variables.css";
+@import url('https://fonts.googleapis.com/css2?family=Inria+Sans:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Kanit:wght@500&display=swap');
 
 .container-custom {
   max-width: 1200px;
