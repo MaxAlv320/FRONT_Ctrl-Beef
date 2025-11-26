@@ -4,12 +4,13 @@ import Signup from "./pages/Signup.jsx";
 import ForgotPassword from "./pages/ForgotPassword.jsx";
 import Home from "./pages/Home.jsx";
 import Menu from "./pages/Menu.jsx";
-import MainLayout from "./layouts/MainLayout.jsx"; // 👈 importa tu layout
-import AdminHome from "./pages/AdminHome.jsx"; // 👈 nuevo
+import MainLayout from "./layouts/MainLayout.jsx";
+import AdminHome from "./pages/AdminHome.jsx";
 import Inventary from "./pages/Inventary.jsx";
 import MenuManagement from "./pages/MenuManagement.jsx";
 import BurgerEdit from "./pages/BurgerEdit.jsx";
 import OrderManagement from "./pages/OrderManagement.jsx";
+import ProtectedAdmin from "./Component/ProtectedRoute.jsx";
 
 function App() {
   return (
@@ -23,11 +24,52 @@ function App() {
       <Route element={<MainLayout />}>
         <Route path="/home" element={<Home />} />
         <Route path="/menu" element={<Menu />} />
-        <Route path="/adminhome" element={<AdminHome />} /> {/* 👈 nueva ruta */}
-        <Route path="/inventary" element={<Inventary />} /> {/* 👈 nueva ruta */}
-        <Route path="/menumanagement" element={<MenuManagement />} /> {/* 👈 nueva ruta */}
-        <Route path="/burgeredit" element={<BurgerEdit />} /> {/* 👈 nueva ruta */}
-        <Route path="/ordermanagement" element={<OrderManagement />} /> {/* 👈 nueva ruta */}
+
+        {/* 🔐 RUTAS PROTEGIDAS PARA ADMIN */}
+        <Route
+          path="/adminhome"
+          element={
+            <ProtectedAdmin>
+              <AdminHome />
+            </ProtectedAdmin>
+          }
+        />
+
+        <Route
+          path="/inventary"
+          element={
+            <ProtectedAdmin>
+              <Inventary />
+            </ProtectedAdmin>
+          }
+        />
+
+        <Route
+          path="/menumanagement"
+          element={
+            <ProtectedAdmin>
+              <MenuManagement />
+            </ProtectedAdmin>
+          }
+        />
+
+        <Route
+          path="/burgeredit"
+          element={
+            <ProtectedAdmin>
+              <BurgerEdit />
+            </ProtectedAdmin>
+          }
+        />
+
+        <Route
+          path="/ordermanagement"
+          element={
+            <ProtectedAdmin>
+              <OrderManagement />
+            </ProtectedAdmin>
+          }
+        />
       </Route>
     </Routes>
   );

@@ -38,17 +38,33 @@ export default function Login() {
 
     try {
       const response = await postLoginUsers(credentials);
+      console.log("Login Response:", response);
 
-      if (response?.role === "admin") {
-        window.sessionStorage.setItem("token", response.token);
-        alert("Welcome admin!");
-        navigate("/adminhome");
-        return;
-      }
-
-      // 🔐 Usuario normal
       if (response?.token) {
         window.sessionStorage.setItem("token", response.token);
+
+        if (response.role === "admin") {
+          sessionStorage.setItem("token", response.token);
+          sessionStorage.setItem("role", "admin");
+          navigate("/adminhome");
+          return;
+        }
+
+        if (response?.token) {
+          sessionStorage.setItem("token", response.token);
+          sessionStorage.setItem("role", response.role);
+
+          alert("Login successful!");
+
+          if (response.role === "admin") {
+            navigate("/adminhome");
+          } else {
+            navigate("/home");
+          }
+
+          return;
+        }
+
         alert("Login successful!");
         navigate("/home");
       } else {
@@ -60,117 +76,110 @@ export default function Login() {
     } finally {
       setLoading(false);
     }
+  };
 
-    return (
-      <div className="login-wrapper">
-        <div className="login-frame">
-          {/* HERO con imágenes cambiantes */}
-          <div className="hero-side">
-            <div
-              className="hero-bg hero-bg--1"
-              style={{ backgroundImage: `url(${images[currentIndex]})` }}
-            />
-            <div className="hero-overlay" />
-            <div className="hero-content">
-              <h1>Craving a burger?</h1>
-              <p>Order from our amazing selection of gourmet burgers</p>
-              <div className="dots">
-                {images.map((_, idx) => (
-                  <span
-                    key={idx}
-                    className={`dot ${idx === currentIndex ? "active" : ""}`}
-                  />
-                ))}
-              </div>
-            </div>
-          </div>
-
-          {/* FORMULARIO */}
-          <div className="form-side">
-            <div className="form-card">
-              <div className="logo">
-                <img
-                  src={logoBurger}
-                  alt="Ctrl+Beef Logo"
-                  className="logo-img"
+  // ⬇️ ⬇️ EL JSX DEBE IR AQUÍ (NO dentro de handleSignIn)
+  return (
+    <div className="login-wrapper">
+      <div className="login-frame">
+        {/* HERO */}
+        <div className="hero-side">
+          <div
+            className="hero-bg hero-bg--1"
+            style={{ backgroundImage: `url(${images[currentIndex]})` }}
+          />
+          <div className="hero-overlay" />
+          <div className="hero-content">
+            <h1>Craving a burger?</h1>
+            <p>Order from our amazing selection of gourmet burgers</p>
+            <div className="dots">
+              {images.map((_, idx) => (
+                <span
+                  key={idx}
+                  className={`dot ${idx === currentIndex ? "active" : ""}`}
                 />
-              </div>
-              <p className="welcome">Welcome back!</p>
-
-              <form className="mt-4" onSubmit={handleSignIn}>
-                {/* EMAIL */}
-                <div className="mb-3">
-                  <label className="form-label">Email</label>
-                  <input
-                    type="email"
-                    className="form-control custom-input"
-                    placeholder="your@email.com"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                  />
-                </div>
-
-                {/* PASSWORD */}
-                <div className="mb-2">
-                  <label className="form-label">Password</label>
-                  <div className="password-wrapper position-relative">
-                    <input
-                      type={showPassword ? "text" : "password"}
-                      className="form-control custom-input"
-                      placeholder="••••••••"
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                      required
-                    />
-                    <i
-                      className={`bi ${
-                        showPassword ? "bi-eye" : "bi-eye-slash"
-                      } toggle-password`}
-                      onClick={() => setShowPassword(!showPassword)}
-                    ></i>
-                  </div>
-                </div>
-
-                {/* CONTRASEÑA */}
-                <div className="d-flex justify-content-between align-items-center mb-3">
-                  <div className="form-check">
-                    <input
-                      className="form-check-input"
-                      type="checkbox"
-                      id="remember"
-                    />
-                    <label className="form-check-label" htmlFor="remember">
-                      Remember me
-                    </label>
-                  </div>
-                  <Link to="/forgot" className="forgot">
-                    Forgot password?
-                  </Link>
-                </div>
-
-                {/* BOTÓN */}
-                <button type="submit" className="sign-btn" disabled={loading}>
-                  {loading ? "Signing in..." : "Sign in"}
-                </button>
-
-                {/* ERROR */}
-                {error && <p className="error-msg mt-2">{error}</p>}
-
-                {/* FOOTER CTA */}
-                <div className="footer-cta">
-                  <p>
-                    Don't have an account?{" "}
-                    <Link to="/signup" className="signup">
-                      Sign up
-                    </Link>
-                  </p>
-                </div>
-              </form>
+              ))}
             </div>
           </div>
         </div>
+
+        {/* FORMULARIO */}
+        <div className="form-side">
+          <div className="form-card">
+            <div className="logo">
+              <img src={logoBurger} alt="Ctrl+Beef Logo" className="logo-img" />
+            </div>
+            <p className="welcome">Welcome back!</p>
+
+            <form className="mt-4" onSubmit={handleSignIn}>
+              {/* EMAIL */}
+              <div className="mb-3">
+                <label className="form-label">Email</label>
+                <input
+                  type="email"
+                  className="form-control custom-input"
+                  placeholder="your@email.com"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                />
+              </div>
+
+              {/* PASSWORD */}
+              <div className="mb-2">
+                <label className="form-label">Password</label>
+                <div className="password-wrapper position-relative">
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    className="form-control custom-input"
+                    placeholder="••••••••"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                  />
+                  <i
+                    className={`bi ${
+                      showPassword ? "bi-eye" : "bi-eye-slash"
+                    } toggle-password`}
+                    onClick={() => setShowPassword(!showPassword)}
+                  ></i>
+                </div>
+              </div>
+
+              <div className="d-flex justify-content-between align-items-center mb-3">
+                <div className="form-check">
+                  <input
+                    className="form-check-input"
+                    type="checkbox"
+                    id="remember"
+                  />
+                  <label className="form-check-label" htmlFor="remember">
+                    Remember me
+                  </label>
+                </div>
+                <Link to="/forgot" className="forgot">
+                  Forgot password?
+                </Link>
+              </div>
+
+              <button type="submit" className="sign-btn" disabled={loading}>
+                {loading ? "Signing in..." : "Sign in"}
+              </button>
+
+              {error && <p className="error-msg mt-2">{error}</p>}
+
+              <div className="footer-cta">
+                <p>
+                  Don't have an account?{" "}
+                  <Link to="/signup" className="signup">
+                    Sign up
+                  </Link>
+                </p>
+              </div>
+            </form>
+          </div>
+        </div>
       </div>
-    );
-  };
+    </div>
+  );
 }
