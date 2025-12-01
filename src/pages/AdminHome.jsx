@@ -19,30 +19,17 @@ const AdminHome = () => {
       <section
         className="hero-section text-center text-white d-flex align-items-center justify-content-center"
         style={{
-          backgroundImage: `url(${heroImageAdmin1})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          position: "relative",
-          marginTop: "200px",
-        }}
+    backgroundImage: `url(${heroImageAdmin1})`,
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+    position: "relative",
+    marginTop: "0px",  // antes 200px
+  }}
       >
         <div className="overlay"></div>
         <div className="content">
           <h2
-            className="what"
-            style={{
-              color: "#821018",
-              fontSize: "100px",
-              fontFamily: "",
-              margin: 0,
-              fontWeight: "bold",
-              height: "500px",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              padding: "0 1300px",
-            }}
-          >
+            className="what">
             What you want to do?
           </h2>
         </div>

@@ -1,5 +1,5 @@
 .hero-section {
-  height: 80vh;
+  height: 40vh;
   position: relative;
 }
 
@@ -158,4 +158,27 @@ body {
 
 .row.g-4 .col-md-4:nth-child(3) .feature-title {
   color: #56070c;
+}
+
+/* ===== HERO RESPONSIVO ===== */
+.what {
+  color: #821018;
+  font-weight: bold;
+  margin: 0;
+  padding: 0 2rem;
+  text-align: center;
+
+  font-size: clamp(24px, 6vw, 80px);
+}
+
+/* 📱 Móviles */
+@media (max-width: 768px) {
+  .hero-section {
+    margin-top: 100px !important;  /* antes 120px */
+    height: 30vh; /* más pequeño */
+  }
+
+  .what {
+    font-size: clamp(20px, 8vw, 45px);
+  }
 }
