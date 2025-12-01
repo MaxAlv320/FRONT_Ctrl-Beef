@@ -17,10 +17,8 @@ const Ingredient = ({ title, image }) => {
 
   const miIngredientStyle = {
     marginTop: "0px",
-    width: "100vw",
     display: "flex",
     justifyContent: "center",
-    alignItems: "center",
   };
 
 
@@ -47,8 +45,8 @@ const Ingredient = ({ title, image }) => {
             src={image}
             alt={title}
             style={{
-              width: "180px",
-              height: "180px",
+              width: "90px",
+              height: "90px",
               objectFit: "cover",
             }}
           />
@@ -65,7 +63,7 @@ const Ingredient = ({ title, image }) => {
           <h2
             style={{
               color: "#000000ff",
-              fontSize: "4rem",
+              fontSize: "3rem",
               fontWeight: "bold",
               fontFamily: "'Inria Sans', sans-serif", // 👈 También aquí
             }}
@@ -82,7 +80,7 @@ const Ingredient = ({ title, image }) => {
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            gap: "25px",
+            gap: "20px",
           }}
         >
           {/* Botón + */}
@@ -92,8 +90,8 @@ const Ingredient = ({ title, image }) => {
             style={{
               border: "1px solid #ccc",
               borderRadius: "12px",
-              width: "120px",
-              height: "120px",
+              width: "60px",
+              height: "60px",
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
@@ -136,8 +134,8 @@ const Ingredient = ({ title, image }) => {
             style={{
               border: "1px solid #ccc",
               borderRadius: "12px",
-              width: "120px",
-              height: "120px",
+              width: "60px",
+              height: "60px",
               display: "flex",
               justifyContent: "center",
               alignItems: "center",

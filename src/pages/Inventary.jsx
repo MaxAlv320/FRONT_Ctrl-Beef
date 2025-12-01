@@ -22,14 +22,13 @@ const Inventary = () => {
 
 
   {/* 🔹 Contenedor principal con espacio debajo del nav */}
-  <div style={{ paddingTop: "250px", textAlign: "center" }}>
+  <div style={{ paddingTop: "50px", textAlign: "center" }}>
     <h2
       style={{
         color: "#000000ff",
-        fontSize: "150px",
+        fontSize: "70px",
         fontFamily: "'Inria Sans', sans-serif",
         fontWeight: "bold",
-        marginTop: "0px",
       }}
     >
       Ingredients
@@ -37,7 +36,7 @@ const Inventary = () => {
 
 
     {/* 🧺 Sección de ingredientes */}
-    <div style={{ marginTop: "100px" }}>
+    <div style={{ marginTop: "40px" }}>
       <Ingredient title="Classic Burger" image={Burger0} />
       <Ingredient title="Cheese Burger" image={Burger1} />
       <Ingredient title="BBQ Special" image={Burger2} />
