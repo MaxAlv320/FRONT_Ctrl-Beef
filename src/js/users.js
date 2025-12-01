@@ -5,7 +5,7 @@ export async function postRegisterUsers(userData) {
     Authorization: "Bearer YOUR_AUTH_TOKEN", // Example: Authorization header
     "Content-Type": "application/json", // Example: Content-Type header
     "x-app-token":
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcHAiOiJDdHJsQmVlZiIsImlhdCI6MTc2MjI3MzQwMCwiZXhwIjoxNzkzMzc3NDAwfQ.PNLW05qyUE0ydxI1ji77CT_DbvY7x0GPFzGLLtA3Ynk", // Example: Custom header
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcHAiOiJDdHJsQmVlZiIsImlhdCI6MTc2NDE3MzkwOCwiZXhwIjoxNzk1Mjc3OTA4fQ.aYiSMuLILGQt07Too8BY-x9UBmbPQhI3HJhHST1gbLQ", // Example: Custom header
     "ngrok-skip-browser-warning": true,
   };
 

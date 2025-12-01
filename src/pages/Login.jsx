@@ -20,7 +20,7 @@ export default function Login() {
 
   const navigate = useNavigate();
 
-  // Rotación de imágenes
+  // imágenes
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % images.length);
@@ -41,6 +41,7 @@ export default function Login() {
 
       if (response?.token) {
         localStorage.setItem("token", response.token);
+        window.sessionStorage("role",response.role);
         alert("Login successful!");
         navigate("/home");
       } else {

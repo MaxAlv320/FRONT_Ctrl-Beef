@@ -1,4 +1,6 @@
 @import "./variables.css";
+@import "./cart.css";
+@import "./checkout.css";
 
 .container-custom {
   max-width: 1200px;

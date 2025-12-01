@@ -1,0 +1,99 @@
+/* Full page container */
+.order-ready-page {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  /* Tu mismo estilo degradado de la imagen */
+  background: linear-gradient(135deg, #6d0b0f, #db8c24);
+  padding: 20px;
+}
+
+/* Main card */
+.order-card {
+  background: #ffffff;
+  padding: 40px;
+  width: 420px;
+  text-align: center;
+  border-radius: 20px;
+  border: 3px solid #f4c644;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+/* Icon circle */
+.order-icon {
+  background: #f4c644;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto 20px auto;
+  font-size: 32px;
+  color: #821018;
+}
+
+/* Titles */
+.order-title {
+  color: #821018;
+  font-size: 26px;
+  font-weight: bold;
+}
+
+.order-subtitle {
+  color: #7d3b22;
+  margin-bottom: 20px;
+}
+
+/* Order number box */
+.order-number-box {
+  background: #f9d86c;
+  padding: 15px;
+  border-radius: 10px;
+  font-weight: 600;
+  margin-top: 20px;
+}
+
+.order-number {
+  margin-top: 5px;
+  font-size: 18px;
+}
+
+/* Total box */
+.order-total-box {
+  border: 2px solid #821018;
+  margin-top: 25px;
+  padding: 15px;
+  border-radius: 10px;
+}
+
+.order-total {
+  font-size: 28px;
+  font-weight: 700;
+  color: #821018;
+  margin-top: 5px;
+}
+
+/* Button */
+.btn-return {
+  margin-top: 25px;
+  background: #821018;
+  color: #fed353;
+  border: none;
+  padding: 12px;
+  border-radius: 8px;
+  width: 100%;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.25s ease;
+}
+
+.btn-return:hover {
+  background: #6a0f15;
+}
+
+.btn-return:active {
+  transform: scale(0.97);
+}

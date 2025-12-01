@@ -14,7 +14,7 @@
   padding: 20px;
 }
 
-/* big rounded outer container with dark inner shadow */
+
 .login-frame{
   width: 1200px;
   max-width: calc(100% - 80px);
@@ -34,7 +34,7 @@
   align-items:flex-end;
   padding: 64px;
   color: white;
-  overflow: hidden; /* para las capas de imagen */
+  overflow: hidden; 
 }
 
 /* Hero background capa(s) para crossfade */
@@ -49,13 +49,11 @@
   z-index: 0;
 }
 
-/* Si una capa está activa se le dará opacity:1 desde el JSX (o puedes cambiar la clase) */
-/* Ahora definimos una clase utilitaria para la capa visible */
 .hero-bg--visible {
   opacity: 1;
 }
 
-/* overlay oscuro encima de la imagen */
+
 .hero-overlay{
   position:absolute;
   inset:0;
