@@ -1,82 +1,75 @@
 import React from "react";
 import { Card } from "react-bootstrap";
 
-
 const Order = ({ id, name, status }) => {
-  const miOrderStyle = {
-    marginTop: "0px",
-    width: "100vw",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-  };
-
-
   return (
-    <div style={miOrderStyle}>
+    <div
+      style={{
+        width: "100vw",
+        display: "flex",
+        justifyContent: "center",
+        marginTop: "10px",
+      }}
+    >
       <Card
         className="shadow-sm"
         style={{
-          border: "2px solid #000000ff",
-          borderRadius: "40px",
-          width: "70vw",
+          border: "2px solid #000",
+          borderRadius: "15px",
+          width: "55vw",             // MÁS CHICO
+          height: "90px",            // MÁS BAJO
           backgroundColor: "#fff",
-          padding: "20px 40px",
           display: "flex",
           flexDirection: "row",
           alignItems: "center",
           justifyContent: "space-between",
+          padding: "0 25px",
           fontFamily: "'Inria Sans', sans-serif",
         }}
       >
 
-
-        {/* 🟦 ID — un poco a la derecha */}
-        <div style={{ flex: 1, textAlign: "left" }}>
+        {/* ID – izquierda */}
+        <div style={{ width: "33%", textAlign: "left" }}>
           <h2
             style={{
-              color: "#000000ff",
-              fontSize: "4rem",
+              fontSize: "1.8rem",     // MÁS CHICO
               fontWeight: "bold",
-              marginLeft: "40px",   // 👈 Mueve ID a la derecha
+              margin: 0,
             }}
           >
             {id}
           </h2>
         </div>
 
-
-        {/* 🟩 NAME — centrado */}
-        <div style={{ flex: 1, textAlign: "center" }}>
+        {/* NAME – centro */}
+        <div style={{ width: "33%", textAlign: "center" }}>
           <h2
             style={{
-              color: "#000000ff",
-              fontSize: "4rem",
+              fontSize: "1.8rem",     // MÁS CHICO
               fontWeight: "bold",
+              margin: 0,
             }}
           >
             {name}
           </h2>
         </div>
 
-
-        {/* 🟧 STATUS — un poco a la izquierda */}
-        <div style={{ flex: 1, textAlign: "right" }}>
+        {/* STATUS – derecha */}
+        <div style={{ width: "33%", textAlign: "right" }}>
           <h2
             style={{
-              color: "#000000ff",
-              fontSize: "4rem",
+              fontSize: "1.8rem",     // MÁS CHICO
               fontWeight: "bold",
-              marginRight: "40px",  // 👈 Mueve STATUS a la izquierda
+              margin: 0,
             }}
           >
             {status}
           </h2>
         </div>
+
       </Card>
     </div>
   );
 };
-
 
 export default Order;

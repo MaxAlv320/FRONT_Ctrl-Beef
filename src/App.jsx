@@ -67,9 +67,8 @@ function App() {
         <Route
           path="/ordermanagement"
           element={
-            <ProtectedAdmin>
               <OrderManagement />
-            </ProtectedAdmin>
+
           }
         />
       </Route>

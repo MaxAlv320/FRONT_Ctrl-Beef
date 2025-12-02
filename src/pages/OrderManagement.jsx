@@ -4,139 +4,131 @@ import React from "react";
 import Navbar from "../Component/Navbar.jsx";
 import StatusButton from "../Component/StatusButton.jsx";
 
-
 const OrderManagement = () => {
-
-
-  // JSON de ejemplo conectado a la tabla
   const orders = [
     { id: "001", name: "Diego", status: "Pending" },
     { id: "002", name: "Frida", status: "Completed" },
     { id: "003", name: "Valeria", status: "In Progress" }
   ];
 
-
   return (
     <>
-  <Navbar title="Order Management" />
+      <Navbar title="Order Management" />
 
+      <div
+        style={{
+          marginTop: "180px",
+          fontFamily: "'Inria Sans', sans-serif",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",     // CENTRADO REAL
+        }}
+      >
 
-  <div
-  style={{
-    display: "flex",
-    justifyContent: "flex-start",
-    alignItems: "center",
-    gap: "20px",
-    marginTop: "280px",   // espacio debajo del navbar
-    paddingLeft: "120px", // alineado con los botones
-    fontFamily: "'Inria Sans', sans-serif",
-  }}
->
-  <span
-    style={{
-      fontSize: "3rem",
-      fontWeight: "bold",
-      color: "#000000ff",
-    }}
-  >
-    ID:
-  </span>
+        {/* Título */}
+        <h2
+          style={{
+            color: "#000",
+            fontSize: "2.4rem",
+            fontWeight: "bold",
+            width: "55vw",
+            textAlign: "left",
+          }}
+        >
+          Orders
+        </h2>
 
-
-  <input
-    type="text"
-    placeholder="Enter ID"
-    style={{
-      fontSize: "2.8rem",
-      padding: "10px 20px",
-      borderRadius: "20px",
-      border: "2px solid #000",
-      fontFamily: "'Inria Sans', sans-serif",
-      outline: "none",
-    }}
-  />
-</div>
-
-
-  {/* BOTONES EN FILA */}
-<div
-  style={{
-    display: "flex",
-    justifyContent: "flex-start", // alineados a la izquierda
-    alignItems: "center",
-    gap: "30px",
-    marginTop: "220px", // más separados del navbar
-    paddingLeft: "120px", // moverlos hacia la izquierda sin pegar al borde
-  }}
->
-  <StatusButton title="Search" />
-  <StatusButton title="Finished" />
-  <StatusButton title="In Progress" />
-  <StatusButton title="Delete" />
-</div>
-
-
-
-
-  <div style={{ paddingTop: "50px", textAlign: "center" }}>
-    <h2
-      style={{
-        color: "#000000ff",
-        fontSize: "70px",
-        fontFamily: "'Inria Sans', sans-serif",
-        fontWeight: "bold",
-      }}
-    >
-      Ingredients
-    </h2>
-
-
-    {/* Encabezado */}
-    <div style={{ marginTop: "100px" }}>
-      <Order id="ID" name="Name" status="Status" />
-    </div>
-
-
-    {/* TABLA */}
-    <table
-      style={{
-        margin: "50px auto",
-        width: "70vw",
-        borderCollapse: "collapse",
-        fontFamily: "'Inria Sans', sans-serif",
-        fontSize: "3rem",
-      }}
-    >
-      <tbody>
-        {orders.map((item, index) => (
-          <tr
-            key={index}
+        {/* ID + Input */}
+        <div
+          style={{
+            marginTop: "15px",
+            display: "flex",
+            alignItems: "center",
+            gap: "12px",
+            width: "55vw",
+          }}
+        >
+          <span
             style={{
-              borderBottom: "2px solid #ddd",
-              height: "120px",
+              fontSize: "1.6rem",
+              fontWeight: "bold",
+              color: "#000",
             }}
           >
-            <td style={{ paddingLeft: "60px", width: "33%", textAlign: "left" }}>
-              {item.id}
-            </td>
+            ID:
+          </span>
 
+          <input
+            type="text"
+            placeholder="Enter ID"
+            style={{
+              fontSize: "1.4rem",
+              padding: "8px 14px",
+              borderRadius: "15px",
+              border: "2px solid #000",
+              width: "160px",
+              outline: "none",
+            }}
+          />
+        </div>
 
-            <td style={{ width: "33%", textAlign: "center" }}>
-              {item.name}
-            </td>
+        {/* BOTONES */}
+        <div
+          style={{
+            display: "flex",
+            gap: "15px",
+            marginTop: "25px",
+            width: "55vw",
+          }}
+        >
+          <StatusButton title="Search" />
+          <StatusButton title="Finished" />
+          <StatusButton title="In Progress" />
+          <StatusButton title="Delete" />
+        </div>
 
+        {/* Encabezado */}
+        <div style={{ marginTop: "30px" }}>
+          <Order id="ID" name="Name" status="Status" />
+        </div>
 
-            <td style={{ paddingRight: "60px", width: "33%", textAlign: "right" }}>
-              {item.status}
-            </td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
-  </div>
-</>
+        {/* TABLA */}
+        <table
+          style={{
+            marginTop: "10px",
+            width: "55vw",                        // IGUAL QUE ORDER
+            borderCollapse: "collapse",
+            fontSize: "1.8rem",
+          }}
+        >
+          <tbody>
+            {orders.map((item, index) => (
+              <tr
+                key={index}
+                style={{
+                  borderBottom: "2px solid #ddd",
+                  height: "90px",                 // IGUAL QUE ORDER
+                }}
+              >
+                <td style={{ textAlign: "left", width: "33%" }}>
+                  {item.id}
+                </td>
+
+                <td style={{ textAlign: "center", width: "33%" }}>
+                  {item.name}
+                </td>
+
+                <td style={{ textAlign: "right", width: "33%" }}>
+                  {item.status}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+
+      </div>
+    </>
   );
 };
-
 
 export default OrderManagement;
