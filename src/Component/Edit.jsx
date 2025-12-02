@@ -1,45 +1,47 @@
 import React from "react";
 import { Card } from "react-bootstrap";
 
-
 const Edit = ({ burger }) => {
   const { title, image, text, price } = burger;
 
-
-  const miBurgerStyle = {
-    marginTop: "600px",
-    width: "100%",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-  };
-
-
   return (
-    <div style={miBurgerStyle}>
+    <div
+      style={{
+        marginTop: "120px",
+        width: "100%",
+        display: "flex",
+        justifyContent: "center",
+        padding: "20px",
+      }}
+    >
       <Card
         className="shadow-sm"
         style={{
-          border: "2px solid #000000ff",
+          border: "2px solid #000",
           borderRadius: "20px",
           backgroundColor: "#fff",
-          padding: "40px",
+          padding: "30px",
           display: "flex",
           flexDirection: "row",
-          alignItems: "flex-start",
-          width: "40vw",
+          width: "80vw",
+          maxWidth: "1100px",
+          gap: "30px",
           fontFamily: "'Inria Sans', sans-serif",
-          gap: "40px",
+
+          /* 📱 Pantallas pequeñas: vista vertical */
+          flexWrap: "wrap",
         }}
       >
-        {/* 🥬 Imagen */}
+        {/* 🖼 Imagen */}
         <div
           style={{
-            width: "600px",
-            height: "600px",
+            width: "100%",
+            maxWidth: "450px",
+            aspectRatio: "1 / 1",
             overflow: "hidden",
             borderRadius: "15px",
             flexShrink: 0,
+            margin: "0 auto",
           }}
         >
           <img
@@ -53,54 +55,49 @@ const Edit = ({ burger }) => {
           />
         </div>
 
-
         {/* 📄 Texto */}
         <div
           style={{
             display: "flex",
             flexDirection: "column",
-            justifyContent: "flex-start",
-            alignItems: "flex-end",
-            width: "100%",
+            justifyContent: "space-between",
+            flex: 1,
+            minWidth: "250px",
           }}
         >
+          {/* Título */}
           <h2
             style={{
-              color: "#000000ff",
-              fontSize: "5rem",
-              fontWeight: "bold",
               margin: 0,
+              fontWeight: "bold",
+              fontSize: "clamp(2rem, 4vw, 4rem)",
+              color: "#000",
               textAlign: "left",
             }}
           >
             {title}
           </h2>
 
-
+          {/* Descripción */}
           <p
             style={{
               marginTop: "10px",
-              marginBottom: 0,
-              fontFamily: "'Inria Sans', sans-serif",
               color: "#777",
-              fontSize: "4rem",
+              fontSize: "clamp(1rem, 2vw, 2rem)",
               textAlign: "left",
-              maxWidth: "90%",
+              maxWidth: "95%",
             }}
           >
             {text}
           </p>
 
-
+          {/* Precio */}
           <p
             style={{
-              marginTop: "200px",
-              marginBottom: 10,
-              fontFamily: "'Inria Sans', sans-serif",
-              color: "#777",
-              fontSize: "5rem",
-              textAlign: "left",
-              maxWidth: "90%",
+              marginTop: "40px",
+              fontWeight: "bold",
+              color: "#333",
+              fontSize: "clamp(1.5rem, 3vw, 3.5rem)",
             }}
           >
             {price}
@@ -110,6 +107,5 @@ const Edit = ({ burger }) => {
     </div>
   );
 };
-
 
 export default Edit;

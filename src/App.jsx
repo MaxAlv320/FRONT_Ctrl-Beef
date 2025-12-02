@@ -50,6 +50,7 @@ function App() {
             <ProtectedAdmin>
               <MenuManagement />
             </ProtectedAdmin>
+
           }
         />
 
@@ -59,6 +60,7 @@ function App() {
             <ProtectedAdmin>
               <BurgerEdit />
             </ProtectedAdmin>
+           
           }
         />
 

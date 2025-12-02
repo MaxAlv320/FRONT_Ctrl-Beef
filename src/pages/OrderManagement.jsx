@@ -78,17 +78,16 @@ const OrderManagement = () => {
 
 
 
-  <div style={{ paddingTop: "100px", textAlign: "center" }}>
+  <div style={{ paddingTop: "50px", textAlign: "center" }}>
     <h2
       style={{
         color: "#000000ff",
-        fontSize: "150px",
+        fontSize: "70px",
         fontFamily: "'Inria Sans', sans-serif",
         fontWeight: "bold",
-        marginTop: "0px",
       }}
     >
-      Order Management
+      Ingredients
     </h2>
 
 
