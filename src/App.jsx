@@ -10,7 +10,6 @@ import Inventary from "./pages/Inventary.jsx";
 import MenuManagement from "./pages/MenuManagement.jsx";
 import BurgerEdit from "./pages/BurgerEdit.jsx";
 import OrderManagement from "./pages/OrderManagement.jsx";
-import ProtectedAdmin from "./Component/ProtectedRoute.jsx";
 
 function App() {
   return (
@@ -25,53 +24,12 @@ function App() {
         <Route path="/home" element={<Home />} />
         <Route path="/menu" element={<Menu />} />
 
-        {/* 🔐 RUTAS PROTEGIDAS PARA ADMIN */}
-        <Route
-          path="/adminhome"
-          element={
-            <ProtectedAdmin>
-              <AdminHome />
-            </ProtectedAdmin>
-          }
-        />
-
-        <Route
-          path="/inventary"
-          element={
-            <ProtectedAdmin>
-              <Inventary />
-            </ProtectedAdmin>
-          }
-        />
-
-        <Route
-          path="/menumanagement"
-          element={
-            <ProtectedAdmin>
-              <MenuManagement />
-            </ProtectedAdmin>
-
-          }
-        />
-
-        <Route
-          path="/burgeredit"
-          element={
-            <ProtectedAdmin>
-              <BurgerEdit />
-            </ProtectedAdmin>
-           
-          }
-        />
-
-        <Route
-          path="/ordermanagement"
-          element={
-            <ProtectedAdmin>
-              <OrderManagement />
-            </ProtectedAdmin>
-          }
-        />
+        {/* 🔓 RUTAS DE ADMIN AHORA DESPROTEGIDAS */}
+        <Route path="/adminhome" element={<AdminHome />} />
+        <Route path="/inventary" element={<Inventary />} />
+        <Route path="/menumanagement" element={<MenuManagement />} />
+        <Route path="/burgeredit" element={<BurgerEdit />} />
+        <Route path="/ordermanagement" element={<OrderManagement />} />
       </Route>
     </Routes>
   );

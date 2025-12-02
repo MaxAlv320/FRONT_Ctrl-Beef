@@ -1,29 +1,31 @@
+// SaveButton.jsx
 import React from "react";
 
-const SaveButton = ({ title = "Save", onClick }) => {
+const SaveButton = ({ title = "Save", onClick, disabled = false }) => {
   return (
     <>
       <style>{`
         .save-btn {
           width: 300px;
           height: 120px;
-          background-color: #FED354;  /* amarillo original */
-          border: 5px solid #444;      /* borde gris original */
+          background-color: ${disabled ? '#CCCCCC' : '#FED354'};
+          border: 5px solid ${disabled ? '#999' : '#444'};
           border-radius: 10px;
-          color: #fff;
+          color: ${disabled ? '#666' : '#fff'};
           font-size: 40px;
           font-weight: 500;
           font-family: 'Kanit', sans-serif;
-          cursor: pointer;
+          cursor: ${disabled ? 'not-allowed' : 'pointer'};
           transition: all 0.2s ease;
           display: flex;
           align-items: center;
           justify-content: center;
           margin-top: 120px;
+          opacity: ${disabled ? 0.7 : 1};
         }
 
-        .save-btn:hover {
-          transform: scale(1.05);
+        .save-btn:hover:not(:disabled) {
+          transform: ${disabled ? 'none' : 'scale(1.05)'};
         }
 
         /* 📱 Tablets */
@@ -58,7 +60,11 @@ const SaveButton = ({ title = "Save", onClick }) => {
       `}</style>
 
       <div style={{ display: "flex", justifyContent: "center" }}>
-        <button className="save-btn" onClick={onClick}>
+        <button 
+          className="save-btn" 
+          onClick={onClick}
+          disabled={disabled}
+        >
           {title}
         </button>
       </div>

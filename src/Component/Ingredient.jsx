@@ -1,26 +1,40 @@
-import React, { useState } from "react";
+// Ingredient.jsx
+import React, { useState, useEffect } from "react";
 import { Card, Button } from "react-bootstrap";
 import iconMas from "../assets/mas.png";
 import iconMenos from "../assets/eliminar.png";
 
+const Ingredient = ({ title, image, quantity: initialQuantity = 0, onQuantityChange }) => {
+  const [cantidad, setCantidad] = useState(initialQuantity);
 
-const Ingredient = ({ title, image }) => {
-  const [cantidad, setCantidad] = useState(0);
+  // Actualizar cuando cambie el prop initialQuantity
+  useEffect(() => {
+    setCantidad(initialQuantity);
+  }, [initialQuantity]);
 
+  const aumentar = () => {
+    const nuevaCantidad = cantidad + 1;
+    setCantidad(nuevaCantidad);
+    if (onQuantityChange) {
+      onQuantityChange(nuevaCantidad);
+    }
+  };
 
-  const aumentar = () => setCantidad((prev) => prev + 1);
-  const disminuir = () => setCantidad((prev) => (prev > 0 ? prev - 1 : 0));
-
+  const disminuir = () => {
+    const nuevaCantidad = cantidad > 0 ? cantidad - 1 : 0;
+    setCantidad(nuevaCantidad);
+    if (onQuantityChange) {
+      onQuantityChange(nuevaCantidad);
+    }
+  };
 
   const textColor = cantidad <= 10 ? "#FFD700" : "#000";
-
 
   const miIngredientStyle = {
     marginTop: "0px",
     display: "flex",
     justifyContent: "center",
   };
-
 
   return (
     <div style={miIngredientStyle}>
@@ -36,10 +50,10 @@ const Ingredient = ({ title, image }) => {
           flexDirection: "row",
           alignItems: "center",
           justifyContent: "space-between",
-          fontFamily: "'Inria Sans', sans-serif", // 👈 Fuente aplicada a todo el card
+          fontFamily: "'Inria Sans', sans-serif",
         }}
       >
-        {/* 🥬 Imagen del ingrediente */}
+        {/* Imagen del ingrediente */}
         <div style={{ flex: "1", display: "flex", justifyContent: "center" }}>
           <img
             src={image}
@@ -52,28 +66,21 @@ const Ingredient = ({ title, image }) => {
           />
         </div>
 
-
-        {/* 📄 Nombre del ingrediente */}
-        <div
-          style={{
-            flex: "2",
-            textAlign: "center",
-          }}
-        >
+        {/* Nombre del ingrediente */}
+        <div style={{ flex: "2", textAlign: "center" }}>
           <h2
             style={{
               color: "#000000ff",
               fontSize: "3rem",
               fontWeight: "bold",
-              fontFamily: "'Inria Sans', sans-serif", // 👈 También aquí
+              fontFamily: "'Inria Sans', sans-serif",
             }}
           >
             {title}
           </h2>
         </div>
 
-
-        {/* ➕ Controles */}
+        {/* Controles */}
         <div
           style={{
             flex: "1",
@@ -110,7 +117,6 @@ const Ingredient = ({ title, image }) => {
             />
           </Button>
 
-
           {/* Número */}
           <p
             style={{
@@ -120,12 +126,11 @@ const Ingredient = ({ title, image }) => {
               margin: 0,
               width: "60px",
               textAlign: "center",
-              fontFamily: "'Inria Sans', sans-serif", // 👈 También aquí
+              fontFamily: "'Inria Sans', sans-serif",
             }}
           >
             {cantidad}
           </p>
-
 
           {/* Botón – */}
           <Button
@@ -158,6 +163,5 @@ const Ingredient = ({ title, image }) => {
     </div>
   );
 };
-
 
 export default Ingredient;
