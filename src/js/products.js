@@ -41,7 +41,7 @@ export async function getProducts() {
     "ngrok-skip-browser-warning": "true",
     Authorization: `Bearer ${token}`,
     "x-app-token":
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcHAiOiJDdHJsQmVlZiIsImlhdCI6MTc2NDE3MzkwOCwiZXhwIjoxNzk1Mjc3OTA4fQ.aYiSMuLILGQt07Too8BY-x9UBmbPQhI3HJhHST1gbLQ",
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcHAiOiJDdHJsQmVlZiIsImlhdCI6MTc2NDYwNTk3NywiZXhwIjoxNzk1NzA5OTc3fQ.LnhVpUZPFQzUqDB2ZIOFfy2DZG1utRd-kizP1h6aH4A",
   };
 
   console.log("HEADERS PRODUCTS:", headers);
@@ -57,4 +57,3 @@ export async function getProducts() {
 
   return await response.json();
 }
-
