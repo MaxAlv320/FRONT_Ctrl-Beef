@@ -36,7 +36,7 @@ const AdminHome = () => {
         >
           <div className="col-md-3 d-flex justify-content-center">
             <AdminCard
-              title="Inventary"
+              title="Remove Rroducts"
               onClick={() => navigate("/inventary")}
             />
           </div>
