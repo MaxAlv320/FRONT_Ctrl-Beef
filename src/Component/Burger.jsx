@@ -1,11 +1,19 @@
 import React from "react";
 import { Card } from "react-bootstrap";
 
-const Burger = ({ title, image, text, price, edit = "Edit", onEdit }) => {
+const Burger = ({
+  id,
+  title,
+  image,
+  text,
+  price,
+  stock,
+  onIncrease,
+  onDecrease,
+}) => {
   return (
     <div className="burger-container">
       <Card className="burger-card shadow-sm">
-
         {/* Imagen */}
         <div className="burger-image-wrapper">
           <img src={image} alt={title} className="burger-image" />
@@ -19,14 +27,23 @@ const Burger = ({ title, image, text, price, edit = "Edit", onEdit }) => {
 
           <p className="burger-price">${price}</p>
 
-          <button
-            className="edit-text"
-            onClick={() => onEdit({ title, image, text, price })}
-          >
-            {edit}
-          </button>
-        </div>
+          {stock !== undefined && (
+            <>
+              <p className="burger-stock">
+                <b>Stock:</b> {stock}
+              </p>
 
+              <div className="stock-controls">
+                <button className="stock-btn" onClick={() => onDecrease(id)}>
+                  -
+                </button>
+                <button className="stock-btn" onClick={() => onIncrease(id)}>
+                  +
+                </button>
+              </div>
+            </>
+          )}
+        </div>
       </Card>
     </div>
   );

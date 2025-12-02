@@ -1,55 +1,214 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../Component/Navbar.jsx";
 import Burger from "../Component/Burger.jsx";
 import "../styles/inventary.css";
 import { useNavigate } from "react-router-dom";
+import { getItems, patchItemStock } from "../js/items.js";
 
-import Burger0 from "../assets/0burger.jpg";
-import Burger1 from "../assets/1burger.jpg";
-import Burger2 from "../assets/2burger.jpg";
-import Burger3 from "../assets/3burger.jpg";
-import Burger4 from "../assets/4burger.jpg";
-import Burger5 from "../assets/5burger.jpg";
-import Burger6 from "../assets/6burger.jpg";
-import Burger7 from "../assets/7burger.jpg";
+// Importar las imágenes locales
+import img1 from "../assets/classicburger.jpg";
+import img2 from "../assets/cheesedeluxe.jpg";
+import img3 from "../assets/checkencrispy.jpg";
+import img4 from "../assets/bbqspecial.jpg";
+import img5 from "../assets/veggieburger.jpg";
+import img6 from "../assets/mushroomswiss.jpg";
+import img7 from "../assets/supremeburger.jpg";
 
 const MenuManagement = () => {
   const navigate = useNavigate();
-  const burgers = [
-    { title: "Classic Burger", image: Burger0, text: "100% beef, tomate, onion, pickles, lettuce.", price: "12.99" },
-    { title: "Cheese Burger", image: Burger1, text: "Double meat, double cheddar cheese, crispy bacon.", price: "15.99" },
-    { title: "BBQ Special", image: Burger2, text: "Homemade BBQ sauce, caramelized onion, jalapeños.", price: "14.99" },
-    { title: "Chicken Burger", image: Burger3, text: "100% chicken, tomate, onion, pickles, lettuce.", price:"11.99" },
-    { title: "Mexican Burger", image: Burger4, text: "Chili, double meat, cheese, tomato, lettuce, sauce.", price:"13.99" },
-    { title: "Super Tocino", image: Burger5, text: "Double meat, tocino, tomate, onion, pickles, lettuce.", price:"16.99" },
-    { title: "Vegetarian", image: Burger6, text: "Onion, lettuce, tomato, pickles, soja.", price:"17.99" },
-    { title: "Fish Burger", image: Burger7, text: "Fish meat, lettuce, tomato.", price:"18.99" },
-  ];
+  const [items, setItems] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
-  const handleEdit = (burger) => {
-    navigate("/burgeredit", { state: burger });
+  // Array de imágenes locales (igual que en MenuApp.jsx)
+  const img = [img1, img2, img3, img4, img5, img6, img7];
+
+  // 🔥 Cargar items y asignar imágenes
+  useEffect(() => {
+    const verifyAndLoad = async () => {
+      try {
+        // Verificar token
+        const token = sessionStorage.getItem("token");
+        if (!token) {
+          alert("Sesión expirada. Por favor, inicie sesión nuevamente.");
+          navigate("/login");
+          return;
+        }
+
+        // Cargar items
+        const data = await getItems();
+
+        if (Array.isArray(data)) {
+          // Asignar imágenes locales a los items (igual que en MenuApp.jsx)
+          const itemsWithImages = data.map((item, index) => ({
+            ...item,
+            // Usar imageUrl si existe, sino asignar imagen local
+            imageUrl: item.imageUrl || img[index % img.length],
+          }));
+
+          setItems(itemsWithImages);
+        } else {
+          console.error("Los datos no son un array:", data);
+        }
+      } catch (error) {
+        // Manejar errores específicos
+        if (
+          error.message.includes("401") ||
+          error.message.includes("autenticado") ||
+          error.message.includes("Sesión expirada")
+        ) {
+          sessionStorage.removeItem("token");
+          alert("Sesión expirada. Por favor, inicie sesión nuevamente.");
+          navigate("/login");
+        } else {
+          alert(`Error al cargar productos: ${error.message}`);
+        }
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    verifyAndLoad();
+  }, [navigate]);
+
+  const handleEdit = (item) => {
+    navigate("/burgeredit", { state: item });
   };
+
+  // 🔥 Aumentar stock
+  const increaseStock = async (item) => {
+    try {
+      const itemId = item._id;
+      if (!itemId) {
+        alert("Error: ID del producto no encontrado");
+        return;
+      }
+
+      const updated = await patchItemStock(itemId, 1);
+
+      // Actualizar estado local
+      setItems((prevItems) =>
+        prevItems.map((i) =>
+          i._id === itemId ? { ...i, stock: updated.stock } : i
+        )
+      );
+    } catch (err) {
+      // Manejar error de autenticación
+      if (
+        err.message.includes("401") ||
+        err.message.includes("autenticado") ||
+        err.message.includes("Sesión expirada")
+      ) {
+        alert("Sesión expirada. Por favor, inicie sesión nuevamente.");
+        sessionStorage.removeItem("token");
+        navigate("/login");
+      } else {
+        alert(`Error al aumentar stock: ${err.message}`);
+      }
+    }
+  };
+
+  // 🔥 Reducir stock
+  const decreaseStock = async (item) => {
+    try {
+      // Verificar stock mínimo
+      if ((item.stock || 0) <= 0) {
+        alert("No hay stock disponible para disminuir");
+        return;
+      }
+
+      const itemId = item._id;
+      if (!itemId) {
+        alert("Error: ID del producto no encontrado");
+        return;
+      }
+
+      const updated = await patchItemStock(itemId, -1);
+
+      // Actualizar estado local
+      setItems((prevItems) =>
+        prevItems.map((i) =>
+          i._id === itemId ? { ...i, stock: updated.stock } : i
+        )
+      );
+    } catch (err) {
+      // Manejar error de autenticación
+      if (
+        err.message.includes("401") ||
+        err.message.includes("autenticado") ||
+        err.message.includes("Sesión expirada")
+      ) {
+        alert("Sesión expirada. Por favor, inicie sesión nuevamente.");
+        sessionStorage.removeItem("token");
+        navigate("/login");
+      } else {
+        alert(`Error al reducir stock: ${err.message}`);
+      }
+    }
+  };
+
+  // 🔥 Mostrar loading
+  if (isLoading) {
+    return (
+      <>
+        <Navbar title="Menu Management" />
+        <div
+          style={{
+            paddingTop: "150px",
+            textAlign: "center",
+            fontFamily: "'Inria Sans', sans-serif",
+          }}
+        >
+          <h2>Cargando productos...</h2>
+          <p>Por favor espera</p>
+        </div>
+      </>
+    );
+  }
 
   return (
     <>
       <Navbar title="Menu Management" />
 
       <div style={{ paddingTop: "50px", textAlign: "center" }}>
-        <h2 className="inventory-title">Ingredients</h2>
+        <h2 className="inventory-title">Burgers</h2>
 
         <div className="inventory-container">
-          <div className="grid-2-columns">
-            {burgers.map((b, idx) => (
-              <Burger
-                key={idx}
-                title={b.title}
-                image={b.image}
-                text={b.text}
-                price={b.price}
-                onEdit={handleEdit}
-              />
-            ))}
-          </div>
+          {items.length === 0 ? (
+            <div style={{ padding: "50px" }}>
+              <h3>No hay productos disponibles</h3>
+              <button
+                onClick={() => window.location.reload()}
+                style={{
+                  marginTop: "20px",
+                  padding: "10px 20px",
+                  backgroundColor: "#8B0000",
+                  color: "white",
+                  border: "none",
+                  borderRadius: "5px",
+                  cursor: "pointer",
+                }}
+              >
+                Reintentar
+              </button>
+            </div>
+          ) : (
+            <div className="grid-2-columns">
+              {items.map((item) => (
+                <Burger
+                  key={item._id}
+                  id={item._id}
+                  title={item.name}
+                  image={item.imageUrl} // Ahora usa las imágenes locales asignadas
+                  text={item.description}
+                  price={item.price}
+                  stock={item.stock}
+                  onEdit={() => handleEdit(item)}
+                  onIncrease={() => increaseStock(item)}
+                  onDecrease={() => decreaseStock(item)}
+                />
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </>
