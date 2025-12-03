@@ -1,4 +1,3 @@
-/* TITULO */
 .inventory-title {
   color: #000;
   font-size: clamp(2.5rem, 6vw, 4.2rem);
@@ -6,7 +5,6 @@
   font-weight: bold;
 }
 
-/* GRID RESPONSIVO */
 .inventory-container {
   margin-top: 40px;
   width: 100%;
@@ -23,14 +21,12 @@
   padding: 0 20px;
 }
 
-/* COLAPSA A 1 COLUMNA EN MOVIL */
 @media (max-width: 850px) {
   .grid-2-columns {
     grid-template-columns: 1fr;
   }
 }
 
-/* CARD GENERAL */
 .burger-container {
   width: 100%;
   display: flex;
@@ -53,7 +49,6 @@
   font-family: "Inria Sans", sans-serif;
 }
 
-/* En móvil, card vertical */
 @media (max-width: 700px) {
   .burger-card {
     flex-direction: column;
@@ -61,7 +56,6 @@
   }
 }
 
-/* IMAGEN */
 .burger-image-wrapper {
   width: 100%;
   max-width: 280px;
@@ -102,13 +96,45 @@
   margin-top: 10px;
   color: #777;
   font-size: clamp(1rem, 2.2vw, 1.5rem);
+  line-height: 1.4;
 }
 
 .burger-price {
   margin-top: 15px;
   font-weight: bold;
   color: #333;
-  font-size: clamp(1rem, 2.5vw, 1.6rem);
+  font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+}
+
+/* ESTILOS PARA STOCK */
+.burger-stock {
+  margin-top: 15px;
+  font-size: clamp(1.1rem, 2.2vw, 1.6rem);
+  color: #444;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 700px) {
+  .burger-stock {
+    justify-content: center;
+  }
+}
+
+.burger-stock b {
+  color: #000;
+  font-size: clamp(1.1rem, 2.2vw, 1.6rem);
+}
+
+.stock-value {
+  font-weight: bold;
+  color: #333;
+  font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+  min-width: 40px;
+  text-align: center;
 }
 
 .edit-text {
@@ -120,11 +146,140 @@
   font-size: clamp(1rem, 2vw, 1.5rem);
 }
 
-/* ======================= */
-/* ESTILOS NUEVOS AGREGADOS */
-/* ======================= */
+/* ================================== */
+/* ESTILOS PARA LOS BOTONES DE STOCK */
+/* ================================== */
 
-/* Inventary component styles */
+.stock-controls {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-top: 10px;
+  justify-content: flex-start;
+}
+
+@media (max-width: 700px) {
+  .stock-controls {
+    justify-content: center;
+  }
+}
+
+.stock-btn {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  border: 2px solid #333;
+  background-color: #fff;
+  color: #333;
+  font-size: 1.5rem;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  font-family: "Inria Sans", sans-serif;
+  padding: 0;
+}
+
+.stock-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.stock-btn:active {
+  transform: scale(0.95);
+}
+
+/* Botón de disminuir stock (-) */
+.stock-btn:first-child {
+  background-color: #f44336;
+  color: white;
+  border-color: #d32f2f;
+}
+
+.stock-btn:first-child:hover {
+  background-color: #d32f2f;
+  box-shadow: 0 4px 8px rgba(244, 67, 54, 0.3);
+}
+
+.stock-btn:first-child:disabled {
+  background-color: #ffcdd2;
+  color: #ff8a80;
+  border-color: #ffcdd2;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.stock-btn:first-child:disabled:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+/* Botón de aumentar stock (+) */
+.stock-btn:last-child {
+  background-color: #4caf50;
+  color: white;
+  border-color: #45a049;
+}
+
+.stock-btn:last-child:hover {
+  background-color: #45a049;
+  box-shadow: 0 4px 8px rgba(76, 175, 80, 0.3);
+}
+
+/* Responsive para los botones de stock */
+@media (max-width: 700px) {
+  .stock-controls {
+    justify-content: center;
+    margin-top: 15px;
+    gap: 20px;
+  }
+
+  .stock-btn {
+    width: 50px;
+    height: 50px;
+    font-size: 1.6rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .stock-controls {
+    gap: 15px;
+  }
+
+  .stock-btn {
+    width: 45px;
+    height: 45px;
+    font-size: 1.4rem;
+  }
+}
+
+/* ESTILOS PARA AGRUPAR STOCK Y CONTROLES */
+.stock-section {
+  margin-top: 15px;
+}
+
+.stock-display {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
+@media (max-width: 700px) {
+  .stock-display {
+    justify-content: center;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .burger-stock {
+    margin-bottom: 5px;
+  }
+}
+
 .inventary-container {
   padding-top: 50px;
   text-align: center;
@@ -141,14 +296,12 @@
   margin-top: 40px;
 }
 
-/* Loading state */
 .inventary-loading {
   margin: 40px;
   color: #666;
   font-size: 22px;
 }
 
-/* Error state */
 .inventary-error {
   margin: 20px auto;
   color: #d32f2f;

@@ -5,7 +5,6 @@ import "../styles/inventary.css";
 import { useNavigate } from "react-router-dom";
 import { getItems, patchItemStock } from "../js/items.js";
 
-// Importar las imágenes locales
 import img1 from "../assets/classicburger.jpg";
 import img2 from "../assets/cheesedeluxe.jpg";
 import img3 from "../assets/checkencrispy.jpg";
@@ -19,14 +18,11 @@ const MenuManagement = () => {
   const [items, setItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  // Array de imágenes locales (igual que en MenuApp.jsx)
   const img = [img1, img2, img3, img4, img5, img6, img7];
 
-  // 🔥 Cargar items y asignar imágenes
   useEffect(() => {
     const verifyAndLoad = async () => {
       try {
-        // Verificar token
         const token = sessionStorage.getItem("token");
         if (!token) {
           alert("Sesión expirada. Por favor, inicie sesión nuevamente.");
@@ -34,14 +30,11 @@ const MenuManagement = () => {
           return;
         }
 
-        // Cargar items
         const data = await getItems();
 
         if (Array.isArray(data)) {
-          // Asignar imágenes locales a los items (igual que en MenuApp.jsx)
           const itemsWithImages = data.map((item, index) => ({
             ...item,
-            // Usar imageUrl si existe, sino asignar imagen local
             imageUrl: item.imageUrl || img[index % img.length],
           }));
 
@@ -50,7 +43,6 @@ const MenuManagement = () => {
           console.error("Los datos no son un array:", data);
         }
       } catch (error) {
-        // Manejar errores específicos
         if (
           error.message.includes("401") ||
           error.message.includes("autenticado") ||
@@ -74,7 +66,6 @@ const MenuManagement = () => {
     navigate("/burgeredit", { state: item });
   };
 
-  // 🔥 Aumentar stock
   const increaseStock = async (item) => {
     try {
       const itemId = item._id;
@@ -84,15 +75,12 @@ const MenuManagement = () => {
       }
 
       const updated = await patchItemStock(itemId, 1);
-
-      // Actualizar estado local
       setItems((prevItems) =>
         prevItems.map((i) =>
           i._id === itemId ? { ...i, stock: updated.stock } : i
         )
       );
     } catch (err) {
-      // Manejar error de autenticación
       if (
         err.message.includes("401") ||
         err.message.includes("autenticado") ||
@@ -107,10 +95,8 @@ const MenuManagement = () => {
     }
   };
 
-  // 🔥 Reducir stock
   const decreaseStock = async (item) => {
     try {
-      // Verificar stock mínimo
       if ((item.stock || 0) <= 0) {
         alert("No hay stock disponible para disminuir");
         return;
@@ -123,15 +109,12 @@ const MenuManagement = () => {
       }
 
       const updated = await patchItemStock(itemId, -1);
-
-      // Actualizar estado local
       setItems((prevItems) =>
         prevItems.map((i) =>
           i._id === itemId ? { ...i, stock: updated.stock } : i
         )
       );
     } catch (err) {
-      // Manejar error de autenticación
       if (
         err.message.includes("401") ||
         err.message.includes("autenticado") ||
@@ -146,7 +129,6 @@ const MenuManagement = () => {
     }
   };
 
-  // 🔥 Mostrar loading
   if (isLoading) {
     return (
       <>
@@ -198,7 +180,7 @@ const MenuManagement = () => {
                   key={item._id}
                   id={item._id}
                   title={item.name}
-                  image={item.imageUrl} // Ahora usa las imágenes locales asignadas
+                  image={item.imageUrl}
                   text={item.description}
                   price={item.price}
                   stock={item.stock}

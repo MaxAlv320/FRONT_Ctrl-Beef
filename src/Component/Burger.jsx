@@ -28,20 +28,26 @@ const Burger = ({
           <p className="burger-price">${price}</p>
 
           {stock !== undefined && (
-            <>
-              <p className="burger-stock">
-                <b>Stock:</b> {stock}
-              </p>
+            <div className="stock-section">
+              <div className="stock-display">
+                <p className="burger-stock">
+                  <b>Stock:</b> <span className="stock-value">{stock}</span>
+                </p>
 
-              <div className="stock-controls">
-                <button className="stock-btn" onClick={() => onDecrease(id)}>
-                  -
-                </button>
-                <button className="stock-btn" onClick={() => onIncrease(id)}>
-                  +
-                </button>
+                <div className="stock-controls">
+                  <button
+                    className="stock-btn"
+                    onClick={() => onDecrease(id)}
+                    disabled={stock <= 0}
+                  >
+                    -
+                  </button>
+                  <button className="stock-btn" onClick={() => onIncrease(id)}>
+                    +
+                  </button>
+                </div>
               </div>
-            </>
+            </div>
           )}
         </div>
       </Card>
