@@ -46,9 +46,6 @@ const CustomerFavorites = () => {
                 <Card.Title>{item.name}</Card.Title>
                 <Card.Text>{item.description}</Card.Text>
                 <h6 className="text-warning fw-bold">${item.price}</h6>
-                <Button variant="warning" className="fw-bold text-white w-100">
-                  Add
-                </Button>
               </Card.Body>
             </Card>
           </div>

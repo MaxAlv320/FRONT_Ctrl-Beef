@@ -1,31 +1,33 @@
 export async function getProducts() {
-  const url = "https://hylotropic-renee-unexcrescently.ngrok-free.dev/"; // Replace with your API endpoint
+  const url =
+    "https://hylotropic-renee-unexcrescently.ngrok-free.dev/api/products";
 
-  /*const headers = {
-    'Authorization': 'Bearer YOUR_AUTH_TOKEN', // Example: Authorization header
-    'Content-Type': 'application/json',        // Example: Content-Type header
-    'x-app-token': 'My-Custom-Value',       // Example: Custom header
-    'ngrok-skip-browser-warning' : true
-    };*/
+  const token = sessionStorage.getItem("token"); 
+
+  if (!token) {
+    console.error("Token NO encontrado en sessionStorage");
+  } else {
+    console.log("Token encontrado:", token);
+  }
 
   const headers = {
     "Content-Type": "application/json",
-    "ngrok-skip-browser-warning": true, // Example: Content-Type header
+    "ngrok-skip-browser-warning": "true",
+    Authorization: `Bearer ${token}`,       
+    "x-app-token":
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcHAiOiJDdHJsQmVlZiIsImlhdCI6MTc2NDYwNTk3NywiZXhwIjoxNzk1NzA5OTc3fQ.LnhVpUZPFQzUqDB2ZIOFfy2DZG1utRd-kizP1h6aH4A",
   };
 
-  try {
-    const response = await fetch(url + "api/products", {
-      method: "GET", // Explicitly set method to GET (optional for GET, but good practice)
-      headers: headers,
-    });
+  console.log("HEADERS PRODUCTS:", headers);
 
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    const data = await response.json();
-    console.log("Fetched data:", data);
-    return data;
-  } catch (error) {
-    console.error("Error fetching data:", error);
+  const response = await fetch(url, {
+    method: "GET",
+    headers,
+  });
+
+  if (!response.ok) {
+    throw new Error(`Error HTTP ${response.status}`);
   }
+
+  return await response.json();
 }

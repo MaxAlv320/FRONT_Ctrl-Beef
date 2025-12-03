@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "../styles/Login.css";
-import "bootstrap-icons/font/bootstrap-icons.css"; 
+import "bootstrap-icons/font/bootstrap-icons.css";
 import burger from "../assets/burger.jpg";
 import burger1 from "../assets/burger1.jpg";
 import burger2 from "../assets/burger2.jpg";
@@ -14,13 +14,13 @@ export default function Login() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false); 
+  const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
   const navigate = useNavigate();
 
-  // imágenes
+  // Rotación de imágenes
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % images.length);
@@ -28,7 +28,7 @@ export default function Login() {
     return () => clearInterval(interval);
   }, [images.length]);
 
-  // Función para iniciar sesión
+  // ====== LOGIN ======
   const handleSignIn = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -38,14 +38,34 @@ export default function Login() {
 
     try {
       const response = await postLoginUsers(credentials);
+      console.log("Login Response:", response);
 
-      if (response?.token) {
-        localStorage.setItem("token", response.token);
-        window.sessionStorage("role",response.role);
-        alert("Login successful!");
-        navigate("/home");
-      } else {
+      if (!response?.token) {
         setError(response?.message || "Invalid credentials.");
+        setLoading(false);
+        return;
+      }
+
+      // Guardar token y role
+      sessionStorage.setItem("token", response.token);
+      sessionStorage.setItem("role", response.role);
+
+      // Guardar nombre y correo para el TopBar
+      sessionStorage.setItem(
+        "user",
+        JSON.stringify({
+          name: response.name || response.nombre || "User",
+          email: response.email || response.correo || email,
+        })
+      );
+
+      alert("Login successful!");
+
+      // Redirección según rol
+      if (response.role === "admin") {
+        navigate("/adminhome");
+      } else {
+        navigate("/home");
       }
     } catch (err) {
       console.error("Error logging in:", err);
@@ -58,7 +78,8 @@ export default function Login() {
   return (
     <div className="login-wrapper">
       <div className="login-frame">
-        {/* HERO con imágenes cambiantes */}
+
+        {/* HERO */}
         <div className="hero-side">
           <div
             className="hero-bg hero-bg--1"
@@ -85,6 +106,7 @@ export default function Login() {
             <div className="logo">
               <img src={logoBurger} alt="Ctrl+Beef Logo" className="logo-img" />
             </div>
+
             <p className="welcome">Welcome back!</p>
 
             <form className="mt-4" onSubmit={handleSignIn}>
@@ -114,14 +136,15 @@ export default function Login() {
                     required
                   />
                   <i
-                    className={`bi ${showPassword ? "bi-eye" : "bi-eye-slash"} toggle-password`}
+                    className={`bi ${
+                      showPassword ? "bi-eye" : "bi-eye-slash"
+                    } toggle-password`}
                     onClick={() => setShowPassword(!showPassword)}
                   ></i>
-
                 </div>
               </div>
 
-              {/* CONTRASEÑA */}
+              {/* Remember - Forgot */}
               <div className="d-flex justify-content-between align-items-center mb-3">
                 <div className="form-check">
                   <input
@@ -138,7 +161,7 @@ export default function Login() {
                 </Link>
               </div>
 
-              {/* BOTÓN */}
+              {/* BTN */}
               <button type="submit" className="sign-btn" disabled={loading}>
                 {loading ? "Signing in..." : "Sign in"}
               </button>
@@ -146,7 +169,6 @@ export default function Login() {
               {/* ERROR */}
               {error && <p className="error-msg mt-2">{error}</p>}
 
-              {/* FOOTER CTA */}
               <div className="footer-cta">
                 <p>
                   Don't have an account?{" "}
@@ -158,6 +180,7 @@ export default function Login() {
             </form>
           </div>
         </div>
+
       </div>
     </div>
   );

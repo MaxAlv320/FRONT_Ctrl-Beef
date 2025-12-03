@@ -1,4 +1,3 @@
-// src/context/CartContext.jsx
 import React, { createContext, useState, useEffect } from "react";
 
 export const CartContext = createContext();
@@ -6,50 +5,92 @@ export const CartContext = createContext();
 export const CartProvider = ({ children }) => {
   const [items, setItems] = useState(() => {
     try {
-      const raw = localStorage.getItem("cart_v1");
+      const raw = sessionStorage.getItem("cart_v1");
       return raw ? JSON.parse(raw) : [];
     } catch {
       return [];
     }
   });
 
+  // Guardar carrito 
   useEffect(() => {
-    localStorage.setItem("cart_v1", JSON.stringify(items));
+    console.log(" Carrito actualizado:", items);
+    sessionStorage.setItem("cart_v1", JSON.stringify(items));
   }, [items]);
 
+  // agrega los productos al cart
   const addItem = (product) => {
-    setItems((prev) => {
-      const idx = prev.findIndex((p) => p.id === product.id);
-      if (idx >= 0) {
-        const next = [...prev];
-        next[idx].quantity = (next[idx].quantity || 1) + 1;
-        return next;
+    console.log("agrego el porducto:", product);
+    
+    if (!product || !product.id) {
+      console.error("Producto inválido:", product);
+      return;
+    }
+    
+    setItems((prevItems) => {
+      // ahuevo bussca el id
+      const existingIndex = prevItems.findIndex((item) => 
+        item.id === product.id
+      );
+      
+      console.log("Índice encontrado:", existingIndex);
+      
+      if (existingIndex !== -1) {
+        // Producto ya existe - incrementar cantidad
+        const updatedItems = [...prevItems];
+        updatedItems[existingIndex] = {
+          ...updatedItems[existingIndex],
+          quantity: updatedItems[existingIndex].quantity + 1
+        };
+        console.log(" suma de cantidads :", updatedItems[existingIndex].quantity);
+        return updatedItems;
+      } else {
+        // agrega uno mas 
+        const newItem = {
+          ...product,
+          quantity: 1
+        };
+        console.log("Agregando nuevo producto:", newItem);
+        return [...prevItems, newItem];
       }
-      return [...prev, { ...product, quantity: 1 }];
     });
   };
 
-  const removeItem = (productId) => {
-    setItems((prev) => prev.filter((p) => p.id !== productId));
+  const removeItem = (id) => {
+    setItems((prev) => prev.filter((item) => item.id !== id));
   };
 
-  const increase = (productId) => {
+  const increase = (id) => {
     setItems((prev) =>
-      prev.map((p) => (p.id === productId ? { ...p, quantity: p.quantity + 1 } : p))
+      prev.map((item) =>
+        item.id === id ? { ...item, quantity: item.quantity + 1 } : item
+      )
     );
   };
 
-  const decrease = (productId) => {
+  const decrease = (id) => {
     setItems((prev) =>
-      prev
-        .map((p) => (p.id === productId ? { ...p, quantity: Math.max(1, p.quantity - 1) } : p))
+      prev.map((item) =>
+        item.id === id 
+          ? { ...item, quantity: Math.max(0, item.quantity - 1) } 
+          : item
+      ).filter((item) => item.quantity > 0) // Eliminar si cantidad es 0
     );
   };
 
-  const clearCart = () => setItems([]);
+  const clearCart = () => {
+    setItems([]);
+    console.log("bajo mis condiciones");
+  };
 
-  const totalItems = items.reduce((s, i) => s + (i.quantity || 0), 0);
-  const subtotal = items.reduce((s, i) => s + (i.price || 0) * (i.quantity || 0), 0);
+  const totalItems = items.reduce((total, item) => total + (item.quantity || 0), 0);
+
+  const subtotal = items.reduce(
+    (total, item) => total + (item.price || 0) * (item.quantity || 0),
+    0
+  );
+
+  console.log("los porductos:", items.length, "Total items:", totalItems, "Subtotal:", subtotal);
 
   return (
     <CartContext.Provider

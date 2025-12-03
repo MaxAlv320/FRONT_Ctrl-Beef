@@ -1,7 +1,8 @@
-// src/pages/Menu.jsx (fragmento completo reutilizable)
 import { useState, useEffect, useContext } from "react";
 import { getProducts } from "../js/products.js";
 import { CartContext } from "../context/CartContext";
+import { useNavigate } from "react-router-dom";
+
 import img1 from "../assets/classicburger.jpg";
 import img2 from "../assets/cheesedeluxe.jpg";
 import img3 from "../assets/checkencrispy.jpg";
@@ -10,70 +11,162 @@ import img5 from "../assets/veggieburger.jpg";
 import img6 from "../assets/mushroomswiss.jpg";
 import img7 from "../assets/supremeburger.jpg";
 
-export default function MenuApp() {
+const MenuApp = () => {
   const [activeFilter, setActiveFilter] = useState("All");
   const [products, setProducts] = useState([]);
-  const { addItem, totalItems } = useContext(CartContext);
+  const [loading, setLoading] = useState(true);
+
+  const { addItem, items } = useContext(CartContext);
+  const navigate = useNavigate();
+
   const img = [img1, img2, img3, img4, img5, img6, img7];
 
   useEffect(() => {
-    const fetch = async () => {
+    async function loadProducts() {
       try {
-        const data = await getProducts();
-        if (data && Array.isArray(data)) {
-          // Map products adding image from local assets (matching index)
-          const mapped = data.map((p, i) => ({
-            id: p.id || i,
-            name: p.name,
-            description: p.description,
-            price: Number(p.price) || 0,
-            category: p.category || "Classic",
-            image: img[i % img.length],
-          }));
-          setProducts(mapped);
-        } else {
-          // fallback: create demo
-          setProducts([]);
+        const response = await getProducts();
+        if (!Array.isArray(response)) {
+          throw new Error("Formato inválido");
         }
+
+        const productsWithImages = response.map((product, index) => ({
+          id: String(product.id || `prod-${Date.now()}-${index}`),
+          name: product.name || `Product ${index + 1}`,
+          price: parseFloat(product.price) || 0,
+          description: product.description || "Sin descripción",
+          category: product.category || "All",
+          image: img[index % img.length],
+        }));
+
+        setProducts(productsWithImages);
       } catch (err) {
-        console.error(err);
-        setProducts([]);
+        setProducts([
+          { id: "1", name: "Classic Burger", price: 9.99, description: "Delicious classic", category: "Classic" },
+          { id: "2", name: "Cheese Deluxe", price: 11.99, description: "Extra cheese", category: "Special" },
+          { id: "3", name: "Veggie Burger", price: 10.99, description: "Vegetarian", category: "Vegetarian" },
+        ].map((product, index) => ({ ...product, image: img[index % img.length] })));
+      } finally {
+        setLoading(false);
       }
-    };
-    fetch();
+    }
+
+    loadProducts();
   }, []);
 
-  const filteredProducts =
-    activeFilter === "All"
-      ? products
-      : products.filter((product) => product.category === activeFilter);
+  const handleAdd = (product) => {
+    addItem({
+      ...product,
+      quantity: 1
+    });
+  };
 
-  const handleAdd = (product) => addItem(product);
+  const filters = [
+    { name: "All" },
+    { name: "Classic" },
+    { name: "Special" },
+    { name: "Vegetarian" },
+    { name: "Combo" }
+  ];
+
+  const filteredProducts = activeFilter === "All"
+    ? products
+    : products.filter((product) =>
+        product.category?.toLowerCase() === activeFilter.toLowerCase()
+      );
+
+  if (loading) {
+    return (
+      <div className="text-center mt-5">
+        <h2>Cargando menú...</h2>
+        <div className="spinner-border text-primary mt-3" role="status">
+          <span className="visually-hidden">Cargando...</span>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="container-custom">
-      {/* ... header, filters ... */}
+      <div className="header">
+        <h2 className="header-subtitle">Our Menu</h2>
+        <p className="header-description">Choose your favorite burgers</p>
+      </div>
+
+      <div className="filters-container">
+        {filters.map((filter) => (
+          <button
+            key={filter.name}
+            className={`filter-button ${
+              activeFilter === filter.name ? "active" : ""
+            }`}
+            onClick={() => setActiveFilter(filter.name)}
+          >
+            {filter.name}
+          </button>
+        ))}
+      </div>
+
+      <div className="divider"></div>
+
       <div className="menu-grid">
-        {filteredProducts.map((product) => (
-          <div key={product.id} className="menu-item">
+        {filteredProducts.map((product, index) => (
+          <div key={`${product.id}-${index}`} className="menu-item">
             <img src={product.image} alt={product.name} className="menu-item-image" />
+
             <h3 className="menu-item-title">{product.name}</h3>
             <p className="menu-item-description">{product.description}</p>
+
             <div className="price-add-container">
-              <div className="menu-item-price">${product.price}</div>
-              <button className="btn-add-simple" onClick={() => handleAdd(product)}>
+              <div className="menu-item-price">${product.price.toFixed(2)}</div>
+
+              {/* BOTÓN +ADD ACTUALIZADO */}
+              <button
+                onClick={() => handleAdd(product)}
+                style={{
+                  backgroundColor: "#f4c644",
+                  color: "white",
+                  border: "none",
+                  padding: "8px 16px",
+                  borderRadius: "4px",
+                  cursor: "pointer",
+                  fontWeight: "600",
+                  transition: "0.2s"
+                }}
+                onMouseOver={(e) => (e.target.style.backgroundColor = "#d9b138")}
+                onMouseOut={(e) => (e.target.style.backgroundColor = "#f4c644")}
+              >
                 + Add
               </button>
             </div>
+
+        
           </div>
         ))}
       </div>
 
+      {/* BOTÓN VIEW ORDER ACTUALIZADO */}
       <div className="view-order-container">
-        <a href="/checkout" className="btn-view-order">
-          View Order ({totalItems})
-        </a>
+        <button
+          onClick={() => navigate("/checkout")}
+          style={{
+            backgroundColor: "#f4c644",
+            color: "white",
+            padding: "12px 24px",
+            fontSize: "18px",
+            fontWeight: "600",
+            border: "none",
+            borderRadius: "6px",
+            cursor: "pointer",
+            transition: "0.2s"
+          }}
+          onMouseOver={(e) => (e.target.style.backgroundColor = "#d9b138")}
+          onMouseOut={(e) => (e.target.style.backgroundColor = "#f4c644")}
+        >
+          View Order ({items?.length || 0})
+        </button>
       </div>
     </div>
   );
-}
+};
+
+export default MenuApp;

@@ -5,13 +5,12 @@ import { FaStore } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
 export default function CheckoutPayment() {
-  const { items, subtotal, clearCart } = useContext(CCartContext);
+  const { items, subtotal, clearCart } = useContext(CartContext);
   const [method, setMethod] = useState("counter");
-  const total = subtotal;
+  const total = Number(subtotal) || 0;
 
   const navigate = useNavigate();
 
-  // Generate a random order number
   const generateOrderNumber = () => {
     const random = Math.floor(1000 + Math.random() * 9000);
     return `CB-2025-${random}`;
@@ -57,7 +56,11 @@ export default function CheckoutPayment() {
 
             <div className="big-box">
               <small>You're dining in at our restaurant</small>
-              <div className="big-amount">${total.toFixed(2)}</div>
+
+              {/* FIX */}
+              <div className="big-amount">
+                ${Number(total).toFixed(2)}
+              </div>
             </div>
 
             <div className="info-note">
@@ -81,18 +84,22 @@ export default function CheckoutPayment() {
                 <span>
                   {item.quantity}x {item.name}
                 </span>
-                <span>${(item.price * item.quantity).toFixed(2)}</span>
+
+                {/* FIX */}
+                <span>
+                  ${(Number(item.price) * Number(item.quantity)).toFixed(2)}
+                </span>
               </div>
             ))}
 
             <div className="summary-row">
               <span>Subtotal</span>
-              <span>${subtotal.toFixed(2)}</span>
+              <span>${Number(subtotal).toFixed(2)}</span>
             </div>
 
             <div className="summary-total">
               <span>Total</span>
-              <span>${total.toFixed(2)}</span>
+              <span>${Number(total).toFixed(2)}</span>
             </div>
 
             <div className="eta-box mt-3">Ready in: 15–20 min</div>
