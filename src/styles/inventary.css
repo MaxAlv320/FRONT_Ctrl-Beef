@@ -1,0 +1,491 @@
+.inventory-title {
+  color: #000;
+  font-size: clamp(2.5rem, 6vw, 4.2rem);
+  font-family: "Inria Sans", sans-serif;
+  font-weight: bold;
+}
+
+.inventory-container {
+  margin-top: 40px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.grid-2-columns {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 40px;
+  width: 100%;
+  max-width: 1400px;
+  padding: 0 20px;
+}
+
+@media (max-width: 850px) {
+  .grid-2-columns {
+    grid-template-columns: 1fr;
+  }
+}
+
+.burger-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.burger-card {
+  border: 2px solid #000;
+  border-radius: 20px;
+  background: #fff;
+  padding: 20px;
+  width: 50vw;
+  max-width: 700px;
+  min-width: 300px;
+
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+
+  font-family: "Inria Sans", sans-serif;
+}
+
+@media (max-width: 700px) {
+  .burger-card {
+    flex-direction: column;
+    width: 90%;
+  }
+}
+
+.burger-image-wrapper {
+  width: 100%;
+  max-width: 280px;
+  aspect-ratio: 1/1;
+  overflow: hidden;
+  border-radius: 15px;
+  flex-shrink: 0;
+}
+
+.burger-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* TEXTO */
+.burger-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 60%;
+}
+
+@media (max-width: 700px) {
+  .burger-info {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+.burger-title {
+  font-weight: bold;
+  font-size: clamp(1.4rem, 3vw, 2.2rem);
+  margin: 0;
+}
+
+.burger-text {
+  margin-top: 10px;
+  color: #777;
+  font-size: clamp(1rem, 2.2vw, 1.5rem);
+  line-height: 1.4;
+}
+
+.burger-price {
+  margin-top: 15px;
+  font-weight: bold;
+  color: #333;
+  font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+}
+
+/* ESTILOS PARA STOCK */
+.burger-stock {
+  margin-top: 15px;
+  font-size: clamp(1.1rem, 2.2vw, 1.6rem);
+  color: #444;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 700px) {
+  .burger-stock {
+    justify-content: center;
+  }
+}
+
+.burger-stock b {
+  color: #000;
+  font-size: clamp(1.1rem, 2.2vw, 1.6rem);
+}
+
+.stock-value {
+  font-weight: bold;
+  color: #333;
+  font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+  min-width: 40px;
+  text-align: center;
+}
+
+.edit-text {
+  margin-top: 10px;
+  color: #f6a700;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: clamp(1rem, 2vw, 1.5rem);
+}
+
+/* ================================== */
+/* ESTILOS PARA LOS BOTONES DE STOCK */
+/* ================================== */
+
+.stock-controls {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-top: 10px;
+  justify-content: flex-start;
+}
+
+@media (max-width: 700px) {
+  .stock-controls {
+    justify-content: center;
+  }
+}
+
+.stock-btn {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  border: 2px solid #333;
+  background-color: #fff;
+  color: #333;
+  font-size: 1.5rem;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  font-family: "Inria Sans", sans-serif;
+  padding: 0;
+}
+
+.stock-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.stock-btn:active {
+  transform: scale(0.95);
+}
+
+/* Botón de disminuir stock (-) */
+.stock-btn:first-child {
+  background-color: #f44336;
+  color: white;
+  border-color: #d32f2f;
+}
+
+.stock-btn:first-child:hover {
+  background-color: #d32f2f;
+  box-shadow: 0 4px 8px rgba(244, 67, 54, 0.3);
+}
+
+.stock-btn:first-child:disabled {
+  background-color: #ffcdd2;
+  color: #ff8a80;
+  border-color: #ffcdd2;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.stock-btn:first-child:disabled:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+/* Botón de aumentar stock (+) */
+.stock-btn:last-child {
+  background-color: #4caf50;
+  color: white;
+  border-color: #45a049;
+}
+
+.stock-btn:last-child:hover {
+  background-color: #45a049;
+  box-shadow: 0 4px 8px rgba(76, 175, 80, 0.3);
+}
+
+/* Responsive para los botones de stock */
+@media (max-width: 700px) {
+  .stock-controls {
+    justify-content: center;
+    margin-top: 15px;
+    gap: 20px;
+  }
+
+  .stock-btn {
+    width: 50px;
+    height: 50px;
+    font-size: 1.6rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .stock-controls {
+    gap: 15px;
+  }
+
+  .stock-btn {
+    width: 45px;
+    height: 45px;
+    font-size: 1.4rem;
+  }
+}
+
+/* ESTILOS PARA AGRUPAR STOCK Y CONTROLES */
+.stock-section {
+  margin-top: 15px;
+}
+
+.stock-display {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
+@media (max-width: 700px) {
+  .stock-display {
+    justify-content: center;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .burger-stock {
+    margin-bottom: 5px;
+  }
+}
+
+.inventary-container {
+  padding-top: 50px;
+  text-align: center;
+}
+
+.inventary-title {
+  color: #000000ff;
+  font-size: 70px;
+  font-family: "Inria Sans", sans-serif;
+  font-weight: bold;
+}
+
+.inventary-content {
+  margin-top: 40px;
+}
+
+.inventary-loading {
+  margin: 40px;
+  color: #666;
+  font-size: 22px;
+}
+
+.inventary-error {
+  margin: 20px auto;
+  color: #d32f2f;
+  background-color: #ffebee;
+  padding: 20px;
+  border-radius: 10px;
+  font-size: 18px;
+  max-width: 600px;
+}
+
+/* Empty state */
+.inventary-empty {
+  margin: 60px;
+  color: #666;
+  font-size: 22px;
+  font-style: italic;
+}
+
+/* Products list */
+.inventary-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+}
+
+.inventary-item {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  position: relative;
+}
+
+/* Debug info */
+.inventary-debug {
+  position: absolute;
+  right: 100px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 14px;
+  color: #666;
+  background-color: #f0f0f0;
+  padding: 5px 10px;
+  border-radius: 4px;
+}
+
+/* Ingredient component styles */
+.ingredient-container {
+  margin-top: 0px;
+  display: flex;
+  justify-content: center;
+}
+
+.ingredient-card {
+  border: 2px solid #000000ff;
+  border-radius: 40px;
+  width: 70vw;
+  background-color: #fff;
+  padding: 20px 40px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  font-family: "Inria Sans", sans-serif;
+}
+
+/* Image section */
+.ingredient-image-container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.ingredient-image {
+  width: 90px;
+  height: 90px;
+  object-fit: cover;
+}
+
+/* Title section */
+.ingredient-title-container {
+  flex: 2;
+  text-align: center;
+}
+
+.ingredient-title {
+  color: #000000ff;
+  font-size: 3rem;
+  font-weight: bold;
+  font-family: "Inria Sans", sans-serif;
+}
+
+/* Delete button section */
+.ingredient-button-container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.ingredient-delete-button {
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  padding: 0;
+  background-color: #ffebee;
+  cursor: pointer;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+.ingredient-delete-button:hover {
+  background-color: #ffcdd2 !important;
+  border-color: #f44336 !important;
+}
+
+.ingredient-delete-icon {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* Responsive adjustments for ingredient card */
+@media (max-width: 1024px) {
+  .ingredient-card {
+    width: 85vw;
+    padding: 20px 30px;
+  }
+
+  .ingredient-title {
+    font-size: 2.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .ingredient-card {
+    width: 90vw;
+    padding: 15px 20px;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .ingredient-title {
+    font-size: 2rem;
+  }
+
+  .ingredient-image-container,
+  .ingredient-title-container,
+  .ingredient-button-container {
+    flex: none;
+    width: 100%;
+  }
+
+  .inventary-debug {
+    position: relative;
+    right: auto;
+    top: auto;
+    transform: none;
+    margin-top: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .ingredient-card {
+    width: 95vw;
+    padding: 10px 15px;
+    border-radius: 25px;
+  }
+
+  .ingredient-title {
+    font-size: 1.8rem;
+  }
+
+  .ingredient-image {
+    width: 70px;
+    height: 70px;
+  }
+
+  .ingredient-delete-button {
+    width: 50px;
+    height: 50px;
+  }
+}

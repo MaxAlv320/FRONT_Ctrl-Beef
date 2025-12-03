@@ -11,13 +11,11 @@ import { postLoginUsers } from "../js/users";
 export default function Login() {
   const images = [burger, burger1, burger2];
   const [currentIndex, setCurrentIndex] = useState(0);
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-
   const navigate = useNavigate();
 
   // Rotación de imágenes
@@ -34,32 +32,38 @@ export default function Login() {
     setLoading(true);
     setError(null);
 
-    const credentials = { email, password };
+    // Validación básica
+    if (!email || !password) {
+      setError("Please enter both email and password");
+      setLoading(false);
+      return;
+    }
 
     try {
+      const credentials = { email, password };
       const response = await postLoginUsers(credentials);
+
       console.log("Login Response:", response);
 
+      // Verificar si la respuesta tiene token
       if (!response?.token) {
-        setError(response?.message || "Invalid credentials.");
+        setError(response?.message || "Invalid credentials");
         setLoading(false);
         return;
       }
 
-      // Guardar token y role
+      // Guardar datos en sessionStorage
       sessionStorage.setItem("token", response.token);
-      sessionStorage.setItem("role", response.role);
+      sessionStorage.setItem("role", response.role || "user");
 
-      // Guardar nombre y correo para el TopBar
+      // Guardar información del usuario para TopBar
       sessionStorage.setItem(
         "user",
         JSON.stringify({
           name: response.name || response.nombre || "User",
-          email: response.email || response.correo || email,
+          email: response.email || email,
         })
       );
-
-      alert("Login successful!");
 
       // Redirección según rol
       if (response.role === "admin") {
@@ -67,9 +71,18 @@ export default function Login() {
       } else {
         navigate("/home");
       }
+
+      // No necesitas alert aquí si la navegación funciona
     } catch (err) {
       console.error("Error logging in:", err);
-      setError("User not found");
+      // Mensajes de error más específicos
+      if (err.message?.includes("Network")) {
+        setError("Network error. Please check your connection.");
+      } else if (err.message?.includes("401")) {
+        setError("Invalid email or password");
+      } else {
+        setError(err.message || "Login failed. Please try again.");
+      }
     } finally {
       setLoading(false);
     }
@@ -78,7 +91,6 @@ export default function Login() {
   return (
     <div className="login-wrapper">
       <div className="login-frame">
-
         {/* HERO */}
         <div className="hero-side">
           <div
@@ -120,6 +132,7 @@ export default function Login() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
+                  disabled={loading}
                 />
               </div>
 
@@ -134,45 +147,68 @@ export default function Login() {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     required
+                    disabled={loading}
                   />
                   <i
                     className={`bi ${
                       showPassword ? "bi-eye" : "bi-eye-slash"
                     } toggle-password`}
-                    onClick={() => setShowPassword(!showPassword)}
+                    onClick={() => !loading && setShowPassword(!showPassword)}
+                    style={{ cursor: loading ? "not-allowed" : "pointer" }}
                   ></i>
                 </div>
               </div>
 
-              {/* Remember - Forgot */}
               <div className="d-flex justify-content-between align-items-center mb-3">
                 <div className="form-check">
                   <input
                     className="form-check-input"
                     type="checkbox"
                     id="remember"
+                    disabled={loading}
                   />
                   <label className="form-check-label" htmlFor="remember">
                     Remember me
                   </label>
                 </div>
-                <Link to="/forgot" className="forgot">
+                <Link
+                  to="/forgot"
+                  className="forgot"
+                  style={{ pointerEvents: loading ? "none" : "auto" }}
+                >
                   Forgot password?
                 </Link>
               </div>
 
-              {/* BTN */}
               <button type="submit" className="sign-btn" disabled={loading}>
-                {loading ? "Signing in..." : "Sign in"}
+                {loading ? (
+                  <>
+                    <span
+                      className="spinner-border spinner-border-sm me-2"
+                      role="status"
+                      aria-hidden="true"
+                    ></span>
+                    Signing in...
+                  </>
+                ) : (
+                  "Sign in"
+                )}
               </button>
 
-              {/* ERROR */}
-              {error && <p className="error-msg mt-2">{error}</p>}
+              {error && (
+                <div className="alert alert-danger mt-3" role="alert">
+                  {error}
+                </div>
+              )}
 
-              <div className="footer-cta">
+              <div className="footer-cta mt-3">
                 <p>
                   Don't have an account?{" "}
-                  <Link to="/signup" className="signup">
+                  <Link
+                    to="/signup"
+                    className="signup"
+                    style={{ pointerEvents: loading ? "none" : "auto" }}
+                  >
                     Sign up
                   </Link>
                 </p>
@@ -180,7 +216,6 @@ export default function Login() {
             </form>
           </div>
         </div>
-
       </div>
     </div>
   );

@@ -15,15 +15,18 @@ const MenuApp = () => {
   const [activeFilter, setActiveFilter] = useState("All");
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null); // ✅ Agregado
 
   const { addItem, items } = useContext(CartContext);
   const navigate = useNavigate();
 
   const img = [img1, img2, img3, img4, img5, img6, img7];
 
+  // ⬇️ CARGAR PRODUCTOS DESDE LA API
   useEffect(() => {
     async function loadProducts() {
       try {
+        setError(null); // Limpiar errores previos
         const response = await getItems();
 
         if (!Array.isArray(response)) {
@@ -43,6 +46,7 @@ const MenuApp = () => {
         setProducts(productsWithImages);
       } catch (err) {
         console.error("Error cargando productos:", err);
+        setError(err.message || "Error al cargar el menú"); // ✅ Establecer error
         setProducts([]);
       } finally {
         setLoading(false);
@@ -81,6 +85,7 @@ const MenuApp = () => {
             product.category?.toLowerCase() === activeFilter.toLowerCase()
         );
 
+  // ⬇️ PANTALLAS DE ESTADO (SÓLO UNA VEZ)
   if (loading) {
     return (
       <div className="text-center mt-5">
@@ -92,6 +97,22 @@ const MenuApp = () => {
     );
   }
 
+  if (error) {
+    return (
+      <div className="text-center mt-5">
+        <h2 className="text-danger">Error</h2>
+        <p>{error}</p>
+        <button
+          className="btn btn-primary mt-3"
+          onClick={() => window.location.reload()}
+        >
+          Reintentar
+        </button>
+      </div>
+    );
+  }
+
+  // ⬇️ UI PRINCIPAL
   return (
     <div className="container-custom">
       <div className="header">
@@ -99,6 +120,7 @@ const MenuApp = () => {
         <p className="header-description">Choose your favorite burgers</p>
       </div>
 
+      {/* FILTROS */}
       <div className="filters-container">
         {filters.map((filter) => (
           <button
@@ -115,45 +137,58 @@ const MenuApp = () => {
 
       <div className="divider"></div>
 
-      <div className="menu-grid">
-        {filteredProducts.map((product, index) => (
-          <div key={`${product.id}-${index}`} className="menu-item">
-            <img
-              src={product.image}
-              alt={product.name}
-              className="menu-item-image"
-            />
+      {/* GRID DE PRODUCTOS */}
+      {filteredProducts.length === 0 ? (
+        <div className="text-center mt-5">
+          <h3>No hay productos disponibles</h3>
+          <p>Intenta seleccionar otra categoría</p>
+        </div>
+      ) : (
+        <div className="menu-grid">
+          {filteredProducts.map((product, index) => (
+            <div key={`${product.id}-${index}`} className="menu-item">
+              <img
+                src={product.image}
+                alt={product.name}
+                className="menu-item-image"
+              />
 
-            <h3 className="menu-item-title">{product.name}</h3>
-            <p className="menu-item-description">{product.description}</p>
+              <h3 className="menu-item-title">{product.name}</h3>
+              <p className="menu-item-description">{product.description}</p>
 
-            <div className="price-add-container">
-              <div className="menu-item-price">${product.price.toFixed(2)}</div>
+              <div className="price-add-container">
+                <div className="menu-item-price">
+                  ${product.price.toFixed(2)}
+                </div>
 
-              <button
-                onClick={() => handleAdd(product)}
-                style={{
-                  backgroundColor: "#f4c644",
-                  color: "white",
-                  border: "none",
-                  padding: "8px 16px",
-                  borderRadius: "4px",
-                  cursor: "pointer",
-                  fontWeight: "600",
-                  transition: "0.2s",
-                }}
-                onMouseOver={(e) =>
-                  (e.target.style.backgroundColor = "#d9b138")
-                }
-                onMouseOut={(e) => (e.target.style.backgroundColor = "#f4c644")}
-              >
-                + Add
-              </button>
+                <button
+                  onClick={() => handleAdd(product)}
+                  style={{
+                    backgroundColor: "#f4c644",
+                    color: "white",
+                    border: "none",
+                    padding: "8px 16px",
+                    borderRadius: "4px",
+                    cursor: "pointer",
+                    fontWeight: "600",
+                    transition: "0.2s",
+                  }}
+                  onMouseOver={(e) =>
+                    (e.target.style.backgroundColor = "#d9b138")
+                  }
+                  onMouseOut={(e) =>
+                    (e.target.style.backgroundColor = "#f4c644")
+                  }
+                >
+                  + Add
+                </button>
+              </div>
             </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
 
+      {/* VER ORDEN */}
       <div className="view-order-container">
         <button
           onClick={() => navigate("/checkout")}

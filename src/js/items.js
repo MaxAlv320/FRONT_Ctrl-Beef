@@ -188,3 +188,43 @@ export async function postBuyItem(itemsData) {
     throw error;
   }
 }
+
+// Agrega esto al FINAL de tu items.js (después de postBuyItem)
+
+export async function patchItemStock(id, amount) {
+  const url = `https://hylotropic-renee-unexcrescently.ngrok-free.dev/api/items/${id}/stock`;
+
+  const token = sessionStorage.getItem("token");
+
+  if (!token) {
+    console.error("Token NO encontrado en sessionStorage");
+    throw new Error("No hay token de autenticación");
+  }
+
+  const headers = {
+    "Content-Type": "application/json",
+    "ngrok-skip-browser-warning": "true",
+    Authorization: `Bearer ${token}`,
+    "x-app-token":
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcHAiOiJDdHJsQmVlZiIsImlhdCI6MTc2NDE3MzkwOCwiZXhwIjoxNzk1Mjc3OTA4fQ.aYiSMuLILGQt07Too8BY-x9UBmbPQhI3HJhHST1gbLQ",
+  };
+
+  try {
+    const response = await fetch(url, {
+      method: "PATCH",
+      headers,
+      body: JSON.stringify({ amount }),
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      throw new Error(`Error HTTP ${response.status}: ${errorText}`);
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error en patchItemStock:", error);
+    throw error;
+  }
+}
