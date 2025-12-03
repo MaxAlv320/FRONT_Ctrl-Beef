@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from "react";
-import { getProducts } from "../js/products.js";
+import { getItems } from "../js/items.js";
 import { CartContext } from "../context/CartContext";
 import { useNavigate } from "react-router-dom";
 
@@ -24,13 +24,15 @@ const MenuApp = () => {
   useEffect(() => {
     async function loadProducts() {
       try {
-        const response = await getProducts();
+        const response = await getItems();
+
         if (!Array.isArray(response)) {
-          throw new Error("Formato inválido");
+          throw new Error("Formato inválido de respuesta");
         }
 
         const productsWithImages = response.map((product, index) => ({
-          id: String(product.id || `prod-${Date.now()}-${index}`),
+          dbId: product._id || product.id,
+          id: product._id || product.id,
           name: product.name || `Product ${index + 1}`,
           price: parseFloat(product.price) || 0,
           description: product.description || "Sin descripción",
@@ -40,11 +42,8 @@ const MenuApp = () => {
 
         setProducts(productsWithImages);
       } catch (err) {
-        setProducts([
-          { id: "1", name: "Classic Burger", price: 9.99, description: "Delicious classic", category: "Classic" },
-          { id: "2", name: "Cheese Deluxe", price: 11.99, description: "Extra cheese", category: "Special" },
-          { id: "3", name: "Veggie Burger", price: 10.99, description: "Vegetarian", category: "Vegetarian" },
-        ].map((product, index) => ({ ...product, image: img[index % img.length] })));
+        console.error("Error cargando productos:", err);
+        setProducts([]);
       } finally {
         setLoading(false);
       }
@@ -55,8 +54,14 @@ const MenuApp = () => {
 
   const handleAdd = (product) => {
     addItem({
-      ...product,
-      quantity: 1
+      dbId: product.dbId,
+      id: product.id,
+      name: product.name,
+      price: product.price,
+      description: product.description,
+      category: product.category,
+      image: product.image,
+      quantity: 1,
     });
   };
 
@@ -65,14 +70,16 @@ const MenuApp = () => {
     { name: "Classic" },
     { name: "Special" },
     { name: "Vegetarian" },
-    { name: "Combo" }
+    { name: "Combo" },
   ];
 
-  const filteredProducts = activeFilter === "All"
-    ? products
-    : products.filter((product) =>
-        product.category?.toLowerCase() === activeFilter.toLowerCase()
-      );
+  const filteredProducts =
+    activeFilter === "All"
+      ? products
+      : products.filter(
+          (product) =>
+            product.category?.toLowerCase() === activeFilter.toLowerCase()
+        );
 
   if (loading) {
     return (
@@ -111,7 +118,11 @@ const MenuApp = () => {
       <div className="menu-grid">
         {filteredProducts.map((product, index) => (
           <div key={`${product.id}-${index}`} className="menu-item">
-            <img src={product.image} alt={product.name} className="menu-item-image" />
+            <img
+              src={product.image}
+              alt={product.name}
+              className="menu-item-image"
+            />
 
             <h3 className="menu-item-title">{product.name}</h3>
             <p className="menu-item-description">{product.description}</p>
@@ -119,7 +130,6 @@ const MenuApp = () => {
             <div className="price-add-container">
               <div className="menu-item-price">${product.price.toFixed(2)}</div>
 
-              {/* BOTÓN +ADD ACTUALIZADO */}
               <button
                 onClick={() => handleAdd(product)}
                 style={{
@@ -130,21 +140,20 @@ const MenuApp = () => {
                   borderRadius: "4px",
                   cursor: "pointer",
                   fontWeight: "600",
-                  transition: "0.2s"
+                  transition: "0.2s",
                 }}
-                onMouseOver={(e) => (e.target.style.backgroundColor = "#d9b138")}
+                onMouseOver={(e) =>
+                  (e.target.style.backgroundColor = "#d9b138")
+                }
                 onMouseOut={(e) => (e.target.style.backgroundColor = "#f4c644")}
               >
                 + Add
               </button>
             </div>
-
-        
           </div>
         ))}
       </div>
 
-      {/* BOTÓN VIEW ORDER ACTUALIZADO */}
       <div className="view-order-container">
         <button
           onClick={() => navigate("/checkout")}
@@ -157,7 +166,7 @@ const MenuApp = () => {
             border: "none",
             borderRadius: "6px",
             cursor: "pointer",
-            transition: "0.2s"
+            transition: "0.2s",
           }}
           onMouseOver={(e) => (e.target.style.backgroundColor = "#d9b138")}
           onMouseOut={(e) => (e.target.style.backgroundColor = "#f4c644")}
