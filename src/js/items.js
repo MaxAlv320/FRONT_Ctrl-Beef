@@ -1,4 +1,3 @@
-// items.js - Archivo completo de API
 export async function getItems() {
   const url =
     "https://hylotropic-renee-unexcrescently.ngrok-free.dev/api/items";
@@ -72,9 +71,8 @@ export async function getItemByName(name) {
   }
 }
 
-export async function postBuyItem(itemId, quantity = 1) {
-  const url =
-    "https://hylotropic-renee-unexcrescently.ngrok-free.dev/api/items/buy";
+export async function postBuyItem(itemsData) {
+  const url = "https://hylotropic-renee-unexcrescently.ngrok-free.dev/api/items/buy";
 
   const token = sessionStorage.getItem("token");
 
@@ -86,44 +84,96 @@ export async function postBuyItem(itemId, quantity = 1) {
     "Content-Type": "application/json",
     "ngrok-skip-browser-warning": "true",
     Authorization: `Bearer ${token}`,
-    "x-app-token":
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcHAiOiJDdHJsQmVlZiIsImlhdCI6MTc2NDE3MzkwOCwiZXhwIjoxNzk1Mjc3OTA4fQ.aYiSMuLILGQt07Too8BY-x9UBmbPQhI3HJhHST1gbLQ",
+    "x-app-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcHAiOiJDdHJsQmVlZiIsImlhdCI6MTc2NDE3MzkwOCwiZXhwIjoxNzk1Mjc3OTA4fQ.aYiSMuLILGQt07Too8BY-x9UBmbPQhI3HJhHST1gbLQ",
   };
 
+  // Asegurar que itemsData sea un array
+  let formattedItems = [];
+  
+  if (Array.isArray(itemsData)) {
+    formattedItems = itemsData.map(item => {
+      if (item && typeof item === 'object' && item.id) {
+        return {
+          id: item.id,
+          quantity: Number(item.quantity) || 1
+        };
+      }
+      return {
+        id: item,
+        quantity: 1
+      };
+    });
+  } else {
+    if (itemsData && typeof itemsData === 'object' && itemsData.id) {
+      formattedItems = [{
+        id: itemsData.id,
+        quantity: Number(itemsData.quantity) || 1
+      }];
+    } else {
+      formattedItems = [{
+        id: itemsData,
+        quantity: 1
+      }];
+    }
+  }
+
   const body = JSON.stringify({
-    itemId: String(itemId),
-    quantity: parseInt(quantity),
+    items: formattedItems
   });
 
+  console.log("Intentando con PATCH...");
+
   try {
-    const response = await fetch(url, {
-      method: "POST",
+    // PRIMERO: Intentar con PATCH (como ya lo tienes)
+    let response = await fetch(url, {
+      method: "PATCH",
       headers,
       body: body,
     });
 
+    // Si PATCH falla, probar con POST
+    if (!response.ok && response.status === 404) {
+      console.log("PATCH falló, intentando con POST...");
+      response = await fetch(url, {
+        method: "POST",
+        headers,
+        body: body,
+      });
+    }
+
+    // Si POST falla, probar con PUT
+    if (!response.ok && response.status === 404) {
+      console.log("POST falló, intentando con PUT...");
+      response = await fetch(url, {
+        method: "PUT",
+        headers,
+        body: body,
+      });
+    }
+
     const responseText = await response.text();
+    console.log("Status:", response.status);
+    console.log("Response:", responseText);
 
     if (!response.ok) {
-      throw new Error(
-        `Error ${response.status}: ${responseText || response.statusText}`
-      );
+      throw new Error(`Error ${response.status}: ${responseText || response.statusText}`);
     }
 
     try {
       const parsed = JSON.parse(responseText);
-
-      // Verificar si hay errores en results
+      
       if (parsed.results && Array.isArray(parsed.results)) {
         const errors = parsed.results.filter((r) => r.status === "error");
         if (errors.length > 0) {
-          throw new Error(errors.map((e) => e.message).join(", "));
+          const errorMessages = errors.map(e => `ID ${e.id}: ${e.message}`);
+          throw new Error(errorMessages.join('; '));
         }
       }
 
       return parsed;
     } catch (e) {
-      return { success: true, message: "Compra realizada" };
+      console.log("Respuesta no JSON, pero éxito:", responseText);
+      return { success: true, message: "Compra realizada", raw: responseText };
     }
   } catch (error) {
     console.error("Error en postBuyItem:", error);

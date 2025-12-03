@@ -16,15 +16,7 @@ export default function CheckoutPayment() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log("Items en carrito para compra:", items);
-    items.forEach((item, index) => {
-      console.log(`Item ${index}:`, {
-        nombre: item.name,
-        idParaAPI: item.dbId || item.id,
-        cantidad: item.quantity,
-        precio: item.price,
-      });
-    });
+    console.log("Items en carrito:", items);
   }, [items]);
 
   const generateOrderNumber = () => {
@@ -42,47 +34,93 @@ export default function CheckoutPayment() {
     setError(null);
     setPurchaseStatus({});
 
-    const statusUpdates = {};
-
     try {
-      // Procesar cada item individualmente
-      for (let i = 0; i < items.length; i++) {
-        const item = items[i];
-        const itemId = item.dbId || item.id;
+      // Preparar datos en el formato correcto para la API
+      const itemsToBuy = items.map(item => ({
+        id: item.dbId || item.id,
+        quantity: item.quantity
+      }));
 
-        if (!itemId) {
-          throw new Error(`"${item.name}" no tiene un ID válido`);
-        }
+      console.log("Items a comprar:", itemsToBuy);
 
-        statusUpdates[item.name] = {
-          status: "processing",
-          message: "Procesando...",
-        };
-        setPurchaseStatus({ ...statusUpdates });
-
-        try {
-          const result = await postBuyItem(itemId, item.quantity);
-          statusUpdates[item.name] = {
-            status: "success",
-            message: "✓ Comprado",
-          };
-          setPurchaseStatus({ ...statusUpdates });
-          console.log(`✓ ${item.name} comprado:`, result);
-        } catch (itemError) {
-          statusUpdates[item.name] = {
-            status: "error",
-            message: `✗ Error: ${itemError.message}`,
-          };
-          setPurchaseStatus({ ...statusUpdates });
-          throw new Error(`${item.name}: ${itemError.message}`);
-        }
+      // Verificar que todos los items tienen ID
+      const itemsWithoutId = items.filter(item => !item.dbId && !item.id);
+      if (itemsWithoutId.length > 0) {
+        throw new Error(`Los siguientes items no tienen ID: ${itemsWithoutId.map(i => i.name).join(', ')}`);
       }
 
-      // Todas las compras exitosas
+      // Enviar los datos al backend
+      const result = await postBuyItem(itemsToBuy);
+      
+      console.log("Resultado de la compra:", result);
+
+      // Procesar resultados
+      if (result.results) {
+        // Crear un mapa para mostrar estado por item
+        const resultsMap = {};
+        result.results.forEach(r => {
+          resultsMap[r.id] = r;
+        });
+
+        // Actualizar estado para cada item
+        items.forEach(item => {
+          const itemId = item.dbId || item.id;
+          const resultItem = resultsMap[itemId];
+          
+          if (resultItem) {
+            if (resultItem.status === "success") {
+              setPurchaseStatus(prev => ({
+                ...prev,
+                [item.name]: {
+                  status: "success",
+                  message: `✓ ${resultItem.message || "Comprado exitosamente"}`
+                }
+              }));
+            } else {
+              setPurchaseStatus(prev => ({
+                ...prev,
+                [item.name]: {
+                  status: "error",
+                  message: `✗ ${resultItem.message || "Error en la compra"}`
+                }
+              }));
+            }
+          } else {
+            setPurchaseStatus(prev => ({
+              ...prev,
+              [item.name]: {
+                status: "warning",
+                message: "⚠ No se recibió respuesta para este item"
+              }
+            }));
+          }
+        });
+
+        // Verificar si hay errores
+        const errors = result.results.filter(r => r.status === "error");
+        if (errors.length > 0) {
+          const errorMessages = errors.map(e => 
+            `${items.find(i => (i.dbId || i.id) === e.id)?.name || e.id}: ${e.message}`
+          );
+          throw new Error(`Errores: ${errorMessages.join('; ')}`);
+        }
+      } else {
+        // Si no hay results, asumir éxito
+        items.forEach(item => {
+          setPurchaseStatus(prev => ({
+            ...prev,
+            [item.name]: {
+              status: "success",
+              message: "✓ Compra exitosa"
+            }
+          }));
+        });
+      }
+
+      // Si todo fue exitoso, proceder con la orden
       const orderNumber = generateOrderNumber();
-
       clearCart();
-
+      
       navigate("/orderready", {
         state: {
           total,
@@ -90,9 +128,15 @@ export default function CheckoutPayment() {
           itemsCount: items.length,
         },
       });
+      
     } catch (err) {
       console.error("Error en el proceso de compra:", err);
       setError(err.message);
+      
+      // Si el error es de stock, mostrar sugerencia
+      if (err.message.includes("stock") || err.message.includes("Stock") || err.message.includes("enough")) {
+        setError(prev => `${prev}. Por favor, ajusta las cantidades o elimina algunos items.`);
+      }
     } finally {
       setLoading(false);
     }
@@ -145,10 +189,10 @@ export default function CheckoutPayment() {
                         : "text-warning"
                     }`}
                   >
-                    {status.status === "processing" && "🔄 "}
                     {status.status === "success" && "✅ "}
                     {status.status === "error" && "❌ "}
-                    {itemName}: {status.message}
+                    {status.status === "warning" && "⚠️ "}
+                    <strong>{itemName}:</strong> {status.message}
                   </div>
                 ))}
               </div>
@@ -175,21 +219,9 @@ export default function CheckoutPayment() {
                   Procesando compra...
                 </>
               ) : (
-                "Confirmar Orden y Comprar"
+                "Confirm Order"
               )}
             </button>
-
-            {/* Información de debug (solo desarrollo) */}
-            {process.env.NODE_ENV === "development" && items.length > 0 && (
-              <div className="mt-3 p-2 bg-dark text-white rounded small">
-                <div>IDs que se enviarán:</div>
-                {items.map((item, idx) => (
-                  <div key={idx} className="font-monospace">
-                    {item.name}: "{item.dbId || item.id}"
-                  </div>
-                ))}
-              </div>
-            )}
           </section>
         </div>
 
@@ -205,7 +237,7 @@ export default function CheckoutPayment() {
                       {item.quantity}x {item.name}
                     </strong>
                     <div className="text-muted small">
-                      ID: <code>{item.dbId || item.id}</code>
+                      ${Number(item.price).toFixed(2)} c/u
                     </div>
                   </div>
                   <div>
