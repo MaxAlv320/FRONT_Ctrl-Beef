@@ -2,7 +2,7 @@
 .inventory-title {
   color: #000;
   font-size: clamp(2.5rem, 6vw, 4.2rem);
-  font-family: 'Inria Sans', sans-serif;
+  font-family: "Inria Sans", sans-serif;
   font-weight: bold;
 }
 
@@ -50,7 +50,7 @@
   flex-direction: row;
   gap: 20px;
 
-  font-family: 'Inria Sans', sans-serif;
+  font-family: "Inria Sans", sans-serif;
 }
 
 /* En móvil, card vertical */
@@ -113,9 +113,226 @@
 
 .edit-text {
   margin-top: 10px;
-  color: #F6A700;
+  color: #f6a700;
   background: none;
   border: none;
   cursor: pointer;
   font-size: clamp(1rem, 2vw, 1.5rem);
+}
+
+/* ======================= */
+/* ESTILOS NUEVOS AGREGADOS */
+/* ======================= */
+
+/* Inventary component styles */
+.inventary-container {
+  padding-top: 50px;
+  text-align: center;
+}
+
+.inventary-title {
+  color: #000000ff;
+  font-size: 70px;
+  font-family: "Inria Sans", sans-serif;
+  font-weight: bold;
+}
+
+.inventary-content {
+  margin-top: 40px;
+}
+
+/* Loading state */
+.inventary-loading {
+  margin: 40px;
+  color: #666;
+  font-size: 22px;
+}
+
+/* Error state */
+.inventary-error {
+  margin: 20px auto;
+  color: #d32f2f;
+  background-color: #ffebee;
+  padding: 20px;
+  border-radius: 10px;
+  font-size: 18px;
+  max-width: 600px;
+}
+
+/* Empty state */
+.inventary-empty {
+  margin: 60px;
+  color: #666;
+  font-size: 22px;
+  font-style: italic;
+}
+
+/* Products list */
+.inventary-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+}
+
+.inventary-item {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  position: relative;
+}
+
+/* Debug info */
+.inventary-debug {
+  position: absolute;
+  right: 100px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 14px;
+  color: #666;
+  background-color: #f0f0f0;
+  padding: 5px 10px;
+  border-radius: 4px;
+}
+
+/* Ingredient component styles */
+.ingredient-container {
+  margin-top: 0px;
+  display: flex;
+  justify-content: center;
+}
+
+.ingredient-card {
+  border: 2px solid #000000ff;
+  border-radius: 40px;
+  width: 70vw;
+  background-color: #fff;
+  padding: 20px 40px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  font-family: "Inria Sans", sans-serif;
+}
+
+/* Image section */
+.ingredient-image-container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.ingredient-image {
+  width: 90px;
+  height: 90px;
+  object-fit: cover;
+}
+
+/* Title section */
+.ingredient-title-container {
+  flex: 2;
+  text-align: center;
+}
+
+.ingredient-title {
+  color: #000000ff;
+  font-size: 3rem;
+  font-weight: bold;
+  font-family: "Inria Sans", sans-serif;
+}
+
+/* Delete button section */
+.ingredient-button-container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.ingredient-delete-button {
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  padding: 0;
+  background-color: #ffebee;
+  cursor: pointer;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+.ingredient-delete-button:hover {
+  background-color: #ffcdd2 !important;
+  border-color: #f44336 !important;
+}
+
+.ingredient-delete-icon {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* Responsive adjustments for ingredient card */
+@media (max-width: 1024px) {
+  .ingredient-card {
+    width: 85vw;
+    padding: 20px 30px;
+  }
+
+  .ingredient-title {
+    font-size: 2.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .ingredient-card {
+    width: 90vw;
+    padding: 15px 20px;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .ingredient-title {
+    font-size: 2rem;
+  }
+
+  .ingredient-image-container,
+  .ingredient-title-container,
+  .ingredient-button-container {
+    flex: none;
+    width: 100%;
+  }
+
+  .inventary-debug {
+    position: relative;
+    right: auto;
+    top: auto;
+    transform: none;
+    margin-top: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .ingredient-card {
+    width: 95vw;
+    padding: 10px 15px;
+    border-radius: 25px;
+  }
+
+  .ingredient-title {
+    font-size: 1.8rem;
+  }
+
+  .ingredient-image {
+    width: 70px;
+    height: 70px;
+  }
+
+  .ingredient-delete-button {
+    width: 50px;
+    height: 50px;
+  }
 }

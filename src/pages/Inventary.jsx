@@ -49,7 +49,6 @@ const Inventary = () => {
         productsData.products &&
         Array.isArray(productsData.products)
       ) {
-        // Si la respuesta viene dentro de un objeto {products: [...]}
         setProducts(productsData.products);
       } else {
         console.error("Formato de datos inesperado:", productsData);
@@ -63,7 +62,6 @@ const Inventary = () => {
     }
   };
 
-  // Función para eliminar un producto
   const handleDeleteProduct = async (productId, productName) => {
     console.log(
       "Intentando eliminar producto ID:",
@@ -87,8 +85,6 @@ const Inventary = () => {
       console.log("Llamando a deleteProduct con ID:", productId);
       await deleteProduct(productId);
       console.log(`Producto ${productId} eliminado exitosamente`);
-
-      // Actualizar la lista de productos eliminando el producto borrado
       setProducts((prevProducts) =>
         prevProducts.filter((product) => {
           console.log("Comparando:", product.id, "con:", productId);
@@ -103,23 +99,19 @@ const Inventary = () => {
     }
   };
 
-  // Cargar productos al montar el componente
   useEffect(() => {
     loadProducts();
   }, []);
 
-  // Función para obtener la imagen correspondiente
   const getProductImage = (product, index) => {
-    // Si el producto tiene una URL de imagen, la usamos
     if (product.imageUrl) {
       return product.imageUrl;
     }
-    // Si el producto tiene un índice o id, usamos la imagen correspondiente
+
     const productIndex = product.id || index;
     return burgerImages[productIndex % burgerImages.length];
   };
 
-  // Función para obtener el nombre del producto
   const getProductTitle = (product, index) => {
     if (product.name) {
       return product.name;
@@ -127,7 +119,7 @@ const Inventary = () => {
     if (product.productName) {
       return product.productName;
     }
-    // Nombres por defecto si la API no proporciona nombres
+
     const defaultNames = [
       "Classic Burger",
       "Cheese Burger",
@@ -144,7 +136,6 @@ const Inventary = () => {
     );
   };
 
-  // Función para obtener el ID del producto
   const getProductId = (product) => {
     if (product.id) {
       return product.id;
@@ -163,58 +154,17 @@ const Inventary = () => {
     <>
       <Navbar title="Inventary" />
 
-      <div style={{ paddingTop: "50px", textAlign: "center" }}>
-        <h2
-          style={{
-            color: "#000000ff",
-            fontSize: "70px",
-            fontFamily: "'Inria Sans', sans-serif",
-            fontWeight: "bold",
-          }}
-        >
-          Burgers
-        </h2>
-
-        {/* Sección de ingredientes/products */}
-        <div style={{ marginTop: "40px" }}>
+      <div className="inventary-container">
+        <h2 className="inventary-title">Burgers</h2>
+        <div className="inventary-content">
           {loading ? (
-            <div style={{ margin: "40px", color: "#666", fontSize: "22px" }}>
-              Cargando productos...
-            </div>
+            <div className="inventary-loading">Cargando productos...</div>
           ) : error ? (
-            <div
-              style={{
-                margin: "20px auto",
-                color: "#d32f2f",
-                backgroundColor: "#ffebee",
-                padding: "20px",
-                borderRadius: "10px",
-                fontSize: "18px",
-                maxWidth: "600px",
-              }}
-            >
-              {error}
-            </div>
+            <div className="inventary-error">{error}</div>
           ) : products.length === 0 ? (
-            <div
-              style={{
-                margin: "60px",
-                color: "#666",
-                fontSize: "22px",
-                fontStyle: "italic",
-              }}
-            >
-              No hay productos disponibles.
-            </div>
+            <div className="inventary-empty">No hay productos disponibles.</div>
           ) : (
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                gap: "20px",
-                alignItems: "center",
-              }}
-            >
+            <div className="inventary-list">
               {products.map((product, index) => {
                 const productId = getProductId(product);
                 const productName = getProductTitle(product, index);
@@ -225,14 +175,7 @@ const Inventary = () => {
                 }
 
                 return (
-                  <div
-                    key={productId || index}
-                    style={{
-                      width: "100%",
-                      display: "flex",
-                      justifyContent: "center",
-                    }}
-                  >
+                  <div key={productId || index} className="inventary-item">
                     <Ingredient
                       title={productName}
                       image={getProductImage(product, index)}
@@ -240,22 +183,6 @@ const Inventary = () => {
                         handleDeleteProduct(productId, productName)
                       }
                     />
-                    {/* Mostrar información de depuración */}
-                    <div
-                      style={{
-                        position: "absolute",
-                        right: "100px",
-                        top: "50%",
-                        transform: "translateY(-50%)",
-                        fontSize: "14px",
-                        color: "#666",
-                        backgroundColor: "#f0f0f0",
-                        padding: "5px 10px",
-                        borderRadius: "4px",
-                      }}
-                    >
-                      ID: {productId}
-                    </div>
                   </div>
                 );
               })}
