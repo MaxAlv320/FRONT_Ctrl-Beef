@@ -180,12 +180,6 @@ export default function Login() {
                 )}
               </button>
 
-              {error && (
-                <div className="alert alert-danger mt-3" role="alert">
-                  {error}
-                </div>
-              )}
-
               <div className="footer-cta mt-3">
                 <p>
                   Don't have an account?{" "}
