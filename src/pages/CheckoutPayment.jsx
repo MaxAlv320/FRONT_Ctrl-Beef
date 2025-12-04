@@ -10,21 +10,13 @@ export default function CheckoutPayment() {
   const [method, setMethod] = useState("counter");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [purchaseStatus, setPurchaseStatus] = useState({});
+  // const [purchaseStatus, setPurchaseStatus] = useState({}); // eliminado
 
   const total = Number(subtotal) || 0;
   const navigate = useNavigate();
 
   useEffect(() => {
     console.log("Items en carrito para compra:", items);
-    items.forEach((item, index) => {
-      console.log(`Item ${index}:`, {
-        nombre: item.name,
-        idParaAPI: item.dbId || item.id,
-        cantidad: item.quantity,
-        precio: item.price,
-      });
-    });
   }, [items]);
 
   const generateOrderNumber = () => {
@@ -40,11 +32,10 @@ export default function CheckoutPayment() {
 
     setLoading(true);
     setError(null);
-    setPurchaseStatus({});
-
-    const statusUpdates = {};
+    // setPurchaseStatus({}); // eliminado
 
     try {
+      // Procesar cada item individualmente
       for (let i = 0; i < items.length; i++) {
         const item = items[i];
         const itemId = item.dbId || item.id;
@@ -53,32 +44,15 @@ export default function CheckoutPayment() {
           throw new Error(`"${item.name}" no tiene un ID válido`);
         }
 
-        statusUpdates[item.name] = {
-          status: "processing",
-          message: "Procesando...",
-        };
-        setPurchaseStatus({ ...statusUpdates });
-
         try {
           const result = await postBuyItem(itemId, item.quantity);
-          statusUpdates[item.name] = {
-            status: "success",
-            message: "✓ Comprado",
-          };
-          setPurchaseStatus({ ...statusUpdates });
           console.log(`✓ ${item.name} comprado:`, result);
         } catch (itemError) {
-          statusUpdates[item.name] = {
-            status: "error",
-            message: `✗ Error: ${itemError.message}`,
-          };
-          setPurchaseStatus({ ...statusUpdates });
           throw new Error(`${item.name}: ${itemError.message}`);
         }
       }
 
       const orderNumber = generateOrderNumber();
-
       clearCart();
 
       navigate("/orderready", {
@@ -128,28 +102,12 @@ export default function CheckoutPayment() {
               complete your payment. Our staff will be happy to assist you!
             </div>
 
-            {Object.keys(purchaseStatus).length > 0 && (
+            {/* Estado de compras comentado */}
+            {/* {Object.keys(purchaseStatus).length > 0 && (
               <div className="purchase-status mt-3 p-3 bg-light rounded">
                 <h6>Estado de compras:</h6>
-                {Object.entries(purchaseStatus).map(([itemName, status]) => (
-                  <div
-                    key={itemName}
-                    className={`mb-1 ${
-                      status.status === "error"
-                        ? "text-danger"
-                        : status.status === "success"
-                        ? "text-success"
-                        : "text-warning"
-                    }`}
-                  >
-                    {status.status === "processing" && "🔄 "}
-                    {status.status === "success" && "✅ "}
-                    {status.status === "error" && "❌ "}
-                    {itemName}: {status.message}
-                  </div>
-                ))}
               </div>
-            )}
+            )} */}
 
             {error && (
               <div className="alert alert-danger mt-3">
@@ -169,23 +127,19 @@ export default function CheckoutPayment() {
                     role="status"
                     aria-hidden="true"
                   ></span>
-                  Procesando compra...
+                  Processing purchase...
                 </>
               ) : (
-                "Confirmar Orden y Comprar"
+                "Confirm Order"
               )}
             </button>
 
-            {process.env.NODE_ENV === "development" && items.length > 0 && (
+            {/* Información de debug comentada */}
+            {/* {process.env.NODE_ENV === "development" && items.length > 0 && (
               <div className="mt-3 p-2 bg-dark text-white rounded small">
                 <div>IDs que se enviarán:</div>
-                {items.map((item, idx) => (
-                  <div key={idx} className="font-monospace">
-                    {item.name}: "{item.dbId || item.id}"
-                  </div>
-                ))}
               </div>
-            )}
+            )} */}
           </section>
         </div>
 
@@ -200,9 +154,10 @@ export default function CheckoutPayment() {
                     <strong>
                       {item.quantity}x {item.name}
                     </strong>
-                    <div className="text-muted small">
+                    {/* ID eliminado */}
+                    {/* <div className="text-muted small">
                       ID: <code>{item.dbId || item.id}</code>
-                    </div>
+                    </div> */}
                   </div>
                   <div>
                     ${(Number(item.price) * Number(item.quantity)).toFixed(2)}

@@ -80,18 +80,23 @@ const MenuApp = () => {
     activeFilter === "All"
       ? products
       : products.filter(
-          (product) =>
-            product.category?.toLowerCase() === activeFilter.toLowerCase()
-        );
+        (product) =>
+          product.category?.toLowerCase() === activeFilter.toLowerCase()
+      );
 
   if (loading) {
     return (
       <div className="text-center mt-5">
-        <h2>Cargando menú...</h2>
-        <div className="spinner-border text-primary mt-3" role="status">
-          <span className="visually-hidden">Cargando...</span>
+        <h2>Loading menu...</h2>
+        <div
+          className="spinner-border mt-3"
+          role="status"
+          style={{ color: "#f4c644" }}
+        >
+          <span className="visually-hidden">Loading...</span>
         </div>
       </div>
+
     );
   }
 
@@ -121,9 +126,8 @@ const MenuApp = () => {
         {filters.map((filter) => (
           <button
             key={filter.name}
-            className={`filter-button ${
-              activeFilter === filter.name ? "active" : ""
-            }`}
+            className={`filter-button ${activeFilter === filter.name ? "active" : ""
+              }`}
             onClick={() => setActiveFilter(filter.name)}
           >
             {filter.name}
