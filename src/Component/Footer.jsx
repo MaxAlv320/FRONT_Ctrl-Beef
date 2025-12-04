@@ -6,7 +6,7 @@ const Footer = () => {
   return (
     <footer className="footer-section text-white py-5">
       <div className="container footer-container">
-        {/* IZQUIERDA */}
+        {/* Izquierda */}
         <div className="footer-left">
           <h4 className="footer-title mb-3">About Us</h4>
           <p className="footer-description">
@@ -16,7 +16,7 @@ const Footer = () => {
           </p>
         </div>
 
-        {/* DERECHA */}
+        {/* Derecha */}
         <div className="footer-right">
           <div className="footer-contact">
             <p><FaPhoneAlt className="footer-icon" /> +52 449 143 31 95</p>
@@ -37,7 +37,7 @@ const Footer = () => {
         </div>
       </div>
 
-      {/* COPYRIGHT */}
+      {/* CopyRight */}
       <div className="footer-copy text-center mt-4">
         © 2025 <span className="highlight">Ctrl+Beef.</span> All rights reserved.
       </div>

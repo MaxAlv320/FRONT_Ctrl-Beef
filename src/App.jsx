@@ -17,7 +17,7 @@ function App() {
       <Routes>
         {/* RUTAS SIN TOPBAR */}
         <Route path="/" element={<Login />} />
-        <Route path="/login" element={<Login />} />   {/* <---- aquí */}
+        <Route path="/login" element={<Login />} /> 
         <Route path="/signup" element={<Signup />} />
         <Route path="/forgot" element={<ForgotPassword />} />
 

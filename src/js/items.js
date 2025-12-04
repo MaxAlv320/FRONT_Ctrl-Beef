@@ -87,7 +87,7 @@ export async function postBuyItem(itemsData) {
     "x-app-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcHAiOiJDdHJsQmVlZiIsImlhdCI6MTc2NDE3MzkwOCwiZXhwIjoxNzk1Mjc3OTA4fQ.aYiSMuLILGQt07Too8BY-x9UBmbPQhI3HJhHST1gbLQ",
   };
 
-  // Asegurar que itemsData sea un array
+  //Para asegurar que itemsData sea un array
   let formattedItems = [];
   
   if (Array.isArray(itemsData)) {
@@ -124,14 +124,14 @@ export async function postBuyItem(itemsData) {
   console.log("Intentando con PATCH...");
 
   try {
-    // PRIMERO: Intentar con PATCH (como ya lo tienes)
+    //Intentar con PATCH
     let response = await fetch(url, {
       method: "PATCH",
       headers,
       body: body,
     });
 
-    // Si PATCH falla, probar con POST
+    //Si PATCH no responde, intentar con POST
     if (!response.ok && response.status === 404) {
       console.log("PATCH falló, intentando con POST...");
       response = await fetch(url, {
@@ -141,7 +141,7 @@ export async function postBuyItem(itemsData) {
       });
     }
 
-    // Si POST falla, probar con PUT
+    //Si POST no responde, intentar con PUT
     if (!response.ok && response.status === 404) {
       console.log("POST falló, intentando con PUT...");
       response = await fetch(url, {

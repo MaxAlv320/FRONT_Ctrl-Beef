@@ -22,7 +22,7 @@ export async function postLoginUsers(userData) {
       throw new Error(data.message || "Invalid credentials");
     }
 
-    // ⬅️⬅️ GUARDAR TOKEN CORRECTAMENTE
+    //Para guardar el token correctamente
     sessionStorage.setItem("token", data.token);
 
     return data;

@@ -16,7 +16,7 @@ export default function CheckoutPayment() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log("Items en carrito:", items);
+    console.log("Items in cart:", items);
   }, [items]);
 
   const generateOrderNumber = () => {
@@ -26,7 +26,7 @@ export default function CheckoutPayment() {
 
   const handleConfirm = async () => {
     if (items.length === 0) {
-      setError("El carrito está vacío");
+      setError("Your shopping cart is empty");
       return;
     }
 
@@ -35,34 +35,28 @@ export default function CheckoutPayment() {
     setPurchaseStatus({});
 
     try {
-      // Preparar datos en el formato correcto para la API
       const itemsToBuy = items.map(item => ({
         id: item.dbId || item.id,
         quantity: item.quantity
       }));
 
-      console.log("Items a comprar:", itemsToBuy);
+      console.log("Items to purchase:", itemsToBuy);
 
-      // Verificar que todos los items tienen ID
       const itemsWithoutId = items.filter(item => !item.dbId && !item.id);
       if (itemsWithoutId.length > 0) {
-        throw new Error(`Los siguientes items no tienen ID: ${itemsWithoutId.map(i => i.name).join(', ')}`);
+        throw new Error(`The following items do not have an ID: ${itemsWithoutId.map(i => i.name).join(', ')}`);
       }
 
-      // Enviar los datos al backend
       const result = await postBuyItem(itemsToBuy);
       
-      console.log("Resultado de la compra:", result);
+      console.log("Purchase result:", result);
 
-      // Procesar resultados
       if (result.results) {
-        // Crear un mapa para mostrar estado por item
         const resultsMap = {};
         result.results.forEach(r => {
           resultsMap[r.id] = r;
         });
 
-        // Actualizar estado para cada item
         items.forEach(item => {
           const itemId = item.dbId || item.id;
           const resultItem = resultsMap[itemId];
@@ -73,7 +67,7 @@ export default function CheckoutPayment() {
                 ...prev,
                 [item.name]: {
                   status: "success",
-                  message: `✓ ${resultItem.message || "Comprado exitosamente"}`
+                  message: `${resultItem.message || "Purchased successfully"}`
                 }
               }));
             } else {
@@ -81,7 +75,7 @@ export default function CheckoutPayment() {
                 ...prev,
                 [item.name]: {
                   status: "error",
-                  message: `✗ ${resultItem.message || "Error en la compra"}`
+                  message: `${resultItem.message || "Error during purchase"}`
                 }
               }));
             }
@@ -90,13 +84,12 @@ export default function CheckoutPayment() {
               ...prev,
               [item.name]: {
                 status: "warning",
-                message: "⚠ No se recibió respuesta para este item"
+                message: "No response was received for this item"
               }
             }));
           }
         });
 
-        // Verificar si hay errores
         const errors = result.results.filter(r => r.status === "error");
         if (errors.length > 0) {
           const errorMessages = errors.map(e => 
@@ -105,19 +98,17 @@ export default function CheckoutPayment() {
           throw new Error(`Errores: ${errorMessages.join('; ')}`);
         }
       } else {
-        // Si no hay results, asumir éxito
         items.forEach(item => {
           setPurchaseStatus(prev => ({
             ...prev,
             [item.name]: {
               status: "success",
-              message: "✓ Compra exitosa"
+              message: "Successful purchase"
             }
           }));
         });
       }
 
-      // Si todo fue exitoso, proceder con la orden
       const orderNumber = generateOrderNumber();
       clearCart();
       
@@ -130,12 +121,11 @@ export default function CheckoutPayment() {
       });
       
     } catch (err) {
-      console.error("Error en el proceso de compra:", err);
+      console.error("Error during checkout:", err);
       setError(err.message);
       
-      // Si el error es de stock, mostrar sugerencia
       if (err.message.includes("stock") || err.message.includes("Stock") || err.message.includes("enough")) {
-        setError(prev => `${prev}. Por favor, ajusta las cantidades o elimina algunos items.`);
+        setError(prev => `${prev}. Please adjust the quantities or remove some items.`);
       }
     } finally {
       setLoading(false);
@@ -189,9 +179,9 @@ export default function CheckoutPayment() {
                         : "text-warning"
                     }`}
                   >
-                    {status.status === "success" && "✅ "}
-                    {status.status === "error" && "❌ "}
-                    {status.status === "warning" && "⚠️ "}
+                    {status.status === "success" && ""}
+                    {status.status === "error" && ""}
+                    {status.status === "warning" && ""}
                     <strong>{itemName}:</strong> {status.message}
                   </div>
                 ))}
@@ -200,7 +190,7 @@ export default function CheckoutPayment() {
 
             {error && (
               <div className="alert alert-danger mt-3">
-                <strong>Error en la compra:</strong> {error}
+                <strong>Error during purchase:</strong> {error}
               </div>
             )}
 
@@ -216,7 +206,7 @@ export default function CheckoutPayment() {
                     role="status"
                     aria-hidden="true"
                   ></span>
-                  Procesando compra...
+                  Processing your purchase...
                 </>
               ) : (
                 "Confirm Order"

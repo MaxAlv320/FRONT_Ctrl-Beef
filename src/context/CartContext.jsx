@@ -12,13 +12,13 @@ export const CartProvider = ({ children }) => {
     }
   });
 
-  // Guardar carrito 
+  //Para guardar carrito 
   useEffect(() => {
     console.log(" Carrito actualizado:", items);
     sessionStorage.setItem("cart_v1", JSON.stringify(items));
   }, [items]);
 
-  // agrega los productos al cart
+  //Para agrega los productos al cart
   const addItem = (product) => {
     console.log("agrego el porducto:", product);
     
@@ -28,7 +28,6 @@ export const CartProvider = ({ children }) => {
     }
     
     setItems((prevItems) => {
-      // ahuevo bussca el id
       const existingIndex = prevItems.findIndex((item) => 
         item.id === product.id
       );
@@ -36,7 +35,6 @@ export const CartProvider = ({ children }) => {
       console.log("Índice encontrado:", existingIndex);
       
       if (existingIndex !== -1) {
-        // Producto ya existe - incrementar cantidad
         const updatedItems = [...prevItems];
         updatedItems[existingIndex] = {
           ...updatedItems[existingIndex],
@@ -45,7 +43,6 @@ export const CartProvider = ({ children }) => {
         console.log(" suma de cantidads :", updatedItems[existingIndex].quantity);
         return updatedItems;
       } else {
-        // agrega uno mas 
         const newItem = {
           ...product,
           quantity: 1
@@ -74,7 +71,7 @@ export const CartProvider = ({ children }) => {
         item.id === id 
           ? { ...item, quantity: Math.max(0, item.quantity - 1) } 
           : item
-      ).filter((item) => item.quantity > 0) // Eliminar si cantidad es 0
+      ).filter((item) => item.quantity > 0)
     );
   };
 
