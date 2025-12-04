@@ -15,18 +15,17 @@ const MenuApp = () => {
   const [activeFilter, setActiveFilter] = useState("All");
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null); // ✅ Agregado
+  const [error, setError] = useState(null);
 
   const { addItem, items } = useContext(CartContext);
   const navigate = useNavigate();
 
   const img = [img1, img2, img3, img4, img5, img6, img7];
 
-  // ⬇️ CARGAR PRODUCTOS DESDE LA API
   useEffect(() => {
     async function loadProducts() {
       try {
-        setError(null); // Limpiar errores previos
+        setError(null);
         const response = await getItems();
 
         if (!Array.isArray(response)) {
@@ -46,7 +45,7 @@ const MenuApp = () => {
         setProducts(productsWithImages);
       } catch (err) {
         console.error("Error cargando productos:", err);
-        setError(err.message || "Error al cargar el menú"); // ✅ Establecer error
+        setError(err.message || "Error al cargar el menú");
         setProducts([]);
       } finally {
         setLoading(false);
@@ -85,7 +84,6 @@ const MenuApp = () => {
             product.category?.toLowerCase() === activeFilter.toLowerCase()
         );
 
-  // ⬇️ PANTALLAS DE ESTADO (SÓLO UNA VEZ)
   if (loading) {
     return (
       <div className="text-center mt-5">
@@ -112,7 +110,6 @@ const MenuApp = () => {
     );
   }
 
-  // ⬇️ UI PRINCIPAL
   return (
     <div className="container-custom">
       <div className="header">
@@ -120,7 +117,6 @@ const MenuApp = () => {
         <p className="header-description">Choose your favorite burgers</p>
       </div>
 
-      {/* FILTROS */}
       <div className="filters-container">
         {filters.map((filter) => (
           <button
@@ -136,8 +132,6 @@ const MenuApp = () => {
       </div>
 
       <div className="divider"></div>
-
-      {/* GRID DE PRODUCTOS */}
       {filteredProducts.length === 0 ? (
         <div className="text-center mt-5">
           <h3>No hay productos disponibles</h3>
@@ -188,7 +182,6 @@ const MenuApp = () => {
         </div>
       )}
 
-      {/* VER ORDEN */}
       <div className="view-order-container">
         <button
           onClick={() => navigate("/checkout")}

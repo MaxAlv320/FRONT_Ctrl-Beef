@@ -89,7 +89,6 @@ export async function postBuyItem(itemsData) {
       "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcHAiOiJDdHJsQmVlZiIsImlhdCI6MTc2NDE3MzkwOCwiZXhwIjoxNzk1Mjc3OTA4fQ.aYiSMuLILGQt07Too8BY-x9UBmbPQhI3HJhHST1gbLQ",
   };
 
-  // Asegurar que itemsData sea un array
   let formattedItems = [];
 
   if (Array.isArray(itemsData)) {
@@ -130,14 +129,12 @@ export async function postBuyItem(itemsData) {
   console.log("Intentando con PATCH...");
 
   try {
-    // PRIMERO: Intentar con PATCH (como ya lo tienes)
     let response = await fetch(url, {
       method: "PATCH",
       headers,
       body: body,
     });
 
-    // Si PATCH falla, probar con POST
     if (!response.ok && response.status === 404) {
       console.log("PATCH falló, intentando con POST...");
       response = await fetch(url, {
@@ -147,7 +144,6 @@ export async function postBuyItem(itemsData) {
       });
     }
 
-    // Si POST falla, probar con PUT
     if (!response.ok && response.status === 404) {
       console.log("POST falló, intentando con PUT...");
       response = await fetch(url, {
@@ -188,8 +184,6 @@ export async function postBuyItem(itemsData) {
     throw error;
   }
 }
-
-// Agrega esto al FINAL de tu items.js (después de postBuyItem)
 
 export async function patchItemStock(id, amount) {
   const url = `https://hylotropic-renee-unexcrescently.ngrok-free.dev/api/items/${id}/stock`;

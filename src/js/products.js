@@ -50,8 +50,7 @@ export async function deleteProduct(id) {
       "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcHAiOiJDdHJsQmVlZiIsImlhdCI6MTc2NDYwNTk3NywiZXhwIjoxNzk1NzA5OTc3fQ.LnhVpUZPFQzUqDB2ZIOFfy2DZG1utRd-kizP1h6aH4A",
   };
 
-  // ¡CORRECCIÓN AQUÍ! Cambia productId por id
-  console.log(`Eliminando producto con ID: ${id}`); // ← Cambiado de productId a id
+  console.log(`Eliminando producto con ID: ${id}`);
   console.log("HEADERS DELETE:", headers);
 
   const response = await fetch(url, {

@@ -21,23 +21,18 @@ function App() {
   return (
     <CartProvider>
       <Routes>
-        {/* RUTAS SIN TOPBAR */}
         <Route path="/" element={<Login />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/forgot" element={<ForgotPassword />} />
 
-        {/* Rutas con TopBar */}
         <Route element={<MainLayout />}>
           <Route path="/home" element={<Home />} />
           <Route path="/menu" element={<Menu />} />
-
-          {/* RUTAS DE CHECKOUT - CORREGIDAS */}
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/checkoutpayment" element={<CheckoutPayment />} />
           <Route path="/orderready" element={<OrderReady />} />
 
-          {/* 🔐 RUTAS PROTEGIDAS PARA ADMIN */}
           <Route
             path="/adminhome"
             element={
