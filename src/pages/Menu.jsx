@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from "react";
-import { getItems } from "../js/items.js";
+import { getProducts } from "../js/products.js";
 import { CartContext } from "../context/CartContext";
 import { useNavigate } from "react-router-dom";
 
@@ -26,7 +26,7 @@ const MenuApp = () => {
     async function loadProducts() {
       try {
         setError(null);
-        const response = await getItems();
+        const response = await getProducts();
 
         if (!Array.isArray(response)) {
           throw new Error("Formato inválido de respuesta");
@@ -79,10 +79,7 @@ const MenuApp = () => {
   const filteredProducts =
     activeFilter === "All"
       ? products
-      : products.filter(
-        (product) =>
-          product.category?.toLowerCase() === activeFilter.toLowerCase()
-      );
+      : products.filter((product) => product.category === activeFilter);
 
   if (loading) {
     return (
@@ -96,7 +93,6 @@ const MenuApp = () => {
           <span className="visually-hidden">Loading...</span>
         </div>
       </div>
-
     );
   }
 
@@ -108,6 +104,7 @@ const MenuApp = () => {
         <button
           className="btn btn-primary mt-3"
           onClick={() => window.location.reload()}
+          style={{ backgroundColor: "#f4c644", border: "none" }}
         >
           Reintentar
         </button>
@@ -126,8 +123,9 @@ const MenuApp = () => {
         {filters.map((filter) => (
           <button
             key={filter.name}
-            className={`filter-button ${activeFilter === filter.name ? "active" : ""
-              }`}
+            className={`filter-button ${
+              activeFilter === filter.name ? "active" : ""
+            }`}
             onClick={() => setActiveFilter(filter.name)}
           >
             {filter.name}
@@ -136,6 +134,7 @@ const MenuApp = () => {
       </div>
 
       <div className="divider"></div>
+
       {filteredProducts.length === 0 ? (
         <div className="text-center mt-5">
           <h3>No hay productos disponibles</h3>

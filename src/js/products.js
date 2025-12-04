@@ -23,6 +23,7 @@ export async function getProducts() {
   const response = await fetch(url, {
     method: "GET",
     headers,
+    cache: "no-cache",
   });
 
   if (!response.ok) {
