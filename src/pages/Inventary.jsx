@@ -4,7 +4,6 @@ import React, { useState, useEffect } from "react";
 import Navbar from "../Component/Navbar.jsx";
 import { getProducts, deleteProduct } from "../js/products.js";
 
-// Importa todas las imágenes de burgers
 import Burger0 from "../assets/0burger.jpg";
 import Burger1 from "../assets/1burger.jpg";
 import Burger2 from "../assets/2burger.jpg";
@@ -14,7 +13,6 @@ import Burger5 from "../assets/5burger.jpg";
 import Burger6 from "../assets/6burger.jpg";
 import Burger7 from "../assets/7burger.jpg";
 
-// Mapeo de imágenes por índice
 const burgerImages = [
   Burger0,
   Burger1,
@@ -31,7 +29,6 @@ const Inventary = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Función para cargar productos desde la API
   const loadProducts = async () => {
     setLoading(true);
     setError(null);
@@ -39,11 +36,9 @@ const Inventary = () => {
       const productsData = await getProducts();
       console.log("Productos cargados:", productsData);
 
-      // IMPORTANTE: Verifica la estructura de los datos que devuelve la API
       if (Array.isArray(productsData)) {
         setProducts(productsData);
       } else if (productsData.data && Array.isArray(productsData.data)) {
-        // Si la respuesta viene dentro de un objeto {data: [...]}
         setProducts(productsData.data);
       } else if (
         productsData.products &&

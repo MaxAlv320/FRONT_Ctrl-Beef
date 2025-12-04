@@ -63,7 +63,9 @@ export default function Signup() {
             <div className="hero-overlay" />
             <div className="hero-content">
               <h1>Join the Ctrl+Beef Club!</h1>
-              <p>Create your account and start enjoying the best burgers in town</p>
+              <p>
+                Create your account and start enjoying the best burgers in town
+              </p>
               <div className="dots">
                 {images.map((_, idx) => (
                   <span
@@ -78,7 +80,11 @@ export default function Signup() {
           <div className="form-side">
             <div className="form-card signup-form-card">
               <div className="logo">
-                <img src={logoBurger} alt="Ctrl+Beef Logo" className="logo-img" />
+                <img
+                  src={logoBurger}
+                  alt="Ctrl+Beef Logo"
+                  className="logo-img"
+                />
               </div>
               <p className="welcome">Create your account</p>
 
@@ -123,10 +129,11 @@ export default function Signup() {
                       type="button"
                       className="toggle-password-btn"
                       onClick={() => setShowPassword((s) => !s)}
-                      aria-label={showPassword ? "Hide password" : "Show password"}
+                      aria-label={
+                        showPassword ? "Hide password" : "Show password"
+                      }
                       title={showPassword ? "Hide password" : "Show password"}
                     >
-                      {/* showPassword === true */}
                       {showPassword ? <Eye size={18} /> : <EyeOff size={18} />}
                     </button>
                   </div>

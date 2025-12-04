@@ -18,7 +18,6 @@ export default function Login() {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-  // Rotación de imágenes
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % images.length);
@@ -26,13 +25,11 @@ export default function Login() {
     return () => clearInterval(interval);
   }, [images.length]);
 
-  // ====== LOGIN ======
   const handleSignIn = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError(null);
 
-    // Validación básica
     if (!email || !password) {
       setError("Please enter both email and password");
       setLoading(false);
@@ -45,18 +42,14 @@ export default function Login() {
 
       console.log("Login Response:", response);
 
-      // Verificar si la respuesta tiene token
       if (!response?.token) {
         setError(response?.message || "Invalid credentials");
         setLoading(false);
         return;
       }
 
-      // Guardar datos en sessionStorage
       sessionStorage.setItem("token", response.token);
       sessionStorage.setItem("role", response.role || "user");
-
-      // Guardar información del usuario para TopBar
       sessionStorage.setItem(
         "user",
         JSON.stringify({
@@ -65,17 +58,13 @@ export default function Login() {
         })
       );
 
-      // Redirección según rol
       if (response.role === "admin") {
         navigate("/adminhome");
       } else {
         navigate("/home");
       }
-
-      // No necesitas alert aquí si la navegación funciona
     } catch (err) {
       console.error("Error logging in:", err);
-      // Mensajes de error más específicos
       if (err.message?.includes("Network")) {
         setError("Network error. Please check your connection.");
       } else if (err.message?.includes("401")) {
@@ -91,7 +80,6 @@ export default function Login() {
   return (
     <div className="login-wrapper">
       <div className="login-frame">
-        {/* HERO */}
         <div className="hero-side">
           <div
             className="hero-bg hero-bg--1"
@@ -112,7 +100,6 @@ export default function Login() {
           </div>
         </div>
 
-        {/* FORMULARIO */}
         <div className="form-side">
           <div className="form-card">
             <div className="logo">
@@ -122,7 +109,6 @@ export default function Login() {
             <p className="welcome">Welcome back!</p>
 
             <form className="mt-4" onSubmit={handleSignIn}>
-              {/* EMAIL */}
               <div className="mb-3">
                 <label className="form-label">Email</label>
                 <input
@@ -136,7 +122,6 @@ export default function Login() {
                 />
               </div>
 
-              {/* PASSWORD */}
               <div className="mb-2">
                 <label className="form-label">Password</label>
                 <div className="password-wrapper position-relative">

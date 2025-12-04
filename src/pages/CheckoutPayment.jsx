@@ -45,7 +45,6 @@ export default function CheckoutPayment() {
     const statusUpdates = {};
 
     try {
-      // Procesar cada item individualmente
       for (let i = 0; i < items.length; i++) {
         const item = items[i];
         const itemId = item.dbId || item.id;
@@ -78,7 +77,6 @@ export default function CheckoutPayment() {
         }
       }
 
-      // Todas las compras exitosas
       const orderNumber = generateOrderNumber();
 
       clearCart();
@@ -130,7 +128,6 @@ export default function CheckoutPayment() {
               complete your payment. Our staff will be happy to assist you!
             </div>
 
-            {/* Estado de compras */}
             {Object.keys(purchaseStatus).length > 0 && (
               <div className="purchase-status mt-3 p-3 bg-light rounded">
                 <h6>Estado de compras:</h6>
@@ -179,7 +176,6 @@ export default function CheckoutPayment() {
               )}
             </button>
 
-            {/* Información de debug (solo desarrollo) */}
             {process.env.NODE_ENV === "development" && items.length > 0 && (
               <div className="mt-3 p-2 bg-dark text-white rounded small">
                 <div>IDs que se enviarán:</div>

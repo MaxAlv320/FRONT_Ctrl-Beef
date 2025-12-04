@@ -30,7 +30,6 @@ const OrderManagement = () => {
     loadUsers();
   }, []);
 
-  // Función para filtrar usuarios por email
   const handleSearch = () => {
     if (!searchEmail.trim()) {
       setFilteredUsers(users);
@@ -43,7 +42,6 @@ const OrderManagement = () => {
     setFilteredUsers(filtered);
   };
 
-  // También se puede buscar al presionar Enter
   const handleKeyPress = (e) => {
     if (e.key === "Enter") {
       handleSearch();
@@ -63,7 +61,6 @@ const OrderManagement = () => {
           alignItems: "center",
         }}
       >
-        {/* Título */}
         <h2
           style={{
             color: "#000",
@@ -76,7 +73,6 @@ const OrderManagement = () => {
           Users
         </h2>
 
-        {/* Buscador por Email */}
         <div
           style={{
             marginTop: "15px",
@@ -113,7 +109,6 @@ const OrderManagement = () => {
           />
         </div>
 
-        {/* Encabezado */}
         <div style={{ marginTop: "30px", width: "55vw" }}>
           <div
             style={{
@@ -130,7 +125,6 @@ const OrderManagement = () => {
           </div>
         </div>
 
-        {/* TABLA DE USUARIOS */}
         <div style={{ marginTop: "10px", width: "55vw" }}>
           {filteredUsers.length === 0 ? (
             <div
