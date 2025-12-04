@@ -1,68 +1,80 @@
-/* src/styles/checkout.css */
 .payment-method-card {
-  background:#fff;
-  padding:18px;
-  border-radius:12px;
-  border:1px solid #eee;
+  background: #fff;
+  padding: 18px;
+  border-radius: 12px;
+  border: 1px solid #eee;
 }
 
-.payment-method-card h3 { color:#821018; margin-bottom:12px; }
+.payment-method-card h3 {
+  color: #821018;
+  margin-bottom: 12px;
+}
 
-.methods { display:flex; gap:12px; }
+.methods {
+  display: flex;
+  gap: 12px;
+}
 .method {
-  display:flex;
-  gap:10px;
-  align-items:center;
-  padding:14px;
-  border-radius:10px;
-  background:#fafafa;
-  border:1px solid #f1e6d0;
-  cursor:pointer;
-  min-width:150px;
-  justify-content:center;
-  flex-direction:column;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  padding: 14px;
+  border-radius: 10px;
+  background: #fafafa;
+  border: 1px solid #f1e6d0;
+  cursor: pointer;
+  min-width: 150px;
+  justify-content: center;
+  flex-direction: column;
 }
 .method.active {
-  border-color:#821018;
-  background:#fff4e0;
+  border-color: #821018;
+  background: #fff4e0;
 }
 
-.method .method-ico { font-size:28px; }
+.method .method-ico {
+  font-size: 28px;
+}
 
 .pay-info-card {
   margin-top: 18px;
-  background:#fff;
-  padding:18px;
-  border-radius:12px;
-  border:3px solid #821018;
+  background: #fff;
+  padding: 18px;
+  border-radius: 12px;
+  border: 3px solid #821018;
 }
 
 .big-box {
-  background:#f6c700;
-  color:#56070C;
-  padding:18px;
-  border-radius:8px;
-  margin-bottom:12px;
+  background: #f6c700;
+  color: #56070c;
+  padding: 18px;
+  border-radius: 8px;
+  margin-bottom: 12px;
 }
 
-.big-amount { font-size:28px; font-weight:700; margin-top:8px; color:#56070C; }
+.big-amount {
+  font-size: 28px;
+  font-weight: 700;
+  margin-top: 8px;
+  color: #56070c;
+}
 
 .info-note {
-  border:1px solid #f2d49a;
-  padding:12px;
-  border-radius:8px;
-  margin-bottom:12px;
-  background:transparent;
+  border: 1px solid #f2d49a;
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  background: transparent;
 }
 
 .btn-confirm {
-  background:#821018;
-  color:#fed353;
-  border:none;
-  padding:10px 16px;
-  border-radius:8px;
-  width:100%;
-  font-weight:700;
+  background: #821018;
+  color: #fed353;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 8px;
+  width: 100%;
+  font-weight: 700;
 }
 
 .order-item-card {
@@ -83,9 +95,19 @@
   border-radius: 8px;
 }
 
-.item-info h5 { margin: 0; font-size: 18px; }
-.item-info p { margin: 2px 0; color: #555; }
-.qty span { background:#f2f2f2; padding:5px 12px; border-radius:6px; }
+.item-info h5 {
+  margin: 0;
+  font-size: 18px;
+}
+.item-info p {
+  margin: 2px 0;
+  color: #555;
+}
+.qty span {
+  background: #f2f2f2;
+  padding: 5px 12px;
+  border-radius: 6px;
+}
 
 .item-total {
   margin-left: auto;
@@ -110,14 +132,14 @@
 
 .summary-total {
   font-size: 20px;
-  font-weight:700;
-  color:#821018;
+  font-weight: 700;
+  color: #821018;
 }
 
 .btn-add-more {
-  background: #fff4e0;           /* crema claro como tus tarjetas activas */
-  color: #821018;                /* vino, tu color principal */
-  border: 2px solid #f1e6d0;     /* beige suave, consistente con tus borders */
+  background: #fff4e0;
+  color: #821018;
+  border: 2px solid #f1e6d0;
   padding: 10px 16px;
   border-radius: 10px;
   width: 100%;
@@ -127,16 +149,16 @@
 }
 
 .btn-add-more:hover {
-  background: #ffe9c2;            /* un toque más cálido */
-  border-color: #d8c6a4;          /* ligero oscurecimiento */
+  background: #ffe9c2;
+  border-color: #d8c6a4;
 }
 
 .btn-add-more:active {
   transform: scale(0.97);
 }
 
-.method-ico { 
-  font-size:28px;
+.method-ico {
+  font-size: 28px;
 }
 
 .methods {
@@ -145,8 +167,6 @@
   justify-content: center;
 }
 
-
-/* PALETA */
 :root {
   --mustard-dark: #b87400;
   --mustard: #f6a700;
@@ -155,7 +175,6 @@
   --burgundy: #821018;
 }
 
-/* === ESTILO DE CADA ITEM === */
 .cart-item-card {
   background: #fff;
   border: 1px solid #eee;
@@ -165,7 +184,7 @@
 }
 
 .cart-item-card:hover {
-  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
 }
 
 .cart-item-img {
@@ -175,7 +194,6 @@
   border-radius: 12px;
 }
 
-/* === ICONO DE REMOVE === */
 .btn-remove {
   background: var(--burgundy);
   border: none;
@@ -199,7 +217,6 @@
   transform: scale(1.07);
 }
 
-/* === BOTÓN CLEAR CART === */
 .btn-clear {
   background: transparent;
   border: 2px solid var(--burgundy);
@@ -215,7 +232,6 @@
   color: var(--mustard-light);
 }
 
-/* === BOTÓN ADD MORE ITEMS === */
 .btn-add-more {
   background: #fff4e0;
   color: var(--burgundy);
@@ -233,7 +249,6 @@
   border-color: #d8c6a4;
 }
 
-/* === BROWSE MENU BUTTON === */
 .btn-browse {
   background: var(--burgundy);
   color: var(--mustard-light);
@@ -249,7 +264,6 @@
   color: white;
 }
 
-/* === ORDER SUMMARY === */
 .summary-box {
   background: #fff;
   padding: 18px;
@@ -270,7 +284,6 @@
   color: var(--burgundy);
 }
 
-/* === PROCEED TO PAYMENT BUTTON === */
 .btn-confirm {
   background: var(--burgundy) !important;
   color: var(--mustard-light) !important;
@@ -287,10 +300,8 @@
   background: var(--burgundy-dark) !important;
 }
 
-/* ETA BOX */
 .eta-box {
   background: #fff4e0;
   border-radius: 10px;
   border: 1px solid #f1e6d0;
 }
-

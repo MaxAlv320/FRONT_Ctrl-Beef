@@ -106,7 +106,6 @@
   font-size: clamp(1.2rem, 2.5vw, 1.8rem);
 }
 
-/* ESTILOS PARA STOCK */
 .burger-stock {
   margin-top: 15px;
   font-size: clamp(1.1rem, 2.2vw, 1.6rem);
@@ -145,10 +144,6 @@
   cursor: pointer;
   font-size: clamp(1rem, 2vw, 1.5rem);
 }
-
-/* ================================== */
-/* ESTILOS PARA LOS BOTONES DE STOCK */
-/* ================================== */
 
 .stock-controls {
   display: flex;
@@ -191,7 +186,6 @@
   transform: scale(0.95);
 }
 
-/* Botón de disminuir stock (-) */
 .stock-btn:first-child {
   background-color: #f44336;
   color: white;
@@ -216,7 +210,6 @@
   box-shadow: none;
 }
 
-/* Botón de aumentar stock (+) */
 .stock-btn:last-child {
   background-color: #4caf50;
   color: white;
@@ -228,7 +221,6 @@
   box-shadow: 0 4px 8px rgba(76, 175, 80, 0.3);
 }
 
-/* Responsive para los botones de stock */
 @media (max-width: 700px) {
   .stock-controls {
     justify-content: center;
@@ -255,7 +247,6 @@
   }
 }
 
-/* ESTILOS PARA AGRUPAR STOCK Y CONTROLES */
 .stock-section {
   margin-top: 15px;
 }
@@ -312,7 +303,6 @@
   max-width: 600px;
 }
 
-/* Empty state */
 .inventary-empty {
   margin: 60px;
   color: #666;
@@ -320,7 +310,6 @@
   font-style: italic;
 }
 
-/* Products list */
 .inventary-list {
   display: flex;
   flex-direction: column;
@@ -335,7 +324,6 @@
   position: relative;
 }
 
-/* Debug info */
 .inventary-debug {
   position: absolute;
   right: 100px;
@@ -348,7 +336,6 @@
   border-radius: 4px;
 }
 
-/* Ingredient component styles */
 .ingredient-container {
   margin-top: 0px;
   display: flex;
@@ -368,7 +355,6 @@
   font-family: "Inria Sans", sans-serif;
 }
 
-/* Image section */
 .ingredient-image-container {
   flex: 1;
   display: flex;
@@ -381,7 +367,6 @@
   object-fit: cover;
 }
 
-/* Title section */
 .ingredient-title-container {
   flex: 2;
   text-align: center;
@@ -394,7 +379,6 @@
   font-family: "Inria Sans", sans-serif;
 }
 
-/* Delete button section */
 .ingredient-button-container {
   flex: 1;
   display: flex;
@@ -428,7 +412,6 @@
   object-fit: contain;
 }
 
-/* Responsive adjustments for ingredient card */
 @media (max-width: 1024px) {
   .ingredient-card {
     width: 85vw;

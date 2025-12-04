@@ -1,14 +1,12 @@
-/* Signup container */
 .signup-frame {
   min-height: 720px;
   height: 90vh;
   overflow: hidden;
   border-radius: 28px;
-  box-shadow: 0 24px 40px rgba(0,0,0,0.45);
-  background: rgba(0,0,0,0.25);
+  box-shadow: 0 24px 40px rgba(0, 0, 0, 0.45);
+  background: rgba(0, 0, 0, 0.25);
 }
 
-/* HERO LEFT */
 .hero-side {
   position: relative;
   display: flex;
@@ -32,7 +30,11 @@
 .hero-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.65) 70%);
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.45) 0%,
+    rgba(0, 0, 0, 0.65) 70%
+  );
   z-index: 1;
 }
 
@@ -53,26 +55,25 @@
   margin: 0 0 22px;
 }
 
-/* Dots */
-.dots { 
-  display: flex; 
-  gap: 10px; 
-  align-items: center; 
+.dots {
+  display: flex;
+  gap: 10px;
+  align-items: center;
 }
 .dot {
   width: 10px;
   height: 10px;
   border-radius: 15px;
-  background: rgba(255,255,255,0.25);
-  box-shadow: 0 1px 0 rgba(0,0,0,0.2) inset;
-  transition: transform .18s ease, background .18s ease;
+  background: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2) inset;
+  transition: transform 0.18s ease, background 0.18s ease;
 }
 .dot.active {
   background: #fff;
   transform: scale(1.08);
 }
 
-.signup-page .form-card{
+.signup-page .form-card {
   width: 100%;
   max-width: 420px;
   background: transparent;
@@ -80,9 +81,9 @@
   padding: 28px 32px;
   position: relative;
   border: 3px solid #f6a700;
-  margin: auto; /* centra la card dentro del form-side */
-} 
-/* Form area */
+  margin: auto;
+}
+
 .signup-page .signup-form-card {
   padding-top: 36px !important;
   padding-bottom: 36px !important;
@@ -92,9 +93,6 @@
   max-height: 80vh;
   overflow-y: auto;
 }
-
-
-/* Solo afecta a botones sign-btn dentro de signup-page */
 
 .signup-page .sign-btn {
   margin-top: 10px;
@@ -125,8 +123,6 @@
   box-shadow: 0 3px 6px rgba(130, 16, 24, 0.3);
 }
 
-
-/* Responsive */
 @media (max-width: 1000px) {
   .signup-frame {
     min-height: auto;

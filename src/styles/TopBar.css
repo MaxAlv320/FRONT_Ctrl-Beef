@@ -74,7 +74,6 @@
   font-weight: 600;
 }
 
-/* === USER DROPDOWN MENU === */
 .user-menu {
   position: absolute;
   top: 45px;
@@ -84,7 +83,7 @@
   width: 180px;
   border-radius: 10px;
   border: 1px solid #eee;
-  box-shadow: 0px 4px 12px rgba(0,0,0,0.1);
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -125,7 +124,7 @@
   background-color: white;
   border-bottom: 1px solid #ececec;
 
-  position: sticky;   /* 🔥 clave: se pega arriba */
+  position: sticky;
   top: 0;
-  z-index: 9999;      /* 🔥 clave: por encima de todo */
+  z-index: 9999;
 }
