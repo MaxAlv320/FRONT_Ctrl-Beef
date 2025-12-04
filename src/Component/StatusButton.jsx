@@ -8,9 +8,9 @@ const StatusButton = ({ title, onClick }) => {
         backgroundColor: "#fff",
         border: "3px solid #000",
         borderRadius: "10px",
-        padding: "8px 18px",            // tamaño compacto
+        padding: "8px 18px",
         color: "#000",
-        fontSize: "1.4rem",             // tamaño del texto ordenado
+        fontSize: "1.4rem",
         fontWeight: "600",
         fontFamily: "'Inria Sans', sans-serif",
         cursor: "pointer",

@@ -5,13 +5,13 @@ const BackButton = ({ title = "Back", onClick }) => {
     <>
       <style>{`
         .back-btn {
-          width: 300px;     /* 🔥 Mitad del ancho */
-          height: 60px;     /* 🔥 Mitad del alto */
+          width: 300px;     
+          height: 60px;     
           background-color: #9b5c03ff;
-          border: 6px solid #d78005ff;   /* borde también reducido */
+          border: 6px solid #d78005ff;  
           border-radius: 10px;
           color: #fff;
-          font-size: 24px;   /* también reducido */
+          font-size: 24px;   
           font-weight: 500;
           font-family: 'Kanit', sans-serif;
           cursor: pointer;

@@ -7,8 +7,8 @@ const SaveButton = ({ title = "Save", onClick }) => {
         .save-btn {
           width: 300px;
           height: 120px;
-          background-color: #FED354;  /* amarillo original */
-          border: 5px solid #444;      /* borde gris original */
+          background-color: #FED354;  
+          border: 5px solid #444;      
           border-radius: 10px;
           color: #fff;
           font-size: 40px;
@@ -26,7 +26,6 @@ const SaveButton = ({ title = "Save", onClick }) => {
           transform: scale(1.05);
         }
 
-        /* 📱 Tablets */
         @media (max-width: 900px) {
           .save-btn {
             width: 260px;
@@ -36,7 +35,6 @@ const SaveButton = ({ title = "Save", onClick }) => {
           }
         }
 
-        /* 📱 Celulares medianos */
         @media (max-width: 600px) {
           .save-btn {
             width: 220px;
@@ -46,7 +44,6 @@ const SaveButton = ({ title = "Save", onClick }) => {
           }
         }
 
-        /* 📱 Celulares pequeños */
         @media (max-width: 400px) {
           .save-btn {
             width: 180px;

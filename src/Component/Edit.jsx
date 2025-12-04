@@ -27,12 +27,9 @@ const Edit = ({ burger }) => {
           maxWidth: "1100px",
           gap: "30px",
           fontFamily: "'Inria Sans', sans-serif",
-
-          /* 📱 Pantallas pequeñas: vista vertical */
           flexWrap: "wrap",
         }}
       >
-        {/* 🖼 Imagen */}
         <div
           style={{
             width: "100%",
@@ -54,8 +51,6 @@ const Edit = ({ burger }) => {
             }}
           />
         </div>
-
-        {/* 📄 Texto */}
         <div
           style={{
             display: "flex",
@@ -65,7 +60,6 @@ const Edit = ({ burger }) => {
             minWidth: "250px",
           }}
         >
-          {/* Título */}
           <h2
             style={{
               margin: 0,
@@ -78,7 +72,6 @@ const Edit = ({ burger }) => {
             {title}
           </h2>
 
-          {/* Descripción */}
           <p
             style={{
               marginTop: "10px",
@@ -91,7 +84,6 @@ const Edit = ({ burger }) => {
             {text}
           </p>
 
-          {/* Precio */}
           <p
             style={{
               marginTop: "40px",

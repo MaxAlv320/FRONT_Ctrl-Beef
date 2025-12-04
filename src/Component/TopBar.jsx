@@ -8,7 +8,6 @@ export default function TopBar() {
   const navigate = useNavigate();
   const [openMenu, setOpenMenu] = useState(false);
 
-  // Traemos los datos del usuario desde sessionStorage
   const user = JSON.parse(sessionStorage.getItem("user")) || {
     name: "Invitado",
     email: "Sin correo",
@@ -24,7 +23,7 @@ export default function TopBar() {
 
   const handleLogout = () => {
     sessionStorage.removeItem("user");
-    sessionStorage.removeItem("token"); // si guardas uno
+    sessionStorage.removeItem("token");
     navigate("/login");
   };
 
@@ -39,12 +38,10 @@ export default function TopBar() {
       </div>
 
       <div className="topbar-right">
-        {/* ICONO DE USUARIO */}
         <div className="user" onClick={toggleUserMenu}>
           <FaUser className="icon" />
         </div>
 
-        {/* MENÚ DESPLEGABLE */}
         {openMenu && (
           <div className="user-menu">
             <p className="user-name">{user.name}</p>

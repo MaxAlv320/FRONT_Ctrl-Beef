@@ -12,43 +12,41 @@ export const CartProvider = ({ children }) => {
     }
   });
 
-  // Guardar carrito 
   useEffect(() => {
     console.log(" Carrito actualizado:", items);
     sessionStorage.setItem("cart_v1", JSON.stringify(items));
   }, [items]);
 
-  // agrega los productos al cart
   const addItem = (product) => {
     console.log("agrego el porducto:", product);
-    
+
     if (!product || !product.id) {
       console.error("Producto inválido:", product);
       return;
     }
-    
+
     setItems((prevItems) => {
-      // ahuevo bussca el id
-      const existingIndex = prevItems.findIndex((item) => 
-        item.id === product.id
+      const existingIndex = prevItems.findIndex(
+        (item) => item.id === product.id
       );
-      
+
       console.log("Índice encontrado:", existingIndex);
-      
+
       if (existingIndex !== -1) {
-        // Producto ya existe - incrementar cantidad
         const updatedItems = [...prevItems];
         updatedItems[existingIndex] = {
           ...updatedItems[existingIndex],
-          quantity: updatedItems[existingIndex].quantity + 1
+          quantity: updatedItems[existingIndex].quantity + 1,
         };
-        console.log(" suma de cantidads :", updatedItems[existingIndex].quantity);
+        console.log(
+          " suma de cantidads :",
+          updatedItems[existingIndex].quantity
+        );
         return updatedItems;
       } else {
-        // agrega uno mas 
         const newItem = {
           ...product,
-          quantity: 1
+          quantity: 1,
         };
         console.log("Agregando nuevo producto:", newItem);
         return [...prevItems, newItem];
@@ -70,11 +68,13 @@ export const CartProvider = ({ children }) => {
 
   const decrease = (id) => {
     setItems((prev) =>
-      prev.map((item) =>
-        item.id === id 
-          ? { ...item, quantity: Math.max(0, item.quantity - 1) } 
-          : item
-      ).filter((item) => item.quantity > 0) // Eliminar si cantidad es 0
+      prev
+        .map((item) =>
+          item.id === id
+            ? { ...item, quantity: Math.max(0, item.quantity - 1) }
+            : item
+        )
+        .filter((item) => item.quantity > 0)
     );
   };
 
@@ -83,14 +83,24 @@ export const CartProvider = ({ children }) => {
     console.log("bajo mis condiciones");
   };
 
-  const totalItems = items.reduce((total, item) => total + (item.quantity || 0), 0);
+  const totalItems = items.reduce(
+    (total, item) => total + (item.quantity || 0),
+    0
+  );
 
   const subtotal = items.reduce(
     (total, item) => total + (item.price || 0) * (item.quantity || 0),
     0
   );
 
-  console.log("los porductos:", items.length, "Total items:", totalItems, "Subtotal:", subtotal);
+  console.log(
+    "los porductos:",
+    items.length,
+    "Total items:",
+    totalItems,
+    "Subtotal:",
+    subtotal
+  );
 
   return (
     <CartContext.Provider

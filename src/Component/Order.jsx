@@ -16,8 +16,8 @@ const Order = ({ id, name, status }) => {
         style={{
           border: "2px solid #000",
           borderRadius: "15px",
-          width: "55vw",             // MÁS CHICO
-          height: "90px",            // MÁS BAJO
+          width: "55vw",
+          height: "90px",
           backgroundColor: "#fff",
           display: "flex",
           flexDirection: "row",
@@ -27,12 +27,10 @@ const Order = ({ id, name, status }) => {
           fontFamily: "'Inria Sans', sans-serif",
         }}
       >
-
-        {/* ID – izquierda */}
         <div style={{ width: "33%", textAlign: "left" }}>
           <h2
             style={{
-              fontSize: "1.8rem",     // MÁS CHICO
+              fontSize: "1.8rem",
               fontWeight: "bold",
               margin: 0,
             }}
@@ -41,11 +39,10 @@ const Order = ({ id, name, status }) => {
           </h2>
         </div>
 
-        {/* NAME – centro */}
         <div style={{ width: "33%", textAlign: "center" }}>
           <h2
             style={{
-              fontSize: "1.8rem",     // MÁS CHICO
+              fontSize: "1.8rem",
               fontWeight: "bold",
               margin: 0,
             }}
@@ -54,11 +51,10 @@ const Order = ({ id, name, status }) => {
           </h2>
         </div>
 
-        {/* STATUS – derecha */}
         <div style={{ width: "33%", textAlign: "right" }}>
           <h2
             style={{
-              fontSize: "1.8rem",     // MÁS CHICO
+              fontSize: "1.8rem",
               fontWeight: "bold",
               margin: 0,
             }}
@@ -66,7 +62,6 @@ const Order = ({ id, name, status }) => {
             {status}
           </h2>
         </div>
-
       </Card>
     </div>
   );

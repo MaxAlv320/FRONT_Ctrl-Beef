@@ -14,12 +14,10 @@ const Burger = ({
   return (
     <div className="burger-container">
       <Card className="burger-card shadow-sm">
-        {/* Imagen */}
         <div className="burger-image-wrapper">
           <img src={image} alt={title} className="burger-image" />
         </div>
 
-        {/* Texto */}
         <div className="burger-info">
           <h2 className="burger-title">{title}</h2>
 
