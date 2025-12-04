@@ -132,7 +132,7 @@ const MenuManagement = () => {
   if (isLoading) {
     return (
       <>
-        <Navbar title="Menu Management" />
+        <Navbar title="Inventary" />
         <div
           style={{
             paddingTop: "150px",
@@ -149,7 +149,7 @@ const MenuManagement = () => {
 
   return (
     <>
-      <Navbar title="Menu Management" />
+      <Navbar title="Inventary" />
 
       <div style={{ paddingTop: "50px", textAlign: "center" }}>
         <h2 className="inventory-title">Burgers</h2>

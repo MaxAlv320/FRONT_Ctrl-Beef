@@ -147,7 +147,7 @@ const Inventary = () => {
 
   return (
     <>
-      <Navbar title="Inventary" />
+      <Navbar title="Menu Management" />
 
       <div className="inventary-container">
         <h2 className="inventary-title">Burgers</h2>
